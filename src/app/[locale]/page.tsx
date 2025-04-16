@@ -13,7 +13,6 @@ import About from './_components/home_components/About'
 import Blogs from './_components/home_components/Blogs'
 import OurValues from './_components/home_components/OurValues';
 import OurMarket from './_components/home_components/Our_Market';
-import Spinner from './_components/spinner/Spinner';
 
 
 const Home = () => {
