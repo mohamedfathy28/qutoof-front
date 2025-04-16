@@ -64,7 +64,7 @@ const Our_client = () => {
       myHeaders.append("Accept-Language", direction=='ltr'? "en" : "ar");
 
       try {
-        const response = await fetch('http://localhost/quttouf-backend/api/user/clients',{
+        const response = await fetch('https://quttouf.com//api/user/clients',{
           headers:myHeaders
         });
         const result = await response.json();
@@ -95,7 +95,7 @@ const Our_client = () => {
       <div className=''>
         <Slider ref={sliderRef1} {...settings1}>
           {data && data.map(data => <div className='relative rounded-[8px] overflow-hidden' key={data.id}>
-            <Image src={data.image ? data.image : "http://localhost/quttouf-backend/dashboard/blank.jpg"} width={100} height={100} alt='our clients' className='w-full h-auto' />
+            <Image src={data.image ? data.image : "https://quttouf.com//dashboard/blank.jpg"} width={100} height={100} alt='our clients' className='w-full h-auto' />
             <div className='absolute z-8 top-0 left-0 w-full h-full bg-gradient-to-t from-[#000000] to-[#D9D9D900] p-8 flex flex-col justify-end items-start'>
               <h5 className='text-[22px] text-[#fff] font-[800]'>{data ? data.title : ""}</h5>
               <span className='text-[18px] text-[#CFCFCF] font-[600]'>{t("Client")}</span>

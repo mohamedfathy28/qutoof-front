@@ -3,8 +3,6 @@ import React, { useEffect, useState } from 'react'
 import Button from '../button/Button'
 import { useRouter } from '@/i18n/routing'
 import Image from 'next/image'
-
-import BlogImg from '@/media/our blog img 1.png'
 import { useTranslations } from 'next-intl'
 
 interface BannerResponse {
@@ -29,7 +27,7 @@ const Banner = () => {
           const myHeaders = new Headers();
           myHeaders.append("Accept-Language", direction=='ltr'? "en" : "ar");
           try {
-            const response = await fetch('http://localhost/quttouf-backend/api/user/main-banners',{
+            const response = await fetch('https://quttouf.com//api/user/main-banners',{
               headers:myHeaders
             });
             const result = await response.json();

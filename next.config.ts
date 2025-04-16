@@ -5,7 +5,7 @@ const withNextIntl = createNextIntlPlugin();
 
 const nextConfig: NextConfig = {
     images: {
-        domains: ["localhost"],
+        domains: ["quttouf.com"],
       },
 };
 

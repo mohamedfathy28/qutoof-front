@@ -71,7 +71,7 @@ const RenderAllProducts = () => {
       const myHeaders = new Headers();
       myHeaders.append("Accept-Language", direction == 'ltr' ? "en" : "ar");
       try {
-        const response = await fetch(`http://localhost/quttouf-backend/api/user/market?per_page=${PerPage}&page=${CurrentPage}`, {
+        const response = await fetch(`https://quttouf.com//api/user/market?per_page=${PerPage}&page=${CurrentPage}`, {
           headers: myHeaders
         });
         const result = await response.json();
@@ -134,7 +134,7 @@ const RenderFromCustomers = () => {
       const myHeaders = new Headers();
       myHeaders.append("Accept-Language", direction == 'ltr' ? "en" : "ar");
       try {
-        const response = await fetch(`http://localhost/quttouf-backend/api/user/market?filter[type_id]=2&per_page=${PerPage}&page=${CurrentPage}`, {
+        const response = await fetch(`https://quttouf.com//api/user/market?filter[type_id]=2&per_page=${PerPage}&page=${CurrentPage}`, {
           headers: myHeaders
         });
         const result = await response.json();
@@ -195,7 +195,7 @@ const RenderFromCompany = () => {
       const myHeaders = new Headers();
       myHeaders.append("Accept-Language", direction == 'ltr' ? "en" : "ar");
       try {
-        const response = await fetch(`http://localhost/quttouf-backend/api/user/market?filter[type_id]=1&per_page=${PerPage}&page=${CurrentPage}`, {
+        const response = await fetch(`https://quttouf.com//api/user/market?filter[type_id]=1&per_page=${PerPage}&page=${CurrentPage}`, {
           headers: myHeaders
         });
         const result = await response.json();

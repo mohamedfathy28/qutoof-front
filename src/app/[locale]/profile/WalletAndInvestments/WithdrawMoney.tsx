@@ -36,7 +36,7 @@ const RenderwithdrawMoney = () => {
         myHeaders.append("Accept-Language", direction=='ltr'? "en" : "ar");
 
         try {
-            const response = await fetch('http://localhost/quttouf-backend/api/user/wallet', {
+            const response = await fetch('https://quttouf.com//api/user/wallet', {
                 headers: myHeaders,
             });
             const result = await response.json();
@@ -78,7 +78,7 @@ const RenderwithdrawMoney = () => {
             formData.append('amount', values.amount.toString());
 
             try {
-                const response = await fetch('http://localhost/quttouf-backend/api/user/wallet/withdraw', {
+                const response = await fetch('https://quttouf.com//api/user/wallet/withdraw', {
                     method: 'POST',
                     headers: myHeaders,
                     body: formData,

@@ -66,7 +66,7 @@ const RenderSold = () => {
 
       
       try {
-        const response = await fetch(`http://localhost/quttouf-backend/api/user/sector-orders?filter[status_id]=3&filter[type_id]=3?per_page=${PerPage}&page=${CurrentPage}`, {
+        const response = await fetch(`https://quttouf.com//api/user/sector-orders?filter[status_id]=3&filter[type_id]=3?per_page=${PerPage}&page=${CurrentPage}`, {
           headers: myHeaders,
         });
         const result = await response.json();

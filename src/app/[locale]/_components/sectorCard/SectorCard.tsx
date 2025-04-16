@@ -78,7 +78,7 @@ const SectorCard = ({ SectorInfo }: ISectorCardProps) => {
     if (NumberOfShares !== null) formData.append("number_of_shares", NumberOfShares.toString());
 
     try {
-      const response = await fetch("http://localhost/quttouf-backend/api/user/sectors/buy-shares", {
+      const response = await fetch("https://quttouf.com//api/user/sectors/buy-shares", {
         method: "POST",
         headers: myHeaders,
         body: formData,

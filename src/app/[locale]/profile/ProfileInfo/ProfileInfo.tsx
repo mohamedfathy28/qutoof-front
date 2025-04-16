@@ -55,11 +55,11 @@ const RenderProfileInfo = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const countriesResponse = await fetch("http://localhost/quttouf-backend/api/user/countries");
+                const countriesResponse = await fetch("https://quttouf.com//api/user/countries");
                 const countriesResult = await countriesResponse.json();
                 setCountries(countriesResult);
 
-                const nationalitiesResponse = await fetch("http://localhost/quttouf-backend/api/user/nationalities");
+                const nationalitiesResponse = await fetch("https://quttouf.com//api/user/nationalities");
                 const nationalitiesResult = await nationalitiesResponse.json();
                 setNationalities(nationalitiesResult);
             } catch (error) {
@@ -115,7 +115,7 @@ const RenderProfileInfo = () => {
             });
 
             try {
-                const response = await fetch('http://localhost/quttouf-backend/api/user/update/profile', {
+                const response = await fetch('https://quttouf.com//api/user/update/profile', {
                     method: 'POST',
                     headers:myHeaders,
                     body: formData,

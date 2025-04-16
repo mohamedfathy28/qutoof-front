@@ -66,7 +66,7 @@ const RenderListedForSale = () => {
       myHeaders.append("Accept-Language", direction=='ltr'? "en" : "ar");
 
       try {
-        const response = await fetch(`http://localhost/quttouf-backend/api/user/sectors/list-for-sale?per_page=${PerPage}&page=${CurrentPage}`,{
+        const response = await fetch(`https://quttouf.com//api/user/sectors/list-for-sale?per_page=${PerPage}&page=${CurrentPage}`,{
           headers: myHeaders,
       });
         const result = await response.json();

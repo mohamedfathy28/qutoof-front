@@ -74,7 +74,7 @@ const ProductCard = ({ ProductInfo }: AppProps) => {
         if (numberOfShares !== null) formData.append("number_of_shares", numberOfShares.toString());
 
         try {
-            const response = await fetch("http://localhost/quttouf-backend/api/user/sectors/buy-shares", {
+            const response = await fetch("https://quttouf.com//api/user/sectors/buy-shares", {
                 method: "POST",
                 headers: myHeaders,
                 body: formData,

@@ -36,7 +36,7 @@ const Blogs = () => {
           const myHeaders = new Headers();
           myHeaders.append("Accept-Language", direction=='ltr'? "en" : "ar");
       try {
-        const response = await fetch(`http://localhost/quttouf-backend/api/user/blogs?per_page=${PerPage}&page=${CurrentPage}`,{
+        const response = await fetch(`https://quttouf.com//api/user/blogs?per_page=${PerPage}&page=${CurrentPage}`,{
           headers:myHeaders
         });
         const result = await response.json();

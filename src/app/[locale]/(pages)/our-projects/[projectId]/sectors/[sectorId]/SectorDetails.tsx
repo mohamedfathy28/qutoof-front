@@ -143,7 +143,7 @@ const SectorDetails = ({ sectorId }: Iprops) => {
         if (NumberOfShares !== null) formData.append("number_of_shares", NumberOfShares.toString());
 
         try {
-            const response = await fetch("http://localhost/quttouf-backend/api/user/sectors/buy-shares", {
+            const response = await fetch("https://quttouf.com//api/user/sectors/buy-shares", {
                 method: "POST",
                 headers: myHeaders,
                 body: formData,
@@ -178,7 +178,7 @@ const SectorDetails = ({ sectorId }: Iprops) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch(`http://localhost/quttouf-backend/api/user/market/${sectorId}`);
+                const response = await fetch(`https://quttouf.com//api/user/market/${sectorId}`);
                 const result = await response.json();
                 setData(result.data);
                 console.log(result.data);
@@ -199,7 +199,7 @@ const SectorDetails = ({ sectorId }: Iprops) => {
             myHeaders.append("Accept-Language", direction=='ltr'? "en" : "ar");
 
             try {
-                const response = await fetch(`http://localhost/quttouf-backend/api/user/blogs?sector_id=${sectorId}`, {
+                const response = await fetch(`https://quttouf.com//api/user/blogs?sector_id=${sectorId}`, {
                     headers: myHeaders,
                 });
                 const result = await response.json();
