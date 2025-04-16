@@ -5,7 +5,8 @@ import { useTranslations } from 'next-intl'
 
 interface AboutResponse {
     title: string,
-    content : string
+    content : string,
+    image: string,
   }
 
 const About = () => {
