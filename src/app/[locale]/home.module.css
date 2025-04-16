@@ -1,0 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Mansalva&display=swap');
+
+
+.homeWrapper .hero h1{
+    font-family: "Mansalva", serif;
+}
+
+.homeWrapper .hero p{
+    font-size: 22px;
+    font-weight: 400;
+    line-height: 25px;
+    color: #fff;
+    margin-bottom: 1.5rem;
+}

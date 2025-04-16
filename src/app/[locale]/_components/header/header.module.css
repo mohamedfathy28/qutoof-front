@@ -1,0 +1,22 @@
+.top_header{
+    background-color: #009444;
+}
+
+.top_header ul{
+    gap: 2rem;
+    display: flex;
+    align-items: center;
+}
+
+.top_header ul li a{
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    color: #fff;
+}
+
+.toggleMenu{
+    outline: 0;
+    border: 0;
+    background: none;
+}
