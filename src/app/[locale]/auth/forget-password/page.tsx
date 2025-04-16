@@ -28,7 +28,7 @@ const ForgetPass = () => {
     formData.append("otp", otp);
 
     try {
-      const response = await fetch("https://quttouf.com//api/user/verify-otp", {
+      const response = await fetch("https://quttouf.com/api/user/verify-otp", {
         method: "POST",
         body: formData,
       });

@@ -47,7 +47,7 @@ const ContactUsPage: React.FC = () => {
             formData.append('message', values.message);
 
             // Send the FormData to the API
-            const response = await fetch('https://quttouf.com//api/user/contact-us', {
+            const response = await fetch('https://quttouf.com/api/user/contact-us', {
                 method: 'POST',
                 body: formData,
             });

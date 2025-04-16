@@ -35,7 +35,7 @@ const ResetPassword = () => {
         formData.append("password_confirmation", values.password_confirmation);
 
         try {
-            const response = await fetch("https://quttouf.com//api/user/reset-password", {
+            const response = await fetch("https://quttouf.com/api/user/reset-password", {
                 method: "POST",
                 headers: myHeaders,
                 body: formData,

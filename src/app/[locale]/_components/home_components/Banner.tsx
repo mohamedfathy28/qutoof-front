@@ -27,7 +27,7 @@ const Banner = () => {
           const myHeaders = new Headers();
           myHeaders.append("Accept-Language", direction=='ltr'? "en" : "ar");
           try {
-            const response = await fetch('https://quttouf.com//api/user/main-banners',{
+            const response = await fetch('https://quttouf.com/api/user/main-banners',{
               headers:myHeaders
             });
             const result = await response.json();

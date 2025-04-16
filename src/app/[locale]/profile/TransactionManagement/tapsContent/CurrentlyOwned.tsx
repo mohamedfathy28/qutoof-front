@@ -80,7 +80,7 @@ const RenderCurrentlyOwned = () => {
         if (NumberOfShares !== null) formData.append("number_of_shares", NumberOfShares.toString());
 
         try {
-            const response = await fetch("https://quttouf.com//api/user/sectors/sell-shares", {
+            const response = await fetch("https://quttouf.com/api/user/sectors/sell-shares", {
                 method: "POST",
                 headers: myHeaders,
                 body: formData,
@@ -129,7 +129,7 @@ const RenderCurrentlyOwned = () => {
         myHeaders.append("Authorization", `Bearer ${token ? JSON.parse(token) : ''}`);
 
         try {
-            const response = await fetch(`https://quttouf.com//api/user/sectors/currently-owned?per_page=${PerPage}&page=${CurrentPage}`, {
+            const response = await fetch(`https://quttouf.com/api/user/sectors/currently-owned?per_page=${PerPage}&page=${CurrentPage}`, {
                 headers: myHeaders,
             });
             const result = await response.json();

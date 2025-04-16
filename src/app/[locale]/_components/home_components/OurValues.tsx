@@ -31,7 +31,7 @@ const OurValues = () => {
           const myHeaders = new Headers();
           myHeaders.append("Accept-Language", direction=='ltr'? "en" : "ar");
             try {
-                const response = await fetch('https://quttouf.com//api/user/values',{
+                const response = await fetch('https://quttouf.com/api/user/values',{
                   headers:myHeaders
                 });
                 const result = await response.json();

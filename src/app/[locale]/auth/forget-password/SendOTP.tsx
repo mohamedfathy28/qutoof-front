@@ -26,7 +26,7 @@ const SendOTP = ({ setShowOTP, setCountry_code, setPhone }: ISendOTPprops) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("https://quttouf.com//api/user/countries");
+        const response = await fetch("https://quttouf.com/api/user/countries");
         const result = await response.json();
         setCountries(result);
       } catch (error) {
@@ -53,7 +53,7 @@ const SendOTP = ({ setShowOTP, setCountry_code, setPhone }: ISendOTPprops) => {
     formData.append("phone", values.phone);
 
     try {
-      const response = await fetch("https://quttouf.com//api/user/resend-otp", {
+      const response = await fetch("https://quttouf.com/api/user/resend-otp", {
         method: "POST",
         body: formData,
       });

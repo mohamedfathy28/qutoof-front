@@ -31,7 +31,7 @@ const SignInPage: React.FC = () => {
     useEffect(() => {
       const fetchData = async () => {
         try {
-          const response = await fetch("https://quttouf.com//api/user/countries");
+          const response = await fetch("https://quttouf.com/api/user/countries");
           const result = await response.json();
           setCountries(result);
         } catch (error) {
@@ -67,7 +67,7 @@ const SignInPage: React.FC = () => {
       formData.append('password', values.password);
 
       try {
-        const response = await fetch(`https://quttouf.com//api/user/login`, {
+        const response = await fetch(`https://quttouf.com/api/user/login`, {
           method: 'POST',
           headers: {
             Accept: 'application/json',

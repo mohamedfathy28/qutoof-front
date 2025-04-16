@@ -28,7 +28,7 @@ const SignUpPage = () => {
   useEffect(() => {
     const fetchCountries = async () => {
       try {
-        const response = await fetch("https://quttouf.com//api/user/countries");
+        const response = await fetch("https://quttouf.com/api/user/countries");
         const result = await response.json();
         setCountries(result);
       } catch (error) {
@@ -79,7 +79,7 @@ const SignUpPage = () => {
 
         console.log(formData);
 
-        const response = await fetch("https://quttouf.com//api/user/register", {
+        const response = await fetch("https://quttouf.com/api/user/register", {
           method: 'POST',
           body: formData,
         })

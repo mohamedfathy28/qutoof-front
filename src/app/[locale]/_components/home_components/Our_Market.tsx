@@ -61,7 +61,7 @@ const OurMarket = () => {
           const myHeaders = new Headers();
           myHeaders.append("Accept-Language", direction=='ltr'? "en" : "ar");
           try {
-            const response = await fetch('https://quttouf.com//api/user/market',{
+            const response = await fetch('https://quttouf.com/api/user/market',{
               headers:myHeaders
             });
             const result = await response.json();
