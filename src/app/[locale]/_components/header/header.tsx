@@ -27,7 +27,6 @@ const Header = () => {
   const { user, updateUser } = useUser();
   const { Configrations } = useConfigrationsContext();
   const dropdownRef = useRef<HTMLDivElement>(null);
-
   const t = useTranslations("HomePage");
 
 
@@ -73,7 +72,7 @@ const Header = () => {
         <div className="flex justify-between max-w-[90%] mx-auto sm:max-w-xl md:max-w-2xl lg:max-w-4xl xl:max-w-6xl 2xl:max-w-7xl">
           <ul className="flex justify-between gap-6 md:gap-2">
             <li>
-              <a href="https://maps.app.goo.gl/fpXQd6Z4Krdinj6m7" target="_blank" className="flex items-center gap-0 md:gap-2">
+              <a href={Configrations?.map} target="_blank" className="flex items-center gap-0 md:gap-2">
                 <Image src={img1} alt="location icon" priority />
                 <span className="hidden lg:inline">
                   {Configrations?.address}
@@ -81,13 +80,13 @@ const Header = () => {
               </a>
             </li>
             <li>
-              <a href="mailto:sales@omnifert.com" className="flex items-center gap-0 md:gap-2">
+              <a href={`mailto:${Configrations?.email}`} className="flex items-center gap-0 md:gap-2">
                 <Image src={img2} alt="email icon" priority />
                 <span className="hidden lg:inline">{Configrations?.email}</span>
               </a>
             </li>
             <li>
-              <a href="tel:+201056541236" className="flex items-center gap-0 md:gap-2">
+              <a href={`tel:+${Configrations?.phone}`} className="flex items-center gap-0 md:gap-2">
                 <Image src={img3} alt="location icon" priority />
                 <span className="hidden lg:inline">{Configrations?.phone}</span>
               </a>
@@ -96,13 +95,13 @@ const Header = () => {
 
           <ul className="flex justify-between gap-6">
             <li>
-              <a href="https://www.facebook.com/">
+              <a href={Configrations?.facebook || "#"} target="_blank" rel="noopener noreferrer">
                 <Image src={img4} alt="facebook icon" priority />
               </a>
             </li>
             <li>
-              <a href="https://www.linkedin.com/">
-                <Image src={img5} alt="linkedIn icon" priority />
+              <a href={Configrations?.twitter || "#"} target="_blank" rel="noopener noreferrer">
+                <Image src={img5} alt="twitter icon" priority />
               </a>
             </li>
           </ul>
@@ -252,3 +251,4 @@ const Header = () => {
 };
 
 export default Header;
+

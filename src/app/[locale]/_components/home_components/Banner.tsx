@@ -46,8 +46,14 @@ const Banner = () => {
 
   return (
     <div className="relative">
-    <Image src={data ? data.image : ""} alt='hero img' width={100} height={100} className='h-[80vh] md:h-[100vh] w-full object-cover' />
-    
+        <div className="relative h-[80vh] md:h-[100vh] w-full">
+            <Image
+                src={data?.image || "/fallback-image.jpg"}
+                alt="hero img"
+                fill
+                className="object-cover"
+            />
+        </div>
     <div className='absolute top-0 left-0 w-full h-full z-10 bg-black/30'>
       <div className={' h-full flex flex-col gap-4 justify-center items-start mx-auto max-w-[90%] sm:max-w-xl md:max-w-2xl lg:max-w-4xl xl:max-w-6xl 2xl:max-w-7xl'}>
         <h1 data-aos="fade-right" data-aos-duration="500" data-aos-delay="0" className='text-[#fff] text-[50px] md:text-[80px] font-[400] leading-[35px] md:leading-[65px] font-[Mansalva]' >{data?.title}</h1>

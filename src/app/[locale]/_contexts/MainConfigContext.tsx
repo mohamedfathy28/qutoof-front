@@ -14,6 +14,8 @@ interface IConfigrations {
   facebook: string,
   instagram: string,
   twitter: string
+  map: string
+  home_videos: string
 }
 
 interface ConfigrationsContext {
@@ -29,28 +31,29 @@ export const ConfigrationsContextProvider = ({ children }: { children: ReactNode
   const [Configrations, setConfigrations] = useState<IConfigrations>();
 
   useEffect(() => {
-    
     const fetchData = async () => {
-
       const direction = typeof window !== "undefined" && localStorage.getItem("direction");
       const myHeaders = new Headers();
-      myHeaders.append("Accept-Language", direction=='ltr'? "en" : "ar");
-        try {
-          const response = await fetch('https://quttouf.com/api/user/main-config',{
-            headers:myHeaders
-          });
-          const result = await response.json();
-          setConfigrations(result.data);
-  
-        } catch (error) {
-          console.error('Error fetching data:', error);
-        }
-      };
-  
-      fetchData();
+      myHeaders.append("Accept-Language", direction === 'ltr' ? "en" : "ar");
+      try {
+        const response = await fetch('https://quttouf.com/api/user/main-config', {
+          headers: myHeaders
+        });
+        const result = await response.json();
+        if (result?.data && Array.isArray(result.data)) {
+          const configObject = result.data.reduce((acc, item) => ({ ...acc, ...item }), {});
+          setConfigrations(configObject);
+        } else {
+          console.error('Error fetching data');
 
-  }, [])
-  
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <ConfigrationsContext.Provider value={{ Configrations, setConfigrations }}>
