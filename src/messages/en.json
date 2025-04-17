@@ -123,7 +123,7 @@
         "reset_password": "Reset Password",
         "password_update_success": "Password Update Successfully",
         "password_update_description": "Your password has been updated successfully",
-        "password_strength": "Password must include uppercase, lowercase, number, and special character (@$!%*?&)"
+        "password_strength": "Password must include uppercase, lowercase, number, and special character (@$!%#*?&)"
 
       }
     },
@@ -160,7 +160,9 @@
         "password_required": "Password is required",
         "password_min": "Password must be at least 8 characters",
         "password_confirmation_required": "Please confirm your password",
-        "password_match": "Passwords must match"
+        "password_match": "Passwords must match",
+        "password_strength": "Password must include uppercase, lowercase, number, and special character (@$!%#*?&)"
+
       },
       "messages": {
         "welcome_title": "Welcome Back",

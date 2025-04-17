@@ -161,7 +161,9 @@
         "password_required": "يجب إدخال كلمة المرور",
         "password_min": "يجب أن تكون كلمة المرور 8 أحرف على الأقل",
         "password_confirmation_required": "يرجى تأكيد كلمة المرور",
-        "password_match": "يجب أن تتطابق كلمات المرور"
+        "password_match": "يجب أن تتطابق كلمات المرور",
+        "password_strength": "يجب أن تحتوي كلمة المرور على حرف كبير (A-Z)، وحرف صغير (a-z)، ورقم (0-9)، وحرف خاص (@$!%*#?&)"
+
       },
       "messages": {
         "welcome_title": "مرحبًا بك مجددًا",
