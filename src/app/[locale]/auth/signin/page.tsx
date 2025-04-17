@@ -45,15 +45,11 @@ const SignInPage: React.FC = () => {
 
   const formik = useFormik({
     initialValues: {
-      country_code:'',
+      country_code:'20',
       phone: '',
       password: '',
     },
     validationSchema: Yup.object({
-      country_code: Yup.number()
-        .required(t("Validation.country_required"))
-        .min(1, t("Validation.country_min")),
-  
       phone: Yup.number().required(t("Validation.phone_required")),
   
       password: Yup.string()

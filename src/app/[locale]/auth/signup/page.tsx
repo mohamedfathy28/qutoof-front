@@ -51,7 +51,7 @@ const SignUpPage = () => {
         .required(t("Validation.password_required"))
         .min(8, t("Validation.password_min"))
         .matches(
-            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d])[A-Za-z\d\W_]{8,}$/,
             t("Validation.password_strength")
         ),
     password_confirmation: Yup.string()
@@ -62,7 +62,7 @@ const SignUpPage = () => {
   const formik = useFormik({
     initialValues: {
       username: '',
-      country_code: '',
+      country_code: '20',
       phone: '',
       password: '',
       password_confirmation: ''

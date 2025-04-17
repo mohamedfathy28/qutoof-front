@@ -122,7 +122,9 @@
         "back_to_login": "Back to login",
         "reset_password": "Reset Password",
         "password_update_success": "Password Update Successfully",
-        "password_update_description": "Your password has been updated successfully"
+        "password_update_description": "Your password has been updated successfully",
+        "password_strength": "Password must include uppercase, lowercase, number, and special character (@$!%*?&)"
+
       }
     },
     "Login": {

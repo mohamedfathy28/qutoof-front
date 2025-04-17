@@ -123,7 +123,9 @@
         "back_to_login": "العودة إلى تسجيل الدخول",
         "reset_password": "إعادة تعيين كلمة المرور",
         "password_update_success": "تم تحديث كلمة المرور بنجاح",
-        "password_update_description": "تم تحديث كلمة المرور الخاصة بك بنجاح"
+        "password_update_description": "تم تحديث كلمة المرور الخاصة بك بنجاح",
+        "password_strength": "يجب أن تحتوي كلمة المرور على حرف كبير (A-Z)، وحرف صغير (a-z)، ورقم (0-9)، وحرف خاص (@$!%*?&)"
+
       }
     },
     "Login": {
