@@ -11,7 +11,7 @@ import Our_client from './_components/home_components/Our_client'
 import Banner from './_components/home_components/Banner'
 import About from './_components/home_components/About'
 import Blogs from './_components/home_components/Blogs'
-import OurValues from './_components/home_components/OurValues';
+// import OurValues from './_components/home_components/OurValues';
 import OurMarket from './_components/home_components/Our_Market';
 import { useConfigrationsContext } from "./_contexts/MainConfigContext";
 
