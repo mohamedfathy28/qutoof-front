@@ -41,7 +41,10 @@ export const ConfigrationsContextProvider = ({ children }: { children: ReactNode
         });
         const result = await response.json();
         if (result?.data && Array.isArray(result.data)) {
-          const configObject = result.data.reduce((acc, item) => ({ ...acc, ...item }), {});
+          const configObject = result.data.reduce(
+              (acc: Record<string, any>, item: Record<string, any>) => ({ ...acc, ...item }),
+              {}
+          );
           setConfigrations(configObject);
         } else {
           console.error('Error fetching data');
