@@ -64,11 +64,11 @@ export function VideoPlayer({
 	});
 
 	// Handlers
-	const handlePlayPause = useCallback(() => {
-		setPlayerState((prev) => ({ ...prev, playing: !prev.playing }));
-	}, []);
+	// const handlePlayPause = useCallback(() => {
+	// 	setPlayerState((prev) => ({ ...prev, playing: !prev.playing }));
+	// }, []);
 
-	const t = useTranslations("HomePage");
+	// const t = useTranslations("HomePage");
 
 	return (
 		<div ref={containerRef} className='relative w-full overflow-hidden'>
