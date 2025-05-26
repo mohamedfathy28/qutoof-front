@@ -18,6 +18,7 @@ interface ITeam {
 	title?: string;
 	content?: string;
 	image?: string;
+	video?: string;
 	created_at: string;
 }
 
@@ -26,8 +27,8 @@ const Out_team = () => {
 	const [currentVideo, setCurrentVideo] = useState<string>("");
 
 	const handleOpenModal = (data: ITeam) => {
-		setIsOpen(true);
-		setCurrentVideo(data.image || "");
+		if (data.video) setIsOpen(true);
+		setCurrentVideo(data.video || "");
 	};
 
 	const [currentSlide, setCurrentSlide] = useState<number>(1); // Starts at 1 (first slide)
@@ -58,7 +59,6 @@ const Out_team = () => {
 				});
 				const result = await response.json();
 				setData(result.data);
-				console.log(result.data[0]);
 				setTotalSlides(result.data.length); // Set total slides count
 			} catch (error) {
 				console.error("Error fetching data:", error);
@@ -76,6 +76,8 @@ const Out_team = () => {
 		slidesToShow: 1,
 		slidesToScroll: 1,
 		waitForAnimate: false,
+		autoplay: true,
+		autoplaySpeed: 5000,
 		afterChange: (index: number) => {
 			setCurrentSlide(index + 1);
 		}, // Update current slide number
@@ -123,7 +125,7 @@ const Out_team = () => {
 												height={100}
 												className='w-full rounded-[8px] h-[550px] object-cover'
 											/>
-											<div className='absolute z-8 top-0 left-0 w-full h-full bg-gradient-to-t from-[#000000] to-[#D9D9D900] p-8 flex flex-col justify-center items-center'>
+											<div className='absolute z-8 top-0 left-0 w-full h-full bg-gradient-to-t from-[#0000008f] to-[#D9D9D900] p-8 flex flex-col justify-center items-center'>
 												<button
 													className='text-black w-70 h-70 mx-auto'
 													onClick={() => handleOpenModal(data)}
@@ -154,7 +156,7 @@ const Out_team = () => {
 												</span>
 
 												<div className='flex gap-2'>
-													<span
+													<button
 														className='rtl:rotate-180 w-12 h-12 bg-[#E5EDD3]  flex justify-center items-center'
 														onClick={previous2}
 													>
@@ -173,8 +175,8 @@ const Out_team = () => {
 																strokeLinejoin='round'
 															/>
 														</svg>
-													</span>
-													<span
+													</button>
+													<button
 														className='rtl:rotate-180 w-12 h-12 bg-[#E5EDD3] flex justify-center items-center'
 														onClick={next2}
 													>
@@ -193,7 +195,7 @@ const Out_team = () => {
 																strokeLinejoin='round'
 															/>
 														</svg>
-													</span>
+													</button>
 												</div>
 											</div>
 										</div>

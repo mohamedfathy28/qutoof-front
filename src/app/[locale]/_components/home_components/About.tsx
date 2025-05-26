@@ -27,7 +27,6 @@ const About = () => {
 					headers: myHeaders,
 				});
 				const result = await response.json();
-				console.log(result.data[0]);
 				setData(result.data[0]);
 			} catch (error) {
 				console.error("Error fetching data:", error);

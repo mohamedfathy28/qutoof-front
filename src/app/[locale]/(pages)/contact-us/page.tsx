@@ -54,7 +54,6 @@ const ContactUsPage: React.FC = () => {
 			);
 
 			const data = await response.json();
-			console.log(data);
 
 			if (!response.ok) {
 				throw new Error("Failed to send message");
@@ -107,7 +106,7 @@ const ContactUsPage: React.FC = () => {
 										{t("Adderss")}
 									</span>
 									<p className='text-[20px] text-[#000] font-[500] leading-[30px]'>
-										Egypt Eye, Cairo,EG
+										{Configrations?.address}
 									</p>
 								</div>
 							</div>
@@ -130,8 +129,13 @@ const ContactUsPage: React.FC = () => {
 									<span className='text-[16px] text-[#939393] font-[400] leading-[24px] mb-3'>
 										{t("PhoneNumber")}
 									</span>
-									<p className='text-[20px] text-[#000] font-[500] leading-[30px]'>
-										{Configrations?.phone}
+									<p>
+										<a
+											href={`tel:${Configrations?.phone}`}
+											className='text-[20px] text-[#000] font-[500] leading-[30px]'
+										>
+											{Configrations?.phone}
+										</a>
 									</p>
 								</div>
 							</div>
@@ -166,8 +170,13 @@ const ContactUsPage: React.FC = () => {
 									<span className='text-[16px] text-[#939393] font-[400] leading-[24px] mb-3'>
 										{t("Email")}
 									</span>
-									<p className='text-[20px] text-[#000] font-[500] leading-[30px]'>
-										{Configrations?.email}
+									<p>
+										<a
+											href={`mailto:${Configrations?.email}`}
+											className='text-[20px] text-[#000] font-[500] leading-[30px]'
+										>
+											{Configrations?.email}
+										</a>
 									</p>
 								</div>
 							</div>
@@ -226,7 +235,7 @@ const ContactUsPage: React.FC = () => {
 									</svg>
 								</a>
 								<a
-									href='https://www.linkedin.com'
+									href='https://www.aedin.com'
 									target='_blank'
 									className='w-12 h-12 rounded-[50%] flex items-center justify-center bg-[#F4F8ED] outline-none border-0 focus:ring-0'
 								>
@@ -355,7 +364,7 @@ const ContactUsPage: React.FC = () => {
 			</div>
 			<div className='w-full'>
 				<iframe
-					src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d55251.37451031098!2d31.258464350000004!3d30.059488450000003!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14583fa60b21beeb%3A0x79dfb296e8423bba!2sCairo%2C%20Cairo%20Governorate!5e0!3m2!1sen!2seg!4v1745670877337!5m2!1sen!2seg'
+					src={Configrations?.map}
 					width={"100%"}
 					height={300}
 					style={{ border: 0 }}

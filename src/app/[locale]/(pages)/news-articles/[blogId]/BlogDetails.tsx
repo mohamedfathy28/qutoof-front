@@ -24,7 +24,6 @@ interface IBlog {
 const BlogDetails = ({ blogId }: IProps) => {
 	const [data, setData] = useState<IBlog>();
 	const [Blogs, setBlogs] = useState<IBlog[]>();
-
 	const t = useTranslations("HomePage");
 
 	useEffect(() => {
@@ -95,7 +94,7 @@ const BlogDetails = ({ blogId }: IProps) => {
 
 			<div className='mx-auto max-w-[90%] sm:max-w-xl md:max-w-2xl lg:max-w-4xl xl:max-w-6xl 2xl:max-w-7xl my-20 md:my-32 space-y-20 lg:space-y-32'>
 				<div className='grid grid-cols-3 gap-8 lg:gap-16'>
-					<div className='col-span-3 lg:col-span-2'>
+					<div className='col-span-3 lg:col-span-3'>
 						<div className='w-full relative'>
 							<Image
 								src={data?.image ? data?.image : panner}
@@ -129,7 +128,7 @@ const BlogDetails = ({ blogId }: IProps) => {
 							{data?.content}
 						</p>
 					</div>
-					<div className='col-span-3 lg:col-span-1 space-y-8'>
+					{/* <div className='col-span-3 lg:col-span-1 space-y-8'>
 						<div className='bg-[#EAF8F0] rounded-[10px] p-8'>
 							<h6 className='text-[22px] text-[#1F1E17] font-[700] mb-4 leading-[30px]'>
 								Categories
@@ -240,7 +239,7 @@ const BlogDetails = ({ blogId }: IProps) => {
 								</li>
 							</ul>
 						</div>
-					</div>
+					</div> */}
 				</div>
 
 				<div>

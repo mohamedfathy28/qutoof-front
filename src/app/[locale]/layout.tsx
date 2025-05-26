@@ -15,40 +15,39 @@ import { Locale, routing } from "../../i18n/routing";
 import LayoutWrapper from "./LayoutWrapper";
 import { ConfigrationsContextProvider } from "./_contexts/MainConfigContext";
 export default async function LocaleLayout({
-  children,
-  params,
+	children,
+	params,
 }: {
-  children: React.ReactNode;
-  params: { locale: string };
+	children: React.ReactNode;
+	params: { locale: string };
 }) {
-  const { locale } = await params;
+	const { locale } = await params;
 
-  // Ensure that the incoming `locale` is valid
-  if (!routing.locales.includes(locale as Locale)) {
-    notFound();
-  }
-  // Providing all messages to the client
-  // side is the easiest way to get started
-  const messages = await getMessages({ locale });
+	// Ensure that the incoming `locale` is valid
+	if (!routing.locales.includes(locale as Locale)) {
+		notFound();
+	}
+	// Providing all messages to the client
+	// side is the easiest way to get started
+	const messages = await getMessages({ locale });
 
-
-  return (
-    <html lang={locale} >
-      <head />
-      <body>
-        <NextIntlClientProvider messages={messages}>
-          <ConfigrationsContextProvider>
-            <DirectionProvider>
-              <UserProvider>
-                <WalletContextProvider>
-                  <LayoutWrapper>{children}</LayoutWrapper>
-                </WalletContextProvider>
-                <Toaster />
-              </UserProvider>
-            </DirectionProvider>
-          </ConfigrationsContextProvider>
-        </NextIntlClientProvider>
-      </body>
-    </html>
-  );
+	return (
+		<html lang={locale}>
+			<head />
+			<body>
+				<NextIntlClientProvider messages={messages}>
+					<ConfigrationsContextProvider>
+						<DirectionProvider>
+							<UserProvider>
+								<WalletContextProvider>
+									<LayoutWrapper>{children}</LayoutWrapper>
+								</WalletContextProvider>
+								<Toaster />
+							</UserProvider>
+						</DirectionProvider>
+					</ConfigrationsContextProvider>
+				</NextIntlClientProvider>
+			</body>
+		</html>
+	);
 }
