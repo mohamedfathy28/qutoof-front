@@ -80,7 +80,7 @@ const Blogs = () => {
 							className='rounded-[8px] h-full w-full object-cover'
 						/>
 					</Link>
-					<div className='flex flex-col justify-end gap-4 md:gap-6 text-white absolute top-0 left-0 w-full h-full bg-gradient-to-b from-black/0 to-black/90 rounded-[8px] p-6 md:p-16'>
+					<div className='flex flex-col justify-end gap-4 md:gap-6 text-white absolute top-0 left-0 w-full h-full bg-gradient-to-b from-black/0 to-black/70 rounded-[8px] p-6 md:p-16'>
 						<Link href={`/news-articles/${data ? data[0].id : 1}`}>
 							<h5 className='text-[22px] leading-[22px] md:text-[28px] md:leading-[33px] font-bold'>
 								{data ? data[0]?.title : ""}

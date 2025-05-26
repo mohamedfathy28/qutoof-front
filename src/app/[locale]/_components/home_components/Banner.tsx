@@ -13,9 +13,7 @@ interface BannerResponse {
 
 const Banner = () => {
 	const [data, setData] = useState<BannerResponse | null>(null);
-
 	const router = useRouter();
-
 	const t = useTranslations("HomePage");
 
 	useEffect(() => {
@@ -40,16 +38,16 @@ const Banner = () => {
 		};
 
 		fetchData();
-	}, []); // Empty dependency array ensures this runs only once after the component mounts
+	}, []);
 
 	if (data?.title == "" && data?.content == "" && data?.image == "")
 		return null;
 
 	return (
 		<div className='relative'>
-			<div className='relative h-[80vh] md:h-[100vh] w-full'>
+			<div className='relative h-[85vh] md:h-[85vh] w-full'>
 				<Image
-					src={data?.image || "/fallback-image.jpg"}
+					src={data?.image || ""}
 					alt='hero img'
 					fill
 					className='object-cover'

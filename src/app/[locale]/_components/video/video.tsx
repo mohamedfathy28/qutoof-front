@@ -94,14 +94,15 @@ export function VideoPlayer({
 					file: {
 						attributes: {
 							poster: thumbnail,
-							class: "w-full h-full object-cover",
+							className: "w-full h-full object-cover",
 						},
 					},
 				}}
+				controls={true}
 			/>
 
 			{/* Custom Controls */}
-			{!playerState.playing && (
+			{/* {!playerState.playing && (
 				<div className='absolute bottom-0 left-0 w-full h-full z-10 bg-black/40 p-3 flex flex-col items-center justify-center gap-4 lg:gap-12'>
 					<button
 						onClick={handlePlayPause}
@@ -120,7 +121,7 @@ export function VideoPlayer({
 						</h4>
 					</div>
 				</div>
-			)}
+			)} */}
 		</div>
 	);
 }

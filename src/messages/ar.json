@@ -65,7 +65,8 @@
 			"password_required": "كلمة المرور مطلوبة",
 			"password_min": "يجب أن تتكون كلمة المرور من 8 أحرف على الأقل",
 			"password_strength": "يجب أن تحتوي كلمة المرور على حرف كبير (A-Z)، وحرف صغير (a-z)، ورقم (0-9)، وحرف خاص (@$!%*?&)"
-		}
+		},
+		"meter": "متر"
 	},
 	"SectorDetails": {
 		"Sectors": "القطاعات",
@@ -81,6 +82,7 @@
 		"RelatedBlogs": "المدونات ذات الصلة",
 		"numberOfAcres": "عدد الأفدنة",
 		"numberOfSectors": "عدد القطاعات",
+		"acres": "افدنة",
 		"Download": "تحميل",
 		"ShowSectors": "عرض القطاعات",
 		"currency": "جنيه مصري",
@@ -91,7 +93,10 @@
 		"ourProjects": "مشاريعنا",
 		"ourSectors": "قطاعاتنا",
 		"CheckOurLatestSectors": "ألقِ نظرة على آخر قطاعاتنا",
-		"CheckOurLatestProjects": "ألقِ نظرة على آخر مشاريعنا"
+		"CheckOurLatestProjects": "ألقِ نظرة على آخر مشاريعنا",
+		"ProjectSchedule": "جدولة المشروع",
+		"StageOwners": "مالكو المرحلة",
+		"CompanyReview": "تقييم الشركة"
 	},
 	"auth": {
 		"Welcome_to_Quttouf": "مرحبًا بك في قطوف",

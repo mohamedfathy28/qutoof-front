@@ -76,6 +76,7 @@ const ShowSectors = ({ projectId }: { projectId: number }) => {
 	}, [CurrentPage, projectId]); // Empty dependency array ensures this runs only once after the component mounts
 
 	const t = useTranslations("SectorDetails");
+	const t_home = useTranslations("HomePage");
 
 	return (
 		<>
@@ -108,6 +109,12 @@ const ShowSectors = ({ projectId }: { projectId: number }) => {
 						data.map((SectorInfo) => (
 							<SectorCard key={SectorInfo.id} SectorInfo={SectorInfo} />
 						))}
+
+					{data?.length === 0 && (
+						<h3 className='col-span-2 text-[20px] text-center text-[#009444] font-[700]'>
+							{t_home("NoRecords")}
+						</h3>
+					)}
 				</div>
 				{data?.length !== 0 ? (
 					<Pagination

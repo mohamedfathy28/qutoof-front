@@ -152,8 +152,6 @@ const SectorDetails = ({ sectorId }: Iprops) => {
 
 			const result = await response.json();
 
-			console.log(result);
-
 			if (response.ok) {
 				toast.success(result.message);
 				setIsOpen(false);
@@ -224,6 +222,7 @@ const SectorDetails = ({ sectorId }: Iprops) => {
 		link.click(); // Trigger the click event
 	};
 
+	const t_home = useTranslations("HomePage");
 	const t = useTranslations("SectorDetails");
 
 	return (
@@ -277,7 +276,7 @@ const SectorDetails = ({ sectorId }: Iprops) => {
 										{t("LandArea")}
 									</span>
 									<p className='text-[#000] text-[18px] font-[500]'>
-										{data?.sector.land_area} m
+										{data?.sector.land_area} {t_home("meter")}
 									</p>
 								</div>
 							</li>
@@ -413,7 +412,7 @@ const SectorDetails = ({ sectorId }: Iprops) => {
 
 						<div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
 							<button
-								className='space-x-6 text-[#16151C] h-14 w-full border border-[#DBDBDB] hover:bg-[#dbdbdb99] duration-300 hover:text-[#16151C] flex items-center justify-center rounded-[8px]'
+								className='space-x-2 text-[#16151C] h-12 w-full border border-[#DBDBDB] hover:bg-[#dbdbdb99] duration-300 hover:text-[#16151C] flex items-center justify-center rounded-[8px]'
 								onClick={() =>
 									handleDownload(data ? data?.sector?.pdf : "")
 								}
@@ -463,7 +462,7 @@ const SectorDetails = ({ sectorId }: Iprops) => {
 										fill='white'
 									/>
 								</svg>
-								Project details. pdf{" "}
+								<span>{t("Download")}</span>
 								<svg
 									width='24'
 									height='22'
@@ -485,7 +484,11 @@ const SectorDetails = ({ sectorId }: Iprops) => {
 									/>
 								</svg>
 							</button>
-							<Button className='px-4' onClick={handleOpenModal}>
+							<Button
+								className='px-4'
+								size='xl'
+								onClick={handleOpenModal}
+							>
 								{t("BuyNow")}
 							</Button>
 						</div>
@@ -496,30 +499,188 @@ const SectorDetails = ({ sectorId }: Iprops) => {
 					tabs={[
 						{
 							id: "tab1",
-							label: "Project schedule",
+							label: t("ProjectSchedule"),
 							content: () => {
 								return (
 									<ul className='list-disc w-full lg:w-2/3'>
 										<li className='flex items-center justify-between pb-3 mb-3 border-b border-[#F1F1F1] text-[#656565]'>
-											Launch Start :{" "}
+											{t("LaunchStart")} :{" "}
 											<span className='text-[#121212] text-[16px] font-[400]'>
 												{data?.sector.launch_start}
 											</span>
 										</li>
 										<li className='flex items-center justify-between pb-3 mb-3 border-b border-[#F1F1F1] text-[#656565]'>
-											Construction Start :{" "}
+											{t("ConstructionStart")} :{" "}
 											<span className='text-[#121212] text-[16px] font-[400]'>
 												{data?.sector.construction_start}
 											</span>
 										</li>
 										<li className='flex items-center justify-between pb-3 mb-3 border-b border-[#F1F1F1] text-[#656565]'>
-											Construction End Date :{" "}
+											{t("ConstructionEndDate")} :{" "}
 											<span className='text-[#121212] text-[16px] font-[400]'>
 												{data?.sector.construction_end}
 											</span>
 										</li>
 										<li className='flex items-center justify-between text-[#656565]'>
-											Production Start Date :{" "}
+											{t("ProductionStartDate")} :{" "}
+											<span className='text-[#121212] text-[16px] font-[400]'>
+												{data?.sector.production_start}
+											</span>
+										</li>
+									</ul>
+								);
+							},
+						},
+						{
+							id: "tab2",
+							label: t("StageOwners"),
+							content: () => {
+								return (
+									<ul className='list-disc w-full lg:w-2/3'>
+										<li className='flex items-center justify-between pb-3 mb-3 border-b border-[#F1F1F1] text-[#656565]'>
+											<div className='flex items-center gap-3'>
+												<span className='w-14 h-14 rounded-[50%] bg-[#E6F4EC] flex items-center justify-center'>
+													<svg
+														width='28'
+														height='28'
+														viewBox='0 0 28 28'
+														fill='none'
+														xmlns='http://www.w3.org/2000/svg'
+													>
+														<path
+															d='M24.5 26.5417H3.5C3.02167 26.5417 2.625 26.1451 2.625 25.6667C2.625 25.1884 3.02167 24.7917 3.5 24.7917H24.5C24.9783 24.7917 25.375 25.1884 25.375 25.6667C25.375 26.1451 24.9783 26.5417 24.5 26.5417Z'
+															fill='#009444'
+														/>
+														<path
+															d='M24.5 3.20825H3.5C3.02167 3.20825 2.625 2.81159 2.625 2.33325C2.625 1.85492 3.02167 1.45825 3.5 1.45825H24.5C24.9783 1.45825 25.375 1.85492 25.375 2.33325C25.375 2.81159 24.9783 3.20825 24.5 3.20825Z'
+															fill='#009444'
+														/>
+														<path
+															d='M16.6833 17.9199L14.8749 19.7282V7.81655L16.6833 9.62489C16.8583 9.79989 17.0799 9.88155 17.3016 9.88155C17.5233 9.88155 17.7449 9.79989 17.9199 9.62489C18.2583 9.28655 18.2583 8.72655 17.9199 8.38822L14.6183 5.08655C14.2916 4.75989 13.7083 4.75989 13.3816 5.08655L10.0799 8.38822C9.74159 8.72655 9.74159 9.28655 10.0799 9.62489C10.4183 9.96322 10.9783 9.96322 11.3166 9.62489L13.1249 7.81655V19.7282L11.3166 17.9199C10.9783 17.5816 10.4183 17.5816 10.0799 17.9199C9.74159 18.2582 9.74159 18.8182 10.0799 19.1566L13.3816 22.4582C13.5449 22.6216 13.7666 22.7149 13.9999 22.7149C14.2333 22.7149 14.4549 22.6216 14.6183 22.4582L17.9199 19.1566C18.2583 18.8182 18.2583 18.2582 17.9199 17.9199C17.5816 17.5816 17.0216 17.5816 16.6833 17.9199Z'
+															fill='#009444'
+														/>
+													</svg>
+												</span>
+												<div className='flex flex-col'>
+													<span className='text-[#656565] text-[14px] font-[400]'>
+														{t("LandArea")}
+													</span>
+													<p className='text-[#000] text-[18px] font-[500]'>
+														{data?.sector.land_area}{" "}
+														{t_home("meter")}
+													</p>
+												</div>
+											</div>
+											<span className='text-[#121212] text-[16px] font-[400]'>
+												{data?.sector.launch_start}
+											</span>
+										</li>
+										<li className='flex items-center justify-between pb-3 mb-3 border-b border-[#F1F1F1] text-[#656565]'>
+											<div className='flex items-center gap-3'>
+												<span className='w-14 h-14 rounded-[50%] bg-[#E6F4EC] flex items-center justify-center'>
+													<svg
+														width='28'
+														height='28'
+														viewBox='0 0 28 28'
+														fill='none'
+														xmlns='http://www.w3.org/2000/svg'
+													>
+														<path
+															d='M24.5 26.5417H3.5C3.02167 26.5417 2.625 26.1451 2.625 25.6667C2.625 25.1884 3.02167 24.7917 3.5 24.7917H24.5C24.9783 24.7917 25.375 25.1884 25.375 25.6667C25.375 26.1451 24.9783 26.5417 24.5 26.5417Z'
+															fill='#009444'
+														/>
+														<path
+															d='M24.5 3.20825H3.5C3.02167 3.20825 2.625 2.81159 2.625 2.33325C2.625 1.85492 3.02167 1.45825 3.5 1.45825H24.5C24.9783 1.45825 25.375 1.85492 25.375 2.33325C25.375 2.81159 24.9783 3.20825 24.5 3.20825Z'
+															fill='#009444'
+														/>
+														<path
+															d='M16.6833 17.9199L14.8749 19.7282V7.81655L16.6833 9.62489C16.8583 9.79989 17.0799 9.88155 17.3016 9.88155C17.5233 9.88155 17.7449 9.79989 17.9199 9.62489C18.2583 9.28655 18.2583 8.72655 17.9199 8.38822L14.6183 5.08655C14.2916 4.75989 13.7083 4.75989 13.3816 5.08655L10.0799 8.38822C9.74159 8.72655 9.74159 9.28655 10.0799 9.62489C10.4183 9.96322 10.9783 9.96322 11.3166 9.62489L13.1249 7.81655V19.7282L11.3166 17.9199C10.9783 17.5816 10.4183 17.5816 10.0799 17.9199C9.74159 18.2582 9.74159 18.8182 10.0799 19.1566L13.3816 22.4582C13.5449 22.6216 13.7666 22.7149 13.9999 22.7149C14.2333 22.7149 14.4549 22.6216 14.6183 22.4582L17.9199 19.1566C18.2583 18.8182 18.2583 18.2582 17.9199 17.9199C17.5816 17.5816 17.0216 17.5816 16.6833 17.9199Z'
+															fill='#009444'
+														/>
+													</svg>
+												</span>
+												<div className='flex flex-col'>
+													<span className='text-[#656565] text-[14px] font-[400]'>
+														{t("LandArea")}
+													</span>
+													<p className='text-[#000] text-[18px] font-[500]'>
+														{data?.sector.land_area}{" "}
+														{t_home("meter")}
+													</p>
+												</div>
+											</div>
+											<span className='text-[#121212] text-[16px] font-[400]'>
+												{data?.sector.construction_start}
+											</span>
+										</li>
+										<li className='flex items-center justify-between pb-3 mb-3 border-b border-[#F1F1F1] text-[#656565]'>
+											<div className='flex items-center gap-3'>
+												<span className='w-14 h-14 rounded-[50%] bg-[#E6F4EC] flex items-center justify-center'>
+													<svg
+														width='28'
+														height='28'
+														viewBox='0 0 28 28'
+														fill='none'
+														xmlns='http://www.w3.org/2000/svg'
+													>
+														<path
+															d='M24.5 26.5417H3.5C3.02167 26.5417 2.625 26.1451 2.625 25.6667C2.625 25.1884 3.02167 24.7917 3.5 24.7917H24.5C24.9783 24.7917 25.375 25.1884 25.375 25.6667C25.375 26.1451 24.9783 26.5417 24.5 26.5417Z'
+															fill='#009444'
+														/>
+														<path
+															d='M24.5 3.20825H3.5C3.02167 3.20825 2.625 2.81159 2.625 2.33325C2.625 1.85492 3.02167 1.45825 3.5 1.45825H24.5C24.9783 1.45825 25.375 1.85492 25.375 2.33325C25.375 2.81159 24.9783 3.20825 24.5 3.20825Z'
+															fill='#009444'
+														/>
+														<path
+															d='M16.6833 17.9199L14.8749 19.7282V7.81655L16.6833 9.62489C16.8583 9.79989 17.0799 9.88155 17.3016 9.88155C17.5233 9.88155 17.7449 9.79989 17.9199 9.62489C18.2583 9.28655 18.2583 8.72655 17.9199 8.38822L14.6183 5.08655C14.2916 4.75989 13.7083 4.75989 13.3816 5.08655L10.0799 8.38822C9.74159 8.72655 9.74159 9.28655 10.0799 9.62489C10.4183 9.96322 10.9783 9.96322 11.3166 9.62489L13.1249 7.81655V19.7282L11.3166 17.9199C10.9783 17.5816 10.4183 17.5816 10.0799 17.9199C9.74159 18.2582 9.74159 18.8182 10.0799 19.1566L13.3816 22.4582C13.5449 22.6216 13.7666 22.7149 13.9999 22.7149C14.2333 22.7149 14.4549 22.6216 14.6183 22.4582L17.9199 19.1566C18.2583 18.8182 18.2583 18.2582 17.9199 17.9199C17.5816 17.5816 17.0216 17.5816 16.6833 17.9199Z'
+															fill='#009444'
+														/>
+													</svg>
+												</span>
+												<div className='flex flex-col'>
+													<span className='text-[#656565] text-[14px] font-[400]'>
+														{t("LandArea")}
+													</span>
+													<p className='text-[#000] text-[18px] font-[500]'>
+														{data?.sector.land_area}{" "}
+														{t_home("meter")}
+													</p>
+												</div>
+											</div>
+											<span className='text-[#121212] text-[16px] font-[400]'>
+												{data?.sector.construction_end}
+											</span>
+										</li>
+									</ul>
+								);
+							},
+						},
+						{
+							id: "tab3",
+							label: t("CompanyReview"),
+							content: () => {
+								return (
+									<ul className='list-disc w-full lg:w-2/3'>
+										<li className='flex items-center justify-between pb-3 mb-3 border-b border-[#F1F1F1] text-[#656565]'>
+											{t("LaunchStart")} :{" "}
+											<span className='text-[#121212] text-[16px] font-[400]'>
+												{data?.sector.launch_start}
+											</span>
+										</li>
+										<li className='flex items-center justify-between pb-3 mb-3 border-b border-[#F1F1F1] text-[#656565]'>
+											{t("ConstructionStart")} :{" "}
+											<span className='text-[#121212] text-[16px] font-[400]'>
+												{data?.sector.construction_start}
+											</span>
+										</li>
+										<li className='flex items-center justify-between pb-3 mb-3 border-b border-[#F1F1F1] text-[#656565]'>
+											{t("ConstructionEndDate")} :{" "}
+											<span className='text-[#121212] text-[16px] font-[400]'>
+												{data?.sector.construction_end}
+											</span>
+										</li>
+										<li className='flex items-center justify-between text-[#656565]'>
+											{t("ProductionStartDate")} :{" "}
 											<span className='text-[#121212] text-[16px] font-[400]'>
 												{data?.sector.production_start}
 											</span>
@@ -540,11 +701,11 @@ const SectorDetails = ({ sectorId }: Iprops) => {
 						data-aos-delay='0'
 						className='text-[26px] md:text-[40px] text-[#252525] font-[500]'
 					>
-						Related Blogs
+						{t("RelatedBlogs")}
 					</h2>
 				</div>
 
-				<div className='grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8'>
+				<div className='grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8'>
 					{RelatedBlogs?.map((BlogInfo) => (
 						<BlogCard key={BlogInfo.id} blogInfo={BlogInfo} />
 					))}

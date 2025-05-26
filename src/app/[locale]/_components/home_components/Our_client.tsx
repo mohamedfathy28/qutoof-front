@@ -17,6 +17,7 @@ interface IClient {
 	title?: string;
 	content?: string;
 	image?: string;
+	video?: string;
 	created_at: string;
 }
 
@@ -25,8 +26,8 @@ const Our_client = () => {
 	const [currentVideo, setCurrentVideo] = useState<string>("");
 
 	const handleOpenModal = (data: IClient) => {
-		setIsOpen(true);
-		setCurrentVideo(data.image || "");
+		if (data.video) setIsOpen(true);
+		setCurrentVideo(data.video || "");
 	};
 
 	const sliderRef1 = useRef<Slider | null>(null);
@@ -45,6 +46,8 @@ const Our_client = () => {
 		slidesToShow: 3,
 		slidesToScroll: 1,
 		centerPadding: "50px",
+		autoplay: true,
+		autoplaySpeed: 5000,
 		responsive: [
 			{
 				breakpoint: 1024,
@@ -133,7 +136,7 @@ const Our_client = () => {
 										alt='our clients'
 										className='w-full h-auto'
 									/>
-									<div className='absolute z-8 top-0 left-0 w-full h-full bg-gradient-to-t from-[#000000] to-[#D9D9D900] p-8 flex flex-col justify-end items-start'>
+									<div className='absolute z-8 top-0 left-0 w-full h-full bg-gradient-to-t from-[#000000bd] to-[#D9D9D900] p-8 flex flex-col justify-end items-start'>
 										<button
 											className='text-black w-70 h-70 mx-auto mb-20'
 											onClick={() => handleOpenModal(data)}
@@ -199,28 +202,30 @@ const Our_client = () => {
 				</div>
 			</div>
 
-			<Modal
-				isOpen={isOpen}
-				onClose={() => {
-					setIsOpen(false);
-				}}
-			>
-				<ReactPlayer
-					url={currentVideo}
-					width='100%'
-					height='100%'
-					progressInterval={1000}
-					config={{
-						file: {
-							attributes: {
-								class: "w-full h-full object-cover",
-							},
-						},
+			{currentVideo && (
+				<Modal
+					isOpen={isOpen}
+					onClose={() => {
+						setIsOpen(false);
 					}}
-					controls={true}
-					playing={true}
-				/>
-			</Modal>
+				>
+					<ReactPlayer
+						url={currentVideo}
+						width='100%'
+						height='100%'
+						progressInterval={1000}
+						config={{
+							file: {
+								attributes: {
+									class: "w-full h-full object-cover",
+								},
+							},
+						}}
+						controls={true}
+						playing={true}
+					/>
+				</Modal>
+			)}
 		</>
 	);
 };
