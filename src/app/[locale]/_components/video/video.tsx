@@ -1,7 +1,6 @@
 "use client";
 import React, { useState, useCallback, useRef } from "react";
 import dynamic from "next/dynamic";
-import { FaPause, FaPlay } from "react-icons/fa";
 import { useTranslations } from "next-intl";
 
 // Dynamically import ReactPlayer to avoid SSR issues

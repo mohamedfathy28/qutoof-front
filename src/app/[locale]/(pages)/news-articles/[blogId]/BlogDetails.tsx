@@ -5,7 +5,6 @@ import panner from "@/media/plog-details-img.png";
 import Image from "next/image";
 import BlogCard from "../../../_components/articleCard/BlogCard";
 import { useTranslations } from "next-intl";
-import Link from "next/link";
 
 interface IProps {
 	blogId: number;
