@@ -88,9 +88,9 @@
 		"SendOffer": "إرسال عرض",
 		"SendingOffer": "جارٍ إرسال العرض...",
 		"Cancel": "إلغاء",
-    "ourProjects": "مشاريعنا",
-    "ourSectors": "قطاعاتنا",
-    "CheckOurLatestSectors": "ألقِ نظرة على آخر قطاعاتنا",
+		"ourProjects": "مشاريعنا",
+		"ourSectors": "قطاعاتنا",
+		"CheckOurLatestSectors": "ألقِ نظرة على آخر قطاعاتنا",
 		"CheckOurLatestProjects": "ألقِ نظرة على آخر مشاريعنا"
 	},
 	"auth": {

@@ -54,7 +54,6 @@ const ContactUsPage: React.FC = () => {
 			);
 
 			const data = await response.json();
-			console.log(data);
 
 			if (!response.ok) {
 				throw new Error("Failed to send message");

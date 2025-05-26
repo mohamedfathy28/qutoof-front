@@ -40,10 +40,8 @@ const Home = () => {
 				<VideoPlayer
 					url={Configrations?.home_videos || "#"}
 					autoPlay={false}
-					thumbnail={
-						"/fallback-image.jpg"
-					}
-					height="616px"
+					thumbnail={"/fallback-image.jpg"}
+					height='616px'
 				/>
 			</div>
 			{/*<OurValues />*/}

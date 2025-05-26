@@ -24,7 +24,6 @@ interface IBlog {
 const BlogDetails = ({ blogId }: IProps) => {
 	const [data, setData] = useState<IBlog>();
 	const [Blogs, setBlogs] = useState<IBlog[]>();
-
 	const t = useTranslations("HomePage");
 
 	useEffect(() => {

@@ -82,7 +82,6 @@ const Our_client = () => {
 				);
 				const result = await response.json();
 				setData(result.data);
-				console.log(result.data[0]);
 			} catch (error) {
 				console.error("Error fetching data:", error);
 			}

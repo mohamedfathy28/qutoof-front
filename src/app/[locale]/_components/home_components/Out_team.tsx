@@ -58,7 +58,6 @@ const Out_team = () => {
 				});
 				const result = await response.json();
 				setData(result.data);
-				console.log(result.data[0]);
 				setTotalSlides(result.data.length); // Set total slides count
 			} catch (error) {
 				console.error("Error fetching data:", error);

@@ -18,7 +18,6 @@ export function DirectionProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     // Get saved direction from localStorage on mount
     const savedDirection = localStorage.getItem('direction') as Direction;
-    console.log(savedDirection);
     
     if (savedDirection) {
       setDirection(savedDirection);
