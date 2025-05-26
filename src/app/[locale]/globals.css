@@ -1,181 +1,180 @@
-@import url('https://fonts.googleapis.com/css2?family=Mansalva&family=Outfit:wght@100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Mansalva&family=Outfit:wght@300..900&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 @layer base {
-  :root {
-    --radius: 0.5rem
-  }
+	:root {
+		--radius: 0.5rem;
+	}
 }
 
 @layer utilities {
-  .custom-scrollbar::-webkit-scrollbar {
-    width: 2px;
-  }
-  
-  .custom-scrollbar::-webkit-scrollbar-track {
-    background: #fff;
-    border-radius: 5px;
-  }
-  
-  .custom-scrollbar::-webkit-scrollbar-thumb {
-    background: #888;
-    border-radius: 5px;
-  }
-  
-  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    background: #555;
-  }
+	.custom-scrollbar::-webkit-scrollbar {
+		width: 2px;
+	}
+
+	.custom-scrollbar::-webkit-scrollbar-track {
+		background: #fff;
+		border-radius: 5px;
+	}
+
+	.custom-scrollbar::-webkit-scrollbar-thumb {
+		background: #888;
+		border-radius: 5px;
+	}
+
+	.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+		background: #555;
+	}
 }
 
-*{
-  font-family: "Outfit", serif;
+html {
+	font-family: "Outfit", serif;
 }
 
-body{
-  background: #fff;
-  overflow-x: hidden;
+body {
+	background: #fff;
+	overflow-x: hidden;
 }
 
-input{
-  outline: 0;
+input {
+	outline: 0;
 }
 
-.slick-track{
-  display: flex !important;
-  gap: 2rem;
+.slick-track {
+	display: flex !important;
+	gap: 2rem;
 }
 
-.ourteam-slider .slick-track , .SectorImgsPreview .slick-track{
-  gap:0;
+.ourteam-slider .slick-track,
+.SectorImgsPreview .slick-track {
+	gap: 0;
 }
 
-
-.iti__tel-input{
-  width: 100%;
-  border-radius: 8px;
-  border: 1px solid rgb(236 236 238);
-  padding-left: .75rem;
-  padding-right: .75rem;
-  padding-top: .5rem;
-  padding-bottom: .5rem;
-  font-size: 16px;
-  outline: none;
+.iti__tel-input {
+	width: 100%;
+	border-radius: 8px;
+	border: 1px solid rgb(236 236 238);
+	padding-left: 0.75rem;
+	padding-right: 0.75rem;
+	padding-top: 0.5rem;
+	padding-bottom: 0.5rem;
+	font-size: 16px;
+	outline: none;
 }
-/* From Uiverse.io by Subaashbala */ 
+/* From Uiverse.io by Subaashbala */
 /* Prior to using this loader, please ensure that you have set a background image or background color, as the text is transparent and not designed with a solid color. */
 .loader {
-  --ANIMATION-DELAY-MULTIPLIER: 70ms;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
+	--ANIMATION-DELAY-MULTIPLIER: 70ms;
+	padding: 0;
+	margin: 0;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	overflow: hidden;
 }
 .loader span {
-  padding: 0;
-  margin: 0;
-  letter-spacing: -5rem;
-  animation-delay: 0s;
-  transform: translateY(4rem);
-  animation: hideAndSeek 1s alternate infinite cubic-bezier(0.86, 0, 0.07, 1);
+	padding: 0;
+	margin: 0;
+	letter-spacing: -5rem;
+	animation-delay: 0s;
+	transform: translateY(4rem);
+	animation: hideAndSeek 1s alternate infinite cubic-bezier(0.86, 0, 0.07, 1);
 }
 .loader .l {
-  animation-delay: calc(var(--ANIMATION-DELAY-MULTIPLIER) * 0);
+	animation-delay: calc(var(--ANIMATION-DELAY-MULTIPLIER) * 0);
 }
 .loader .o {
-  animation-delay: calc(var(--ANIMATION-DELAY-MULTIPLIER) * 1);
+	animation-delay: calc(var(--ANIMATION-DELAY-MULTIPLIER) * 1);
 }
 .loader .a {
-  animation-delay: calc(var(--ANIMATION-DELAY-MULTIPLIER) * 2);
+	animation-delay: calc(var(--ANIMATION-DELAY-MULTIPLIER) * 2);
 }
 .loader .d {
-  animation-delay: calc(var(--ANIMATION-DELAY-MULTIPLIER) * 3);
+	animation-delay: calc(var(--ANIMATION-DELAY-MULTIPLIER) * 3);
 }
 .loader .ispan {
-  animation-delay: calc(var(--ANIMATION-DELAY-MULTIPLIER) * 4);
+	animation-delay: calc(var(--ANIMATION-DELAY-MULTIPLIER) * 4);
 }
 .loader .n {
-  animation-delay: calc(var(--ANIMATION-DELAY-MULTIPLIER) * 5);
+	animation-delay: calc(var(--ANIMATION-DELAY-MULTIPLIER) * 5);
 }
 .loader .g {
-  animation-delay: calc(var(--ANIMATION-DELAY-MULTIPLIER) * 6);
+	animation-delay: calc(var(--ANIMATION-DELAY-MULTIPLIER) * 6);
 }
 .letter {
-  width: fit-content;
-  height: 3rem;
+	width: fit-content;
+	height: 3rem;
 }
 .i {
-  margin-inline: 5px;
+	margin-inline: 5px;
 }
 @keyframes hideAndSeek {
-  0% {
-    transform: translateY(4rem);
-  }
-  100% {
-    transform: translateY(0rem);
-  }
+	0% {
+		transform: translateY(4rem);
+	}
+	100% {
+		transform: translateY(0rem);
+	}
 }
 
-
-/* From Uiverse.io by G4b413l */ 
+/* From Uiverse.io by G4b413l */
 .pinwheel {
-  --uib-size: 45px;
-  --uib-speed: 0.8s;
-  --uib-color: #009444;
-  --uib-line-weight: 4px;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: var(--uib-size);
-  width: var(--uib-size);
+	--uib-size: 45px;
+	--uib-speed: 0.8s;
+	--uib-color: #009444;
+	--uib-line-weight: 4px;
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: var(--uib-size);
+	width: var(--uib-size);
 }
 
 .pinwheel__line {
-  position: absolute;
-  top: calc(50% - var(--uib-line-weight) / 2);
-  left: 0;
-  height: var(--uib-line-weight);
-  width: 100%;
-  border-radius: calc(var(--uib-line-weight) / 2);
-  background-color: var(--uib-color);
-  animation: rotate81232 var(--uib-speed) ease-in-out infinite;
+	position: absolute;
+	top: calc(50% - var(--uib-line-weight) / 2);
+	left: 0;
+	height: var(--uib-line-weight);
+	width: 100%;
+	border-radius: calc(var(--uib-line-weight) / 2);
+	background-color: var(--uib-color);
+	animation: rotate81232 var(--uib-speed) ease-in-out infinite;
 }
 
 .pinwheel__line:nth-child(2) {
-  animation-delay: calc(var(--uib-speed) * 0.075);
-  opacity: 0.8;
+	animation-delay: calc(var(--uib-speed) * 0.075);
+	opacity: 0.8;
 }
 
 .pinwheel__line:nth-child(3) {
-  animation-delay: calc(var(--uib-speed) * 0.15);
-  opacity: 0.6;
+	animation-delay: calc(var(--uib-speed) * 0.15);
+	opacity: 0.6;
 }
 
 .pinwheel__line:nth-child(4) {
-  animation-delay: calc(var(--uib-speed) * 0.225);
-  opacity: 0.4;
+	animation-delay: calc(var(--uib-speed) * 0.225);
+	opacity: 0.4;
 }
 
 .pinwheel__line:nth-child(5) {
-  animation-delay: calc(var(--uib-speed) * 0.3);
-  opacity: 0.2;
+	animation-delay: calc(var(--uib-speed) * 0.3);
+	opacity: 0.2;
 }
 
 .pinwheel__line:nth-child(6) {
-  animation-delay: calc(var(--uib-speed) * 0.375);
-  opacity: 0.1;
+	animation-delay: calc(var(--uib-speed) * 0.375);
+	opacity: 0.1;
 }
 
 @keyframes rotate81232 {
-  0% {
-    transform: rotate(0deg);
-  }
+	0% {
+		transform: rotate(0deg);
+	}
 
-  100% {
-    transform: rotate(180deg);
-  }
+	100% {
+		transform: rotate(180deg);
+	}
 }
