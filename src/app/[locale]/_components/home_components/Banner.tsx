@@ -31,7 +31,7 @@ const Banner = () => {
 					}
 				);
 				const result = await response.json();
-				setData(result.data[0]);
+				setData(result.data);
 			} catch (error) {
 				console.error("Error fetching data:", error);
 			}
