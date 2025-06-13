@@ -34,6 +34,7 @@ interface ProfileInfo {
 	emergency_number: string;
 	bank_name: string;
 	bank_account_number: string;
+	iban_number: string;
 	nationality_id: string;
 	isntapay_account: string;
 	national_id: string;
@@ -91,6 +92,7 @@ const RenderProfileInfo = () => {
 		emergency_number: Yup.string().nullable(),
 		bank_name: Yup.string(),
 		bank_account_number: Yup.string(),
+		iban_number: Yup.string(),
 		nationality_id: Yup.string(),
 		isntapay_account: Yup.string().nullable(),
 		national_id: Yup.string(),
@@ -482,6 +484,26 @@ const RenderProfileInfo = () => {
 				{formik.errors.bank_account_number && (
 					<p className='text-red-500 text-sm'>
 						{formik.errors.bank_account_number}
+					</p>
+				)}
+			</div>
+
+			<div className='space-y-1 mb-4'>
+				<label
+					htmlFor='iban_number'
+					className='text-[#656C77] text-[16px] leading-[24px] font-[500]'
+				>
+					{t("iban_number_label")}
+				</label>
+				<input
+					type='text'
+					id='iban_number'
+					{...formik.getFieldProps("iban_number")}
+					className='w-full px-3 py-2 border border-[#ECECEE] bg-white rounded-[8px] outline-none text-[16px]'
+				/>
+				{formik.errors.iban_number && (
+					<p className='text-red-500 text-sm'>
+						{formik.errors.iban_number}
 					</p>
 				)}
 			</div>

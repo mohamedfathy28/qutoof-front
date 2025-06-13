@@ -58,14 +58,10 @@ const RenderwithdrawMoney = () => {
 
 	const formik = useFormik({
 		initialValues: {
-			address: "",
 			phone_number: "",
 			amount: "",
 		},
 		validationSchema: Yup.object({
-			address: Yup.string()
-				.email(t("address_invalid"))
-				.required(t("address_required")),
 			phone_number: Yup.number().required(t("phone_number_required")),
 			amount: Yup.number()
 				.required(t("amount_required"))
@@ -82,7 +78,6 @@ const RenderwithdrawMoney = () => {
 			);
 
 			const formData = new FormData();
-			formData.append("address", values.address);
 			formData.append("phone_number", values.phone_number);
 			formData.append("amount", values.amount.toString());
 
@@ -119,27 +114,6 @@ const RenderwithdrawMoney = () => {
 				{data?.wallet_balance}{" "}
 				<span className=' text-[16px]'>{t("currency")}</span>
 			</h4>
-			<div className='space-y-1 mb-4'>
-				<label
-					htmlFor='address'
-					className='text-[#656C77] text-[16px] leading-[24px] font-[500]'
-				>
-					{t("address_label")}
-				</label>
-				<input
-					type='text'
-					name='address'
-					id='address'
-					onChange={formik.handleChange}
-					onBlur={formik.handleBlur}
-					value={formik.values.address}
-					placeholder={t("address_placeholder")}
-					className='w-full px-3 py-2 border border-[#ECECEE] bg-white rounded-[8px] outline-none text-[16px]'
-				/>
-				{formik.errors.address ? (
-					<div className='text-red-500'>{formik.errors.address}</div>
-				) : null}
-			</div>
 			<div className='grid grid-cols-1 lg:grid-cols-2 gap-4 pb-6 mb-6 border-b border-[#F1F1F1]'>
 				<div className='space-y-1'>
 					<label
