@@ -15,19 +15,37 @@ import Blogs from "./_components/home_components/Blogs";
 import OurMarket from "./_components/home_components/Our_Market";
 import { useConfigrationsContext } from "./_contexts/MainConfigContext";
 
+
+import { useState } from "react";
+
 const Home = () => {
-	const { Configrations } = useConfigrationsContext(); // Access Configrations
+	const { Configrations } = useConfigrationsContext();
+	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
 		AOS.init({
 			disable: "mobile",
-			once: true, // Whether animation should happen only once
-			mirror: false, // Whether elements should animate out on scroll
+			once: true,
+			mirror: false,
 		});
 	}, []);
 
+	// Hide spinner when Configrations is loaded and DOM is ready
+	useEffect(() => {
+		if (Configrations) {
+			// Wait for next tick to ensure DOM is painted
+			const timeout = setTimeout(() => setLoading(false), 300);
+			return () => clearTimeout(timeout);
+		}
+	}, [Configrations]);
+
 	return (
 		<>
+			{loading && (
+				<div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', background: '#fff', zIndex: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'opacity 0.3s' }}>
+					<div className="animate-spin rounded-full h-20 w-20 border-t-4 border-b-4 border-blue-500"></div>
+				</div>
+			)}
 			<Banner />
 			<About />
 			<Blogs />

@@ -96,7 +96,20 @@
 		"CheckOurLatestProjects": "ألقِ نظرة على آخر مشاريعنا",
 		"ProjectSchedule": "جدولة المشروع",
 		"StageOwners": "مالكو المرحلة",
-		"CompanyReview": "تقييم الشركة"
+		"CompanyReview": "تقييم الشركة",
+		"Username": "اسم المستخدم",
+		"NumberOfShares": "عدد الأسهم",
+		"PreviousValue": "القيمة السابقة",
+		"NewValue": "القيمة الجديده",
+		"Description": "الوصف",
+		"NoRatesFound": "لا توجد بيانات متاحة لهذا القطاع.",
+		"SectorProfit": "أرباح القطاع",
+		"DateFrom": "التاريخ من",
+		"DateTo": "التاريخ إلى",
+		"Profit_sector": "قيمه ارباح السهم ",
+		"Note": "ملاحظات",
+		"NoProfitsFound": "لا توجد أرباح متاحة لهذا القطاع.",
+		"NoOwnersFound": "لا توجد بيانات متاحة لمالكي هذا القطاع."
 	},
 	"auth": {
 		"Welcome_to_Quttouf": "مرحبًا بك في قطوف",
@@ -274,7 +287,13 @@
 			"Transitions": "المعاملات",
 			"no_records": "لم يتم إضافة أي سجلات بعد.",
 			"Deposit_Money": "إيداع الأموال",
-			"withdraw_Money": "سحب الأموال"
+			"withdraw_Money": "سحب الأموال",
+			"total_profit": "إجمالي الأرباح",
+			"sector": "القطاع",
+			"date_from": "التاريخ من",
+			"date_to": "التاريخ إلى",
+			"profit": "قيمه الربح السهم",
+			"note": "ملاحظات"
 		}
 	}
 }

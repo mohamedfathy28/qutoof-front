@@ -66,7 +66,24 @@ interface IMarket {
 		production_start: string;
 		media: string[];
 		created_at: string;
+		users: Array<{
+			username: string;
+			numeber_of_shares: number;
+		}>,
 	};
+	sectorsProfit: Array<{
+		id: number;
+		date_from: string;
+		date_to: string;
+		profit: number;
+		note: string;
+	}>;
+	RateSectors: Array<{
+		id: number;
+		previous_value: number;
+		new_value: number;
+		description: string;
+	}>;
 	user: {
 		id: number;
 		image: string;
@@ -528,7 +545,7 @@ const SectorDetails = ({ sectorId }: Iprops) => {
 											</span>
 										</li>
 									</ul>
-								);
+								)
 							},
 						},
 						{
@@ -536,122 +553,30 @@ const SectorDetails = ({ sectorId }: Iprops) => {
 							label: t("StageOwners"),
 							content: () => {
 								return (
-									<ul className='list-disc w-full lg:w-2/3'>
-										<li className='flex items-center justify-between pb-3 mb-3 border-b border-[#F1F1F1] text-[#656565]'>
-											<div className='flex items-center gap-3'>
-												<span className='w-14 h-14 rounded-[50%] bg-[#E6F4EC] flex items-center justify-center'>
-													<svg
-														width='28'
-														height='28'
-														viewBox='0 0 28 28'
-														fill='none'
-														xmlns='http://www.w3.org/2000/svg'
-													>
-														<path
-															d='M24.5 26.5417H3.5C3.02167 26.5417 2.625 26.1451 2.625 25.6667C2.625 25.1884 3.02167 24.7917 3.5 24.7917H24.5C24.9783 24.7917 25.375 25.1884 25.375 25.6667C25.375 26.1451 24.9783 26.5417 24.5 26.5417Z'
-															fill='#009444'
-														/>
-														<path
-															d='M24.5 3.20825H3.5C3.02167 3.20825 2.625 2.81159 2.625 2.33325C2.625 1.85492 3.02167 1.45825 3.5 1.45825H24.5C24.9783 1.45825 25.375 1.85492 25.375 2.33325C25.375 2.81159 24.9783 3.20825 24.5 3.20825Z'
-															fill='#009444'
-														/>
-														<path
-															d='M16.6833 17.9199L14.8749 19.7282V7.81655L16.6833 9.62489C16.8583 9.79989 17.0799 9.88155 17.3016 9.88155C17.5233 9.88155 17.7449 9.79989 17.9199 9.62489C18.2583 9.28655 18.2583 8.72655 17.9199 8.38822L14.6183 5.08655C14.2916 4.75989 13.7083 4.75989 13.3816 5.08655L10.0799 8.38822C9.74159 8.72655 9.74159 9.28655 10.0799 9.62489C10.4183 9.96322 10.9783 9.96322 11.3166 9.62489L13.1249 7.81655V19.7282L11.3166 17.9199C10.9783 17.5816 10.4183 17.5816 10.0799 17.9199C9.74159 18.2582 9.74159 18.8182 10.0799 19.1566L13.3816 22.4582C13.5449 22.6216 13.7666 22.7149 13.9999 22.7149C14.2333 22.7149 14.4549 22.6216 14.6183 22.4582L17.9199 19.1566C18.2583 18.8182 18.2583 18.2582 17.9199 17.9199C17.5816 17.5816 17.0216 17.5816 16.6833 17.9199Z'
-															fill='#009444'
-														/>
-													</svg>
-												</span>
-												<div className='flex flex-col'>
-													<span className='text-[#656565] text-[14px] font-[400]'>
-														{t("LandArea")}
-													</span>
-													<p className='text-[#000] text-[18px] font-[500]'>
-														{data?.sector.land_area}{" "}
-														{t_home("meter")}
-													</p>
-												</div>
-											</div>
-											<span className='text-[#121212] text-[16px] font-[400]'>
-												{data?.sector.launch_start}
-											</span>
-										</li>
-										<li className='flex items-center justify-between pb-3 mb-3 border-b border-[#F1F1F1] text-[#656565]'>
-											<div className='flex items-center gap-3'>
-												<span className='w-14 h-14 rounded-[50%] bg-[#E6F4EC] flex items-center justify-center'>
-													<svg
-														width='28'
-														height='28'
-														viewBox='0 0 28 28'
-														fill='none'
-														xmlns='http://www.w3.org/2000/svg'
-													>
-														<path
-															d='M24.5 26.5417H3.5C3.02167 26.5417 2.625 26.1451 2.625 25.6667C2.625 25.1884 3.02167 24.7917 3.5 24.7917H24.5C24.9783 24.7917 25.375 25.1884 25.375 25.6667C25.375 26.1451 24.9783 26.5417 24.5 26.5417Z'
-															fill='#009444'
-														/>
-														<path
-															d='M24.5 3.20825H3.5C3.02167 3.20825 2.625 2.81159 2.625 2.33325C2.625 1.85492 3.02167 1.45825 3.5 1.45825H24.5C24.9783 1.45825 25.375 1.85492 25.375 2.33325C25.375 2.81159 24.9783 3.20825 24.5 3.20825Z'
-															fill='#009444'
-														/>
-														<path
-															d='M16.6833 17.9199L14.8749 19.7282V7.81655L16.6833 9.62489C16.8583 9.79989 17.0799 9.88155 17.3016 9.88155C17.5233 9.88155 17.7449 9.79989 17.9199 9.62489C18.2583 9.28655 18.2583 8.72655 17.9199 8.38822L14.6183 5.08655C14.2916 4.75989 13.7083 4.75989 13.3816 5.08655L10.0799 8.38822C9.74159 8.72655 9.74159 9.28655 10.0799 9.62489C10.4183 9.96322 10.9783 9.96322 11.3166 9.62489L13.1249 7.81655V19.7282L11.3166 17.9199C10.9783 17.5816 10.4183 17.5816 10.0799 17.9199C9.74159 18.2582 9.74159 18.8182 10.0799 19.1566L13.3816 22.4582C13.5449 22.6216 13.7666 22.7149 13.9999 22.7149C14.2333 22.7149 14.4549 22.6216 14.6183 22.4582L17.9199 19.1566C18.2583 18.8182 18.2583 18.2582 17.9199 17.9199C17.5816 17.5816 17.0216 17.5816 16.6833 17.9199Z'
-															fill='#009444'
-														/>
-													</svg>
-												</span>
-												<div className='flex flex-col'>
-													<span className='text-[#656565] text-[14px] font-[400]'>
-														{t("LandArea")}
-													</span>
-													<p className='text-[#000] text-[18px] font-[500]'>
-														{data?.sector.land_area}{" "}
-														{t_home("meter")}
-													</p>
-												</div>
-											</div>
-											<span className='text-[#121212] text-[16px] font-[400]'>
-												{data?.sector.construction_start}
-											</span>
-										</li>
-										<li className='flex items-center justify-between pb-3 mb-3 border-b border-[#F1F1F1] text-[#656565]'>
-											<div className='flex items-center gap-3'>
-												<span className='w-14 h-14 rounded-[50%] bg-[#E6F4EC] flex items-center justify-center'>
-													<svg
-														width='28'
-														height='28'
-														viewBox='0 0 28 28'
-														fill='none'
-														xmlns='http://www.w3.org/2000/svg'
-													>
-														<path
-															d='M24.5 26.5417H3.5C3.02167 26.5417 2.625 26.1451 2.625 25.6667C2.625 25.1884 3.02167 24.7917 3.5 24.7917H24.5C24.9783 24.7917 25.375 25.1884 25.375 25.6667C25.375 26.1451 24.9783 26.5417 24.5 26.5417Z'
-															fill='#009444'
-														/>
-														<path
-															d='M24.5 3.20825H3.5C3.02167 3.20825 2.625 2.81159 2.625 2.33325C2.625 1.85492 3.02167 1.45825 3.5 1.45825H24.5C24.9783 1.45825 25.375 1.85492 25.375 2.33325C25.375 2.81159 24.9783 3.20825 24.5 3.20825Z'
-															fill='#009444'
-														/>
-														<path
-															d='M16.6833 17.9199L14.8749 19.7282V7.81655L16.6833 9.62489C16.8583 9.79989 17.0799 9.88155 17.3016 9.88155C17.5233 9.88155 17.7449 9.79989 17.9199 9.62489C18.2583 9.28655 18.2583 8.72655 17.9199 8.38822L14.6183 5.08655C14.2916 4.75989 13.7083 4.75989 13.3816 5.08655L10.0799 8.38822C9.74159 8.72655 9.74159 9.28655 10.0799 9.62489C10.4183 9.96322 10.9783 9.96322 11.3166 9.62489L13.1249 7.81655V19.7282L11.3166 17.9199C10.9783 17.5816 10.4183 17.5816 10.0799 17.9199C9.74159 18.2582 9.74159 18.8182 10.0799 19.1566L13.3816 22.4582C13.5449 22.6216 13.7666 22.7149 13.9999 22.7149C14.2333 22.7149 14.4549 22.6216 14.6183 22.4582L17.9199 19.1566C18.2583 18.8182 18.2583 18.2582 17.9199 17.9199C17.5816 17.5816 17.0216 17.5816 16.6833 17.9199Z'
-															fill='#009444'
-														/>
-													</svg>
-												</span>
-												<div className='flex flex-col'>
-													<span className='text-[#656565] text-[14px] font-[400]'>
-														{t("LandArea")}
-													</span>
-													<p className='text-[#000] text-[18px] font-[500]'>
-														{data?.sector.land_area}{" "}
-														{t_home("meter")}
-													</p>
-												</div>
-											</div>
-											<span className='text-[#121212] text-[16px] font-[400]'>
-												{data?.sector.construction_end}
-											</span>
-										</li>
-									</ul>
+									<div className="w-full lg:w-2/3">
+										<table className="min-w-full border border-[#F1F1F1] rounded-lg overflow-hidden">
+											<thead className="bg-[#F4F8ED]">
+												<tr>
+													<th className="px-4 py-2 text-right text-[#656565] text-[14px] font-[500]">{t("Username")}</th>
+													<th className="px-4 py-2 text-left text-[#656565] text-[14px] font-[500]">{t("NumberOfShares")}</th>
+												</tr>
+											</thead>
+											<tbody>
+												{data?.sector.users && data.sector.users.length > 0 ? (
+													data.sector.users.map((user, idx) => (
+														<tr key={idx} className="border-t border-[#F1F1F1]">
+															<td className="px-4 text-right py-2 text-[#121212] text-[16px] font-[400]">{user.username}</td>
+															<td className="px-4 text-left py-2 text-[#121212] text-[16px] font-[400]">{user.numeber_of_shares}</td>
+														</tr>
+													))
+												) : (
+													<tr>
+														<td colSpan={2} className="px-4 py-4 text-center text-[#888]">{t("NoOwnersFound")}</td>
+													</tr>
+												)}
+											</tbody>
+										</table>
+									</div>
 								);
 							},
 						},
@@ -660,32 +585,68 @@ const SectorDetails = ({ sectorId }: Iprops) => {
 							label: t("CompanyReview"),
 							content: () => {
 								return (
-									<ul className='list-disc w-full lg:w-2/3'>
-										<li className='flex items-center justify-between pb-3 mb-3 border-b border-[#F1F1F1] text-[#656565]'>
-											{t("LaunchStart")} :{" "}
-											<span className='text-[#121212] text-[16px] font-[400]'>
-												{data?.sector.launch_start}
-											</span>
-										</li>
-										<li className='flex items-center justify-between pb-3 mb-3 border-b border-[#F1F1F1] text-[#656565]'>
-											{t("ConstructionStart")} :{" "}
-											<span className='text-[#121212] text-[16px] font-[400]'>
-												{data?.sector.construction_start}
-											</span>
-										</li>
-										<li className='flex items-center justify-between pb-3 mb-3 border-b border-[#F1F1F1] text-[#656565]'>
-											{t("ConstructionEndDate")} :{" "}
-											<span className='text-[#121212] text-[16px] font-[400]'>
-												{data?.sector.construction_end}
-											</span>
-										</li>
-										<li className='flex items-center justify-between text-[#656565]'>
-											{t("ProductionStartDate")} :{" "}
-											<span className='text-[#121212] text-[16px] font-[400]'>
-												{data?.sector.production_start}
-											</span>
-										</li>
-									</ul>
+									<div className="w-full lg:w-2/3">
+										<table className="min-w-full border border-[#F1F1F1] rounded-lg overflow-hidden">
+											<thead className="bg-[#F4F8ED]">
+												<tr>
+													<th className="px-4 py-2 text-right text-[#656565] text-[14px] font-[500]">{t("PreviousValue")}</th>
+													<th className="px-4 py-2 text-right text-[#656565] text-[14px] font-[500]">{t("NewValue")}</th>
+													<th className="px-4 py-2 text-right text-[#656565] text-[14px] font-[500]">{t("Description")}</th>
+												</tr>
+											</thead>
+											<tbody>
+												{data?.RateSectors && data.RateSectors.length > 0 ? (
+													data.RateSectors.map((rate, idx) => (
+														<tr key={idx} className="border-t border-[#F1F1F1]">
+															<td className="px-4 py-2 text-right text-[#121212] text-[16px] font-[400]">{rate.previous_value}</td>
+															<td className="px-4 py-2 text-right text-[#121212] text-[16px] font-[400]">{rate.new_value}</td>
+															<td className="px-4 py-2 text-right text-[#121212] text-[16px] font-[400]">{rate.description}</td>
+														</tr>
+													))
+												) : (
+													<tr>
+														<td colSpan={3} className="px-4 py-4 text-center text-[#888]">{t("NoRatesFound")}</td>
+													</tr>
+												)}
+											</tbody>
+										</table>
+									</div>
+								);
+							},
+						},
+						{
+							id: "tab4",
+							label: t("SectorProfit"),
+							content: () => {
+								return (
+									<div className="w-full lg:w-2/3">
+										<table className="min-w-full border border-[#F1F1F1] rounded-lg overflow-hidden">
+											<thead className="bg-[#F4F8ED]">
+												<tr>
+													<th className="px-4 py-2 text-right text-[#656565] text-[14px] font-[500]">{t("DateFrom")}</th>
+													<th className="px-4 py-2 text-right text-[#656565] text-[14px] font-[500]">{t("DateTo")}</th>
+													<th className="px-4 py-2 text-right text-[#656565] text-[14px] font-[500]">{t("Profit_sector")}</th>
+													<th className="px-4 py-2 text-right text-[#656565] text-[14px] font-[500]">{t("Note")}</th>
+												</tr>
+											</thead>
+											<tbody>
+												{data?.sectorsProfit && data.sectorsProfit.length > 0 ? (
+													data.sectorsProfit.map((profit, idx) => (
+														<tr key={idx} className="border-t border-[#F1F1F1]">
+															<td className="px-4 py-2 text-right text-[#121212] text-[16px] font-[400]">{profit.date_from}</td>
+															<td className="px-4 py-2 text-right text-[#121212] text-[16px] font-[400]">{profit.date_to}</td>
+															<td className="px-4 py-2 text-right text-[#121212] text-[16px] font-[400]">{profit.profit}</td>
+															<td className="px-4 py-2 text-right text-[#121212] text-[16px] font-[400]">{profit.note}</td>
+														</tr>
+													))
+												) : (
+													<tr>
+														<td colSpan={4} className="px-4 py-4 text-center text-[#888]">{t("NoProfitsFound")}</td>
+													</tr>
+												)}
+											</tbody>
+										</table>
+									</div>
 								);
 							},
 						},

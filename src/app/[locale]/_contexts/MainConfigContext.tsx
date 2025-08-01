@@ -42,8 +42,8 @@ export const ConfigrationsContextProvider = ({ children }: { children: ReactNode
         const result = await response.json();
         if (result?.data && Array.isArray(result.data)) {
           const configObject = result.data.reduce(
-              (acc: Partial<IConfigrations>, item: Partial<IConfigrations>) => ({ ...acc, ...item }),
-              {}
+            (acc: Partial<IConfigrations>, item: Partial<IConfigrations>) => ({ ...acc, ...item }),
+            {}
           ) as IConfigrations;
           setConfigrations(configObject);
         } else {

@@ -199,9 +199,8 @@ const RenderPurchaseRequests = () => {
 									</p>
 								</div>
 								<a
-									href={`${
-										ele.user.country_code + ele.user.whatsapp_number
-									}`}
+									href={`${ele.user.country_code + ele.user.whatsapp_number
+										}`}
 									className='flex items-center justify-center w-12 h-12 rounded-[50%] bg-[#E2F7E5]'
 								>
 									<IoLogoWhatsapp className='text-[24px] text-[#47C756]' />

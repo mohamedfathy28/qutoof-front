@@ -96,7 +96,21 @@
 		"CheckOurLatestProjects": "Check our latest Projects",
 		"ProjectSchedule": "Project Schedule",
 		"StageOwners": "Stage Owners",
-		"CompanyReview": "Company Review"
+		"CompanyReview": "Company Review",
+		"Username": "Username",
+		"NumberOfShares": "Number of Shares",
+		"PreviousValue": "Previous Value",
+		"NewValue": "New Value",
+		"Description": "Description",
+		"NoRatesFound": "No data available for this sector.",
+		"SectorProfit": "Sector Profits",
+		"DateFrom": "Date From",
+		"DateTo": "Date To",
+		"Profit_sector": "Share Profit Value",
+		"Note": "Notes",
+		"NoProfitsFound": "No profits available for this sector.",
+		"NoOwnersFound": "No data available for the owners of this sector."
+	
 	},
 	"auth": {
 		"Welcome_to_Quttouf": "Welcome to Quttouf",
@@ -273,7 +287,13 @@
 			"Transitions": "Transitions",
 			"no_records": "No records have been added yet.",
 			"Deposit_Money": "Deposit Money",
-			"withdraw_Money": "withdraw Money"
+			"withdraw_Money": "Withdraw Money",
+			"total_profit": "Total Profit",
+			"sector": "Sector",
+			"date_from": "Date From",
+			"date_to": "Date To",
+			"profit": "Share Profit Value",
+			"note": "Notes"
 		}
 	}
 }

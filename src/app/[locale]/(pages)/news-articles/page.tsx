@@ -33,11 +33,11 @@ const Blogs = () => {
 
       const direction = typeof window !== "undefined" && localStorage.getItem("direction");
 
-          const myHeaders = new Headers();
-          myHeaders.append("Accept-Language", direction=='ltr'? "en" : "ar");
+      const myHeaders = new Headers();
+      myHeaders.append("Accept-Language", direction == 'ltr' ? "en" : "ar");
       try {
-        const response = await fetch(`https://quttouf.com/api/user/blogs?per_page=${PerPage}&page=${CurrentPage}`,{
-          headers:myHeaders
+        const response = await fetch(`https://quttouf.com/api/user/blogs?per_page=${PerPage}&page=${CurrentPage}`, {
+          headers: myHeaders
         });
         const result = await response.json();
         setData(result.data);
@@ -57,7 +57,7 @@ const Blogs = () => {
 
   const t = useTranslations("HomePage");
 
-  
+
   return (
     <>
       <Breadcrumb
@@ -76,7 +76,7 @@ const Blogs = () => {
         {isLoading ? <Spinner /> : <>
           <div className='grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8'>
 
-          {data?.length !== 0 ? data.map((blogInfo: IBlog) => <BlogCard key={blogInfo.id} blogInfo={blogInfo} />):<h3 className='col-span-3 text-[20px] text-center text-[#009444] font-[700]'>{t("NoRecords")}</h3>}
+            {data?.length !== 0 ? data.map((blogInfo: IBlog) => <BlogCard key={blogInfo.id} blogInfo={blogInfo} />) : <h3 className='col-span-3 text-[20px] text-center text-[#009444] font-[700]'>{t("NoRecords")}</h3>}
 
           </div>
 

@@ -12,7 +12,7 @@ const RenderWalletAndInvestments = () => {
 
 	const { TransactionsFromContext, setTransactionsFromContext } =
 		useWalletContext();
-
+	const { userProfitFromContext, setUserProfitFromContext } = useWalletContext();
 	const t = useTranslations("profile.wallet");
 
 	const WalletTabs = [
@@ -48,6 +48,7 @@ const RenderWalletAndInvestments = () => {
 			});
 			const result = await response.json();
 			setTransactionsFromContext(result.data.transactions);
+			setUserProfitFromContext(result.data.user_profit);
 			console.log(result.data.transactions);
 		} catch (error) {
 			console.error("Error fetching data:", error);
@@ -235,30 +236,36 @@ const RenderWalletAndInvestments = () => {
 					</div>
 
 					<div className='flex flex-col gap-4'>
-						<div className='flex items-center gap-2 lg:gap-4 w-full lg:w-auto'>
-							<p className='text-[#656565]'>The revenue for the year 2022:</p>
-							<span className='text-[#121212] text-[14px] font-[600]'>
-								1200 {t("currency")}
-							</span>
-						</div>
-						<div className='flex items-center gap-2 lg:gap-4 w-full lg:w-auto'>
-							<p className='text-[#656565]'>The revenue for the year 2023:</p>
-							<span className='text-[#121212] text-[14px] font-[600]'>
-								1200 {t("currency")}
-							</span>
-						</div>
-						<div className='flex items-center gap-2 lg:gap-4 w-full lg:w-auto'>
-							<p className='text-[#656565]'>The revenue for the year 2024:</p>
-							<span className='text-[#121212] text-[14px] font-[600]'>
-								1500 {t("currency")}
-							</span>
-						</div>
-						<div className='flex items-center gap-2 lg:gap-4 w-full lg:w-auto'>
-							<p className='text-[#656565]'>The revenue for the year 2025:</p>
-							<span className='text-[#121212] text-[14px] font-[600]'>
-								100 {t("currency")}
-							</span>
-						</div>
+						{userProfitFromContext && userProfitFromContext.length > 0 ? (
+							<div className="overflow-x-auto w-full">
+								<table className="min-w-[600px] w-full divide-y divide-gray-200">
+									<thead>
+										<tr>
+											<th className="px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase whitespace-nowrap">#</th>
+											<th className="px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase whitespace-nowrap">{t("total_profit")}</th>
+											<th className="px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase whitespace-nowrap">{t("sector")}</th>
+											<th className="px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase whitespace-nowrap">{t("date_from")}</th>
+											<th className="px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase whitespace-nowrap">{t("date_to")}</th>
+											<th className="px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase whitespace-nowrap">{t("note")}</th>
+										</tr>
+									</thead>
+									<tbody>
+										{userProfitFromContext.map((item, idx) => (
+											<tr key={item.id} className="bg-white even:bg-gray-50">
+												<td className="px-2 text-left py-2 text-sm text-gray-700 whitespace-nowrap">{idx + 1}</td>
+												<td className="px-2 text-left py-2 text-sm text-gray-700 whitespace-nowrap">{item.profit} {t("currency")}</td>
+												<td className="px-2 text-left py-2 text-sm text-gray-700 whitespace-nowrap">{item.sectorsProfit?.sector_name || "-"}</td>
+												<td className="px-2 text-left py-2 text-sm text-gray-700 whitespace-nowrap">{item.sectorsProfit?.date_from || "-"}</td>
+												<td className="px-2 text-left py-2 text-sm text-gray-700 whitespace-nowrap">{item.sectorsProfit?.date_to || "-"}</td>
+												<td className="px-2 text-left py-2 text-sm text-gray-700 whitespace-nowrap">{item.sectorsProfit?.note || "-"}</td>
+											</tr>
+										))}
+									</tbody>
+								</table>
+							</div>
+						) : (
+							<p className="text-gray-500">{t("no_records")}</p>
+						)}
 					</div>
 				</div>
 				<div className='col-span-5 lg:col-span-2 p-4 lg:p-8 bg-white rounded-[16px]'>
@@ -308,7 +315,7 @@ const RenderWalletAndInvestments = () => {
 								>
 									<span className='w-12 h-12 rounded-[50%] bg-[#007BFF0F] flex justify-center items-center'>
 										{ele.status == "waiting_for_deposit" ||
-										ele.status == "Deposit" ? (
+											ele.status == "Deposit" ? (
 											<svg
 												width='24'
 												height='24'
@@ -404,7 +411,7 @@ const RenderWalletAndInvestments = () => {
 												{ele.status}
 											</p>
 											{ele.status == "waiting_for_deposit" ||
-											ele.status == "Deposit" ? (
+												ele.status == "Deposit" ? (
 												<p className='text-[#007BFF] text-[14px] font-[500]'>
 													{ele.amount + t("currency") + " +"}
 												</p>
