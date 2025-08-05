@@ -13,6 +13,7 @@ interface IConfigrations {
   long: string,
   facebook: string,
   instagram: string,
+  linkedin: string,
   twitter: string
   map: string
   home_videos: string

@@ -7,6 +7,8 @@ import img2 from "@/media/emailicon.png";
 import img3 from "@/media/tele-icon.png";
 import img4 from "@/media/facebook-icon.png";
 import img5 from "@/media/linkedIn-icon.png";
+import img6 from "@/media/instgramIcon.png";
+import img7 from "@/media/twitterIcon.png";
 import logo from "@/media/logo.png";
 import { Link, useRouter } from "@/i18n/routing";
 import menuIcon from "@/media/menuIcon.png";
@@ -122,13 +124,33 @@ const Header = () => {
 								<Image src={img4} alt='facebook icon' priority />
 							</a>
 						</li>
+
+						<li>
+							<a
+								href={Configrations?.instagram || "#"}
+								target='_blank'
+								rel='noopener noreferrer'
+							>
+								<Image src={img6} alt='instagram icon' priority />
+							</a>
+						</li>
 						<li>
 							<a
 								href={Configrations?.twitter || "#"}
 								target='_blank'
 								rel='noopener noreferrer'
 							>
-								<Image src={img5} alt='twitter icon' priority />
+								<Image src={img7} alt='twitter icon' priority />
+							</a>
+						</li>
+
+						<li>
+							<a
+								href={Configrations?.linkedin || "#"}
+								target='_blank'
+								rel='noopener noreferrer'
+							>
+								<Image src={img5} alt='linkedin icon' priority />
 							</a>
 						</li>
 					</ul>
@@ -145,9 +167,8 @@ const Header = () => {
 						/>
 					</Link>
 					<ul
-						className={`fixed flex top-[0] h-[110vh] w-[15rem] bg-[#00431F] z-[99999] overflow-scroll lg:overflow-auto  px-6 py-16 flex-col justify-start lg:static lg:h-auto lg:w-auto lg:bg-transparent lg:z-0 lg:px-0 lg:py-0 lg:flex-row gap-6 transition-all duration-500 ${
-							isOpen ? "left-0" : "left-[-15rem]"
-						}`}
+						className={`fixed flex top-[0] h-[110vh] w-[15rem] bg-[#00431F] z-[99999] overflow-scroll lg:overflow-auto  px-6 py-16 flex-col justify-start lg:static lg:h-auto lg:w-auto lg:bg-transparent lg:z-0 lg:px-0 lg:py-0 lg:flex-row gap-6 transition-all duration-500 ${isOpen ? "left-0" : "left-[-15rem]"
+							}`}
 					>
 						<li className='absolute top-4 right-4'>
 							<button
@@ -155,14 +176,12 @@ const Header = () => {
 								onClick={() => setIsOpen(!isOpen)}
 							>
 								<div
-									className={`absolute w-full h-0.5 bg-white top-1/2 rotate-45 transition-all duration-300 ${
-										!isOpen && "rotate-[0deg]"
-									}`}
+									className={`absolute w-full h-0.5 bg-white top-1/2 rotate-45 transition-all duration-300 ${!isOpen && "rotate-[0deg]"
+										}`}
 								></div>
 								<div
-									className={`absolute w-full h-0.5 bg-white top-1/2 -rotate-45 transition-all duration-300 ${
-										!isOpen && "-rotate-[0deg]"
-									}`}
+									className={`absolute w-full h-0.5 bg-white top-1/2 -rotate-45 transition-all duration-300 ${!isOpen && "-rotate-[0deg]"
+										}`}
 								></div>
 							</button>
 						</li>

@@ -106,6 +106,7 @@ const RenderDepositMoney = () => {
 				if (response.ok) {
 					toast.success(result.message);
 					fetchData();
+					formik.resetForm();
 				} else {
 					toast.error(result.message);
 				}

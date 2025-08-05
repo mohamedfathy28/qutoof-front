@@ -46,7 +46,7 @@ const ContactUsPage: React.FC = () => {
 
 			// Send the FormData to the API
 			const response = await fetch(
-				"https://quttouf.com/api/user/contact-us",
+				"https://quttouf-backend.test/api/user/contact-us",
 				{
 					method: "POST",
 					body: formData,
@@ -234,6 +234,8 @@ const ContactUsPage: React.FC = () => {
 										/>
 									</svg>
 								</a>
+
+								
 								<a
 									href='https://www.aedin.com'
 									target='_blank'

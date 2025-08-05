@@ -109,7 +109,8 @@
 		"Profit_sector": "قيمه ارباح السهم ",
 		"Note": "ملاحظات",
 		"NoProfitsFound": "لا توجد أرباح متاحة لهذا القطاع.",
-		"NoOwnersFound": "لا توجد بيانات متاحة لمالكي هذا القطاع."
+		"NoOwnersFound": "لا توجد بيانات متاحة لمالكي هذا القطاع.",
+		"Year": "السنة"
 	},
 	"auth": {
 		"Welcome_to_Quttouf": "مرحبًا بك في قطوف",
@@ -258,7 +259,7 @@
 			"Cancel": "إلغاء",
 			"Loading": "جاري التحميل...",
 			"Confirm": "تأكيد",
-			"Offer_Submission_Details": "تفاصيل تقديم العرض",
+			"Offer Submission Details": "تفاصيل تقديم العرض",
 			"Refusing": "جارٍ الرفض...",
 			"Refuse": "رفض",
 			"Accepting": "جارٍ القبول...",

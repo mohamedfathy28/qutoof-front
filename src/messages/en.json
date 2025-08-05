@@ -109,8 +109,8 @@
 		"Profit_sector": "Share Profit Value",
 		"Note": "Notes",
 		"NoProfitsFound": "No profits available for this sector.",
-		"NoOwnersFound": "No data available for the owners of this sector."
-	
+		"NoOwnersFound": "No data available for the owners of this sector.",
+		"Year": "Year"
 	},
 	"auth": {
 		"Welcome_to_Quttouf": "Welcome to Quttouf",

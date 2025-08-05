@@ -83,6 +83,7 @@ interface IMarket {
 		previous_value: number;
 		new_value: number;
 		description: string;
+		year: string;
 	}>;
 	user: {
 		id: number;
@@ -589,6 +590,8 @@ const SectorDetails = ({ sectorId }: Iprops) => {
 										<table className="min-w-full border border-[#F1F1F1] rounded-lg overflow-hidden">
 											<thead className="bg-[#F4F8ED]">
 												<tr>
+													<th className="px-4 py-2 text-right text-[#656565] text-[14px] font-[500]">{t("Year")}</th>
+
 													<th className="px-4 py-2 text-right text-[#656565] text-[14px] font-[500]">{t("PreviousValue")}</th>
 													<th className="px-4 py-2 text-right text-[#656565] text-[14px] font-[500]">{t("NewValue")}</th>
 													<th className="px-4 py-2 text-right text-[#656565] text-[14px] font-[500]">{t("Description")}</th>
@@ -598,6 +601,7 @@ const SectorDetails = ({ sectorId }: Iprops) => {
 												{data?.RateSectors && data.RateSectors.length > 0 ? (
 													data.RateSectors.map((rate, idx) => (
 														<tr key={idx} className="border-t border-[#F1F1F1]">
+															<td className="px-4 py-2 text-right text-[#121212] text-[16px] font-[400]">{rate.year}</td>
 															<td className="px-4 py-2 text-right text-[#121212] text-[16px] font-[400]">{rate.previous_value}</td>
 															<td className="px-4 py-2 text-right text-[#121212] text-[16px] font-[400]">{rate.new_value}</td>
 															<td className="px-4 py-2 text-right text-[#121212] text-[16px] font-[400]">{rate.description}</td>
