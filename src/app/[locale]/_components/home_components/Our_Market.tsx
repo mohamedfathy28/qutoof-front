@@ -9,6 +9,7 @@ interface IProject {
 	number_of_shares: number;
 	share_price: number;
 	company_evaluation: number;
+	shares: number;
 	status_id: number;
 	status: string;
 	type: string;
@@ -63,14 +64,21 @@ const OurMarket = () => {
 					}
 				);
 				const result = await response.json();
-				setData(result.data);
+				// Map data to include 'shares' property
+				const mappedData: IProject[] = Array.isArray(result.data)
+					? result.data.map((item: any) => ({
+						...item,
+						shares: item.number_of_shares ?? 0
+					}))
+					: [];
+				setData(mappedData);
 			} catch (error) {
 				console.error("Error fetching data:", error);
 			}
 		};
 
 		fetchData();
-	}, [router]); // Empty dependency array ensures this runs only once after the component mounts
+	}, [router]);
 
 	if (data?.length == 0) return null;
 
