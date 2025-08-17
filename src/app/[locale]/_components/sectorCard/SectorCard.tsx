@@ -12,41 +12,17 @@ import { useTranslations } from "next-intl";
 interface ISectorCardProps {
 	SectorInfo: {
 		id: number;
-		number_of_shares: number;
-		share_price: number;
-		company_evaluation: number;
-		status_id: number;
-		status: string;
-		type: string;
-		type_flag: string;
-		participants: number;
-		total_price: number;
-		sector: {
-			id: 1;
-			title: string;
-			description: string;
-			number_of_acres: number;
-			available_shares: number;
-			land_area: number;
-			offered_by_company: number;
-			pdf: string;
-			company_rate: number;
-			launch_start: string;
-			construction_start: string;
-			construction_end: string;
-			production_start: string;
-			media: string[];
-			created_at: string;
-		};
-		user: {
-			id: number;
-			image: string;
-			username: string;
-			whatsapp_number: string;
-			country_code: string;
-			phone: string;
-		};
-		created_at: string;
+		title: string;
+		description: string;
+		number_of_acres: number;
+		available_shares: number;
+		land_area: number;
+		offered_by_company: number;
+		media: Record<string, string> | string[];
+		AllowToSell: boolean;
+		// optional legacy fields (may be undefined)
+		share_price?: number;
+		total_price?: number;
 	};
 }
 
@@ -72,7 +48,7 @@ const SectorCard = ({ SectorInfo }: ISectorCardProps) => {
 
 		const formData = new FormData();
 		if (SectorInfo?.id)
-			formData.append("market_of_sector_id", SectorInfo.id.toString());
+			formData.append("market_of_sector_id", SectorInfo.id.toString()); // may differ from new API (adjust if backend changes)
 		if (OfferValue !== null)
 			formData.append("asking_price", OfferValue.toString());
 		if (NumberOfShares !== null)
@@ -136,11 +112,12 @@ const SectorCard = ({ SectorInfo }: ISectorCardProps) => {
 		<>
 			<div className='w-full overflow-hidden'>
 				<Image
-					src={
-						SectorInfo?.sector.media[0]
-							? SectorInfo?.sector.media[0]
-							: SectorImg
-					}
+					src={(() => {
+						const list = Array.isArray(SectorInfo.media)
+							? SectorInfo.media
+							: Object.values(SectorInfo.media || {});
+						return list[0] || SectorImg;
+					})()}
 					width={100}
 					height={100}
 					alt='Card image'
@@ -148,10 +125,10 @@ const SectorCard = ({ SectorInfo }: ISectorCardProps) => {
 				/>
 				<div className='py-3'>
 					<h2 className='text-[24px] lg:text-[28px] font-[500] mb-3 text-[#121212]'>
-						{SectorInfo.sector.title}
+						{SectorInfo.title}
 					</h2>
 					<p className='text-[#525252] text-[16px] lg:text-[20px] mb-4 line-clamp-3'>
-						{SectorInfo.sector.description}
+						{SectorInfo.description}
 					</p>
 					<ul className='grid grid-cols-2 mb-8'>
 						<li className='flex items-center gap-2'>
@@ -159,41 +136,35 @@ const SectorCard = ({ SectorInfo }: ISectorCardProps) => {
 								{t("LandArea")}:
 							</span>
 							<span className='text-[#121212] text-[14px] lg:text-[18px] font-[500]'>
-								{SectorInfo.sector.land_area} {t_home("meter")}
+								{SectorInfo.land_area} {t_home("meter")}
 							</span>
 						</li>
 						<li className='flex items-center gap-2'>
 							<span className='text-[#656565] text-[14px] lg:text-[18px]'>
-								{t("NumberOfCompanyShares")}:
+								{t("NumberOfAcres")}:
 							</span>
 							<span className='text-[#121212] text-[14px] lg:text-[18px] font-[500]'>
-								{SectorInfo.number_of_shares}
+								{SectorInfo.number_of_acres} {t_home("acres")}
 							</span>
 						</li>
 						<li className='flex items-center gap-2'>
 							<span className='text-[#656565] text-[14px] lg:text-[18px]'>
-								{t("SharePrice")}:
+								{t("available_shares")}:
 							</span>
 							<span className='text-[#121212] text-[14px] lg:text-[18px] font-[500]'>
-								{SectorInfo.share_price}
+								{SectorInfo.available_shares ?? "0"} {t_home("shares")}
 							</span>
 						</li>
-						<li className='flex items-center gap-2'>
-							<span className='text-[#656565] text-[14px] lg:text-[18px]'>
-								{t("OfferedByTheCompany")}:
-							</span>
-							<span className='text-[#121212] text-[14px] lg:text-[18px] font-[500]'>
-								{SectorInfo.sector.available_shares}
-							</span>
-						</li>
-						<li className='flex items-center gap-2'>
-							<span className='text-[#656565] text-[14px] lg:text-[18px]'>
-								{t("TotalPrice")}:
-							</span>
-							<span className='text-[#121212] text-[14px] lg:text-[18px] font-[500]'>
-								{SectorInfo.total_price}
-							</span>
-						</li>
+						{SectorInfo.AllowToSell && (
+							<li className='flex items-center gap-2'>
+								<span className='text-[#656565] text-[14px] lg:text-[18px]'>
+									{t("SharePrice")}:
+								</span>
+								<span className='text-[#121212] text-[14px] lg:text-[18px] font-[500]'>
+									{SectorInfo.share_price ?? "-"} {SectorInfo.share_price ? t("currency") : ""}
+								</span>
+							</li>
+						)}
 					</ul>
 					<div className='flex items-center justify-between'>
 						<Link
@@ -215,9 +186,11 @@ const SectorCard = ({ SectorInfo }: ISectorCardProps) => {
 								/>
 							</svg>
 						</Link>
-						<Button className='px-4' onClick={handleOpenModal}>
-							{t("BuyNow")}
-						</Button>
+						{SectorInfo.AllowToSell && (
+							<Button className='px-4' onClick={handleOpenModal}>
+								{t("BuyNow")}
+							</Button>
+						)}
 					</div>
 				</div>
 			</div>

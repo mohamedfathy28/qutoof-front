@@ -16,67 +16,40 @@ import PriceInput from "@/app/[locale]/_components/amountInput/AmountInput";
 import BlogCard from "@/app/[locale]/_components/articleCard/BlogCard";
 import { useTranslations } from "next-intl";
 
-const images = [
-	{
-		src: img1,
-		alt: "Palm trees in sunset",
-	},
-	{
-		src: img2,
-		alt: "Tropical palm trees",
-	},
-	{
-		src: img3,
-		alt: "Palm grove",
-	},
-	{
-		src: img4,
-		alt: "Palm trees landscape",
-	},
+const fallbackImages = [
+	{ src: img1, alt: "Image 1" },
+	{ src: img2, alt: "Image 2" },
+	{ src: img3, alt: "Image 3" },
+	{ src: img4, alt: "Image 4" },
 ];
 
 interface Iprops {
 	sectorId: number;
 }
 
-interface IMarket {
+// New API shape for /api/sectors/{id}
+interface ISector {
 	id: number;
-	number_of_shares: number;
-	share_price: number;
-	company_evaluation: number;
-	status_id: number;
-	status: string;
-	type: string;
-	type_flag: string;
-	participants: number;
-	total_price: number;
-	sector: {
-		id: 1;
-		title: string;
-		description: string;
-		number_of_acres: number;
-		available_shares: number;
-		land_area: number;
-		offered_by_company: number;
-		pdf: string;
-		company_rate: number;
-		launch_start: string;
-		construction_start: string;
-		construction_end: string;
-		production_start: string;
-		media: string[];
-		created_at: string;
-		users: Array<{
-			username: string;
-			numeber_of_shares: number;
-		}>,
-	};
+	title: string;
+	description: string;
+	number_of_acres: number;
+	available_shares: number;
+	land_area: number;
+	offered_by_company: number;
+	pdf: string;
+	company_rate: number;
+	launch_start: string;
+	construction_start: string;
+	construction_end: string;
+	production_start: string;
+	media: Record<string, string> | string[];
+	created_at: string;
 	sectorsProfit: Array<{
 		id: number;
 		date_from: string;
 		date_to: string;
-		profit: number;
-		note: string;
+		profit: string | number;
+		note: string | null;
 	}>;
 	RateSectors: Array<{
 		id: number;
@@ -85,15 +58,24 @@ interface IMarket {
 		description: string;
 		year: string;
 	}>;
-	user: {
-		id: number;
-		image: string;
+	AllowToSell?: boolean;
+	users: Array<{
 		username: string;
-		whatsapp_number: string;
-		country_code: string;
-		phone: string;
+		numeber_of_shares: number; // API spelling preserved
+	}>;
+	project?: {
+		id: number;
+		title: string;
+		description: string;
+		image: string;
+		pdf: string;
+		sectors_count: number;
+		total_area: number;
 	};
-	created_at: string;
+	// Legacy fields that UI might still reference (optional)
+	share_price?: number;
+	total_price?: number;
+	number_of_shares?: number;
 }
 
 interface IBlog {
@@ -107,7 +89,7 @@ interface IBlog {
 }
 
 const SectorDetails = ({ sectorId }: Iprops) => {
-	const [data, setData] = useState<IMarket>();
+	const [data, setData] = useState<ISector>();
 	const [RelatedBlogs, setRelatedBlogs] = useState<IBlog[]>([]);
 	const [isOpen, setIsOpen] = useState<boolean>(false);
 	const [OfferValue, setOfferValue] = useState<number | null>(null);
@@ -143,6 +125,8 @@ const SectorDetails = ({ sectorId }: Iprops) => {
 
 		const token =
 			typeof window !== "undefined" && localStorage.getItem("token");
+		const direction =
+			typeof window !== "undefined" && localStorage.getItem("direction");
 
 		const myHeaders = new Headers();
 		myHeaders.append("accept", "application/json");
@@ -150,7 +134,8 @@ const SectorDetails = ({ sectorId }: Iprops) => {
 			"Authorization",
 			`Bearer ${token ? JSON.parse(token) : ""}`
 		);
-
+		myHeaders.append("Accept-Language", direction == "ltr" ? "en" : "ar");
+		console.log("Sending offer with headers:", myHeaders);
 		const formData = new FormData();
 		if (data?.id) formData.append("market_of_sector_id", data.id.toString());
 		if (OfferValue !== null)
@@ -189,14 +174,27 @@ const SectorDetails = ({ sectorId }: Iprops) => {
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
+				const token =
+					typeof window !== "undefined" && localStorage.getItem("token");
+				const direction =
+					typeof window !== "undefined" && localStorage.getItem("direction");
+
+				const myHeaders = new Headers();
+				myHeaders.append("accept", "application/json");
+				myHeaders.append(
+					"Authorization",
+					`Bearer ${token ? JSON.parse(token) : ""}`
+				);
+				myHeaders.append("Accept-Language", direction === "ltr" ? "en" : "ar");
+
 				const response = await fetch(
-					`https://quttouf.com/api/user/market/${sectorId}`
+					`https://quttouf.com/api/user/sectors/${sectorId}`,
+					{ headers: myHeaders }
 				);
 				const result = await response.json();
 				setData(result.data);
-				console.log(result.data);
 			} catch (error) {
-				console.error("Error fetching data:", error);
+				console.error("Error fetching sector data:", error);
 			}
 		};
 
@@ -243,27 +241,40 @@ const SectorDetails = ({ sectorId }: Iprops) => {
 	const t_home = useTranslations("HomePage");
 	const t = useTranslations("SectorDetails");
 
+	// Prepare slider images (convert media object to array)
+	const sliderImages = React.useMemo(() => {
+		if (!data?.media) return fallbackImages;
+		let mediaArray: string[] = [];
+		if (Array.isArray(data.media)) {
+			mediaArray = data.media;
+		} else {
+			mediaArray = Object.values(data.media);
+		}
+		if (mediaArray.length === 0) return fallbackImages;
+		return mediaArray.map((url, idx) => ({ src: url, alt: data.title + " " + (idx + 1) }));
+	}, [data]);
+
 	return (
 		<>
 			<Breadcrumb
 				items={[
 					{ label: t("Sectors"), href: "/sectors" },
-					{ label: data?.sector.title, href: `/sectors/${sectorId}` },
+					{ label: data?.title, href: `/sectors/${sectorId}` },
 				]}
 			/>
 			<div className='mx-auto max-w-[90%] sm:max-w-xl md:max-w-2xl lg:max-w-4xl xl:max-w-6xl 2xl:max-w-7xl py-20 md:py-32'>
 				<div className='grid grid-cols-1 lg:grid-cols-2 gap-12 mb-12'>
-					<ImageSlider images={images} />
+					<ImageSlider images={sliderImages} />
 					<div>
 						<h3 className='text-[#121212] text-[28px] font-[500] mb-2'>
-							{data?.sector.title}
+							{data?.title}
 						</h3>
 						<span className='flex items-center gap-2 text-[24px] pb-6 mb-6 border-b border-[#F1F1F1]'>
 							<FaStar className='text-yellow-500' />
-							{data?.sector.company_rate}
+							{data?.company_rate}
 						</span>
 						<p className='text-[#444444] text-[14px] font-[400] leading-[28px] mb-8'>
-							{data?.sector.description}
+							{data?.description}
 						</p>
 						<ul className='grid grid-cols-1 lg:grid-cols-2 gap-4 pb-6 mb-6 border-b border-[#F1F1F1]'>
 							<li className='flex items-center gap-3'>
@@ -294,7 +305,7 @@ const SectorDetails = ({ sectorId }: Iprops) => {
 										{t("LandArea")}
 									</span>
 									<p className='text-[#000] text-[18px] font-[500]'>
-										{data?.sector.land_area} {t_home("meter")}
+										{data?.land_area} {t_home("meter")}
 									</p>
 								</div>
 							</li>
@@ -318,7 +329,7 @@ const SectorDetails = ({ sectorId }: Iprops) => {
 										{t("NumberOfCompanyShares")}
 									</span>
 									<p className='text-[#000] text-[18px] font-[500]'>
-										{data?.number_of_shares}
+										{data?.available_shares}
 									</p>
 								</div>
 							</li>
@@ -351,89 +362,59 @@ const SectorDetails = ({ sectorId }: Iprops) => {
 								</span>
 								<div className='flex flex-col'>
 									<span className='text-[#656565] text-[14px] font-[400]'>
-										{t("OfferedByTheCompany")}
+										{t("NumberOfAcres")}
 									</span>
 									<p className='text-[#000] text-[18px] font-[500]'>
-										{data?.sector.offered_by_company}
+										{data?.number_of_acres} {t_home("acre")}
 									</p>
 								</div>
 							</li>
-							<li className='flex items-center gap-3'>
-								<span className='w-14 h-14 rounded-[50%] bg-[#E6F4EC] flex items-center justify-center'>
-									<svg
-										width='28'
-										height='28'
-										viewBox='0 0 28 28'
-										fill='none'
-										xmlns='http://www.w3.org/2000/svg'
-									>
-										<path
-											d='M11.959 11.7017C11.959 12.3317 12.134 12.4251 12.5307 12.5651L13.1257 12.7751V10.7917H12.7757C12.3323 10.7917 11.959 11.2001 11.959 11.7017Z'
-											fill='#009444'
-										/>
-										<path
-											d='M14.875 17.2084H15.225C15.68 17.2084 16.0417 16.8001 16.0417 16.2984C16.0417 15.6684 15.8667 15.5751 15.47 15.4351L14.875 15.2251V17.2084Z'
-											fill='#009444'
-										/>
-										<path
-											d='M22.844 6.39325L20.4523 8.78492C20.2773 8.95992 20.0557 9.04158 19.834 9.04158C19.6123 9.04158 19.3906 8.95992 19.2157 8.78492C18.8773 8.44659 18.8773 7.88658 19.2157 7.54825L21.6073 5.15659C19.554 3.40659 16.9057 2.33325 14.0007 2.33325C7.56065 2.33325 2.33398 7.55992 2.33398 13.9999C2.33398 20.4399 7.56065 25.6666 14.0007 25.6666C20.4407 25.6666 25.6673 20.4399 25.6673 13.9999C25.6673 11.0949 24.594 8.44659 22.844 6.39325ZM16.0423 13.7899C16.789 14.0583 17.7923 14.5949 17.7923 16.3099C17.7923 17.7683 16.6373 18.9699 15.2257 18.9699H14.8757V19.2616C14.8757 19.7399 14.479 20.1366 14.0007 20.1366C13.5223 20.1366 13.1257 19.7399 13.1257 19.2616V18.9699H13.0323C11.4807 18.9699 10.209 17.6633 10.209 16.0533C10.209 15.5633 10.6057 15.1666 11.084 15.1666C11.5623 15.1666 11.959 15.5633 11.959 16.0416C11.959 16.6833 12.4373 17.2083 13.0323 17.2083H13.1257V14.6183L11.959 14.2099C11.2123 13.9416 10.209 13.4049 10.209 11.6899C10.209 10.2316 11.364 9.02992 12.7757 9.02992H13.1257V8.74992C13.1257 8.27158 13.5223 7.87492 14.0007 7.87492C14.479 7.87492 14.8757 8.27158 14.8757 8.74992V9.04158H14.969C16.5207 9.04158 17.7923 10.3483 17.7923 11.9583C17.7923 12.4366 17.3957 12.8333 16.9173 12.8333C16.439 12.8333 16.0423 12.4366 16.0423 11.9583C16.0423 11.3166 15.564 10.7916 14.969 10.7916H14.8757V13.3816L16.0423 13.7899Z'
-											fill='#009444'
-										/>
-										<path
-											d='M26.4717 1.99492C26.3783 1.78492 26.215 1.60992 25.9933 1.51659C25.8883 1.48159 25.7833 1.45825 25.6667 1.45825H21C20.5217 1.45825 20.125 1.85492 20.125 2.33325C20.125 2.81159 20.5217 3.20825 21 3.20825H23.555L21.6067 5.15659C22.05 5.54159 22.4583 5.94992 22.8433 6.39325L24.7917 4.44492V6.99992C24.7917 7.47825 25.1883 7.87492 25.6667 7.87492C26.145 7.87492 26.5417 7.47825 26.5417 6.99992V2.33325C26.5417 2.21659 26.5183 2.11159 26.4717 1.99492Z'
-											fill='#009444'
-										/>
-									</svg>
-								</span>
-								<div className='flex flex-col'>
-									<span className='text-[#656565] text-[14px] font-[400]'>
-										{t("SharePrice")}
+							{data?.AllowToSell && (
+								<li className='flex items-center gap-3'>
+									<span className='w-14 h-14 rounded-[50%] bg-[#E6F4EC] flex items-center justify-center'>
+										<svg
+											width='28'
+											height='28'
+											viewBox='0 0 28 28'
+											fill='none'
+											xmlns='http://www.w3.org/2000/svg'
+										>
+											<path
+												d='M11.959 11.7017C11.959 12.3317 12.134 12.4251 12.5307 12.5651L13.1257 12.7751V10.7917H12.7757C12.3323 10.7917 11.959 11.2001 11.959 11.7017Z'
+												fill='#009444'
+											/>
+											<path
+												d='M14.875 17.2084H15.225C15.68 17.2084 16.0417 16.8001 16.0417 16.2984C16.0417 15.6684 15.8667 15.5751 15.47 15.4351L14.875 15.2251V17.2084Z'
+												fill='#009444'
+											/>
+											<path
+												d='M22.844 6.39325L20.4523 8.78492C20.2773 8.95992 20.0557 9.04158 19.834 9.04158C19.6123 9.04158 19.3906 8.95992 19.2157 8.78492C18.8773 8.44659 18.8773 7.88658 19.2157 7.54825L21.6073 5.15659C19.554 3.40659 16.9057 2.33325 14.0007 2.33325C7.56065 2.33325 2.33398 7.55992 2.33398 13.9999C2.33398 20.4399 7.56065 25.6666 14.0007 25.6666C20.4407 25.6666 25.6673 20.4399 25.6673 13.9999C25.6673 11.0949 24.594 8.44659 22.844 6.39325ZM16.0423 13.7899C16.789 14.0583 17.7923 14.5949 17.7923 16.3099C17.7923 17.7683 16.6373 18.9699 15.2257 18.9699H14.8757V19.2616C14.8757 19.7399 14.479 20.1366 14.0007 20.1366C13.5223 20.1366 13.1257 19.7399 13.1257 19.2616V18.9699H13.0323C11.4807 18.9699 10.209 17.6633 10.209 16.0533C10.209 15.5633 10.6057 15.1666 11.084 15.1666C11.5623 15.1666 11.959 15.5633 11.959 16.0416C11.959 16.6833 12.4373 17.2083 13.0323 17.2083H13.1257V14.6183L11.959 14.2099C11.2123 13.9416 10.209 13.4049 10.209 11.6899C10.209 10.2316 11.364 9.02992 12.7757 9.02992H13.1257V8.74992C13.1257 8.27158 13.5223 7.87492 14.0007 7.87492C14.479 7.87492 14.8757 8.27158 14.8757 8.74992V9.04158H14.969C16.5207 9.04158 17.7923 10.3483 17.7923 11.9583C17.7923 12.4366 17.3957 12.8333 16.9173 12.8333C16.439 12.8333 16.0423 12.4366 16.0423 11.9583C16.0423 11.3166 15.564 10.7916 14.969 10.7916H14.8757V13.3816L16.0423 13.7899Z'
+												fill='#009444'
+											/>
+											<path
+												d='M26.4717 1.99492C26.3783 1.78492 26.215 1.60992 25.9933 1.51659C25.8883 1.48159 25.7833 1.45825 25.6667 1.45825H21C20.5217 1.45825 20.125 1.85492 20.125 2.33325C20.125 2.81159 20.5217 3.20825 21 3.20825H23.555L21.6067 5.15659C22.05 5.54159 22.4583 5.94992 22.8433 6.39325L24.7917 4.44492V6.99992C24.7917 7.47825 25.1883 7.87492 25.6667 7.87492C26.145 7.87492 26.5417 7.47825 26.5417 6.99992V2.33325C26.5417 2.21659 26.5183 2.11159 26.4717 1.99492Z'
+												fill='#009444'
+											/>
+										</svg>
 									</span>
-									<p className='text-[#000] text-[18px] font-[500]'>
-										{data?.share_price} {t("currency")}
-									</p>
-								</div>
-							</li>
-							<li className='flex items-center gap-3'>
-								<span className='w-14 h-14 rounded-[50%] bg-[#E6F4EC] flex items-center justify-center'>
-									<svg
-										width='28'
-										height='28'
-										viewBox='0 0 28 28'
-										fill='none'
-										xmlns='http://www.w3.org/2000/svg'
-									>
-										<path
-											d='M14.875 18.5733H15.6333C16.3917 18.5733 17.0217 17.8966 17.0217 17.08C17.0217 16.065 16.66 15.8666 16.065 15.6566L14.8867 15.2483V18.5733H14.875Z'
-											fill='#009444'
-										/>
-										<path
-											d='M13.9657 2.21657C7.52573 2.23991 2.31073 7.47824 2.33406 13.9182C2.3574 20.3582 7.59573 25.5732 14.0357 25.5499C20.4757 25.5266 25.6907 20.2882 25.6674 13.8482C25.6441 7.40824 20.4057 2.20491 13.9657 2.21657ZM16.6374 13.9999C17.5474 14.3149 18.7724 14.9916 18.7724 17.0799C18.7724 18.8766 17.3607 20.3232 15.6341 20.3232H14.8757V20.9999C14.8757 21.4782 14.4791 21.8749 14.0007 21.8749C13.5224 21.8749 13.1257 21.4782 13.1257 20.9999V20.3232H12.7057C10.7924 20.3232 9.24073 18.7132 9.24073 16.7299C9.24073 16.2516 9.6374 15.8549 10.1157 15.8549C10.5941 15.8549 10.9907 16.2516 10.9907 16.7299C10.9907 17.7449 11.7607 18.5732 12.7057 18.5732H13.1257V14.6299L11.3641 13.9999C10.4541 13.6849 9.22906 13.0082 9.22906 10.9199C9.22906 9.12324 10.6407 7.67657 12.3674 7.67657H13.1257V6.99991C13.1257 6.52157 13.5224 6.12491 14.0007 6.12491C14.4791 6.12491 14.8757 6.52157 14.8757 6.99991V7.67657H15.2957C17.2091 7.67657 18.7607 9.28657 18.7607 11.2699C18.7607 11.7482 18.3641 12.1449 17.8857 12.1449C17.4074 12.1449 17.0107 11.7482 17.0107 11.2699C17.0107 10.2549 16.2407 9.42657 15.2957 9.42657H14.8757V13.3699L16.6374 13.9999Z'
-											fill='#009444'
-										/>
-										<path
-											d='M10.9902 10.9318C10.9902 11.9468 11.3519 12.1451 11.9469 12.3551L13.1252 12.7634V9.42676H12.3669C11.6086 9.42676 10.9902 10.1034 10.9902 10.9318Z'
-											fill='#009444'
-										/>
-									</svg>
-								</span>
-								<div className='flex flex-col'>
-									<span className='text-[#656565] text-[14px] font-[400]'>
-										{t("TotalPrice")}
-									</span>
-									<p className='text-[#000] text-[18px] font-[500]'>
-										{data?.total_price} {t("currency")}
-									</p>
-								</div>
-							</li>
+
+									<div className='flex flex-col'>
+										<span className='text-[#656565] text-[14px] font-[400]'>
+											{t("SharePrice")}
+										</span>
+										<p className='text-[#000] text-[18px] font-[500]'>
+											{data?.share_price ?? "-"} {data?.share_price ? t("currency") : ""}
+										</p>
+									</div>
+
+								</li>
+							)}
 						</ul>
 
 						<div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
 							<button
 								className='space-x-2 text-[#16151C] h-12 w-full border border-[#DBDBDB] hover:bg-[#dbdbdb99] duration-300 hover:text-[#16151C] flex items-center justify-center rounded-[8px]'
-								onClick={() =>
-									handleDownload(data ? data?.sector?.pdf : "")
-								}
+								onClick={() => handleDownload(data ? data?.pdf : "")}
 							>
 								<svg
 									width='32'
@@ -502,13 +483,15 @@ const SectorDetails = ({ sectorId }: Iprops) => {
 									/>
 								</svg>
 							</button>
-							<Button
-								className='px-4'
-								size='xl'
-								onClick={handleOpenModal}
-							>
-								{t("BuyNow")}
-							</Button>
+							{data?.AllowToSell && (
+								<Button
+									className='px-4'
+									size='xl'
+									onClick={handleOpenModal}
+								>
+									{t("BuyNow")}
+								</Button>
+							)}
 						</div>
 					</div>
 				</div>
@@ -524,25 +507,25 @@ const SectorDetails = ({ sectorId }: Iprops) => {
 										<li className='flex items-center justify-between pb-3 mb-3 border-b border-[#F1F1F1] text-[#656565]'>
 											{t("LaunchStart")} :{" "}
 											<span className='text-[#121212] text-[16px] font-[400]'>
-												{data?.sector.launch_start}
+												{data?.launch_start}
 											</span>
 										</li>
 										<li className='flex items-center justify-between pb-3 mb-3 border-b border-[#F1F1F1] text-[#656565]'>
 											{t("ConstructionStart")} :{" "}
 											<span className='text-[#121212] text-[16px] font-[400]'>
-												{data?.sector.construction_start}
+												{data?.construction_start}
 											</span>
 										</li>
 										<li className='flex items-center justify-between pb-3 mb-3 border-b border-[#F1F1F1] text-[#656565]'>
 											{t("ConstructionEndDate")} :{" "}
 											<span className='text-[#121212] text-[16px] font-[400]'>
-												{data?.sector.construction_end}
+												{data?.construction_end}
 											</span>
 										</li>
 										<li className='flex items-center justify-between text-[#656565]'>
 											{t("ProductionStartDate")} :{" "}
 											<span className='text-[#121212] text-[16px] font-[400]'>
-												{data?.sector.production_start}
+												{data?.production_start}
 											</span>
 										</li>
 									</ul>
@@ -563,8 +546,8 @@ const SectorDetails = ({ sectorId }: Iprops) => {
 												</tr>
 											</thead>
 											<tbody>
-												{data?.sector.users && data.sector.users.length > 0 ? (
-													data.sector.users.map((user, idx) => (
+												{data?.users && data.users.length > 0 ? (
+													data.users.map((user, idx) => (
 														<tr key={idx} className="border-t border-[#F1F1F1]">
 															<td className="px-4 text-right py-2 text-[#121212] text-[16px] font-[400]">{user.username}</td>
 															<td className="px-4 text-left py-2 text-[#121212] text-[16px] font-[400]">{user.numeber_of_shares}</td>

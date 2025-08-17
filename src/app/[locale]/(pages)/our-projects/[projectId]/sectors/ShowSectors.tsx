@@ -5,75 +5,48 @@ import Pagination from "../../../../_components/pagination/Pagination";
 import SectorCard from "../../../../_components/sectorCard/SectorCard";
 import { useTranslations } from "next-intl";
 
-interface ISector {
+// New simplified sector data shape from API
+export interface ISectorItem {
 	id: number;
-	number_of_shares: number;
-	share_price: number;
-	company_evaluation: number;
-	status_id: number;
-	status: string;
-	type: string;
-	type_flag: string;
-	participants: number;
-	total_price: number;
-	sector: {
-		id: 1;
-		title: string;
-		description: string;
-		number_of_acres: number;
-		available_shares: number;
-		land_area: number;
-		offered_by_company: number;
-		pdf: string;
-		company_rate: number;
-		launch_start: string;
-		construction_start: string;
-		construction_end: string;
-		production_start: string;
-		media: string[];
-		created_at: string;
-	};
-	user: {
-		id: number;
-		image: string;
-		username: string;
-		whatsapp_number: string;
-		country_code: string;
-		phone: string;
-	};
-	created_at: string;
+	title: string;
+	description: string;
+	number_of_acres: number;
+	available_shares: number;
+	land_area: number;
+	offered_by_company: number;
+	media: Record<string, string> | string[];
+	AllowToSell: boolean;
+	share_price?: number;
 }
 
 const ShowSectors = ({ projectId }: { projectId: number }) => {
-	const [data, setData] = useState<ISector[]>();
+	const [data, setData] = useState<ISectorItem[]>([]);
 	const [totalPages, setTotalPages] = useState<number>();
 	const [CurrentPage, setCurrentPage] = useState<number>(1);
+	const PerPage = 6; // UI page size
 
 	useEffect(() => {
 		const fetchData = async () => {
 			const direction =
 				typeof window !== "undefined" && localStorage.getItem("direction");
-			const PerPage = 6;
 			const myHeaders = new Headers();
 			myHeaders.append("Accept-Language", direction == "ltr" ? "en" : "ar");
 			try {
 				const response = await fetch(
-					`https://quttouf.com/api/user/market?filter[project_id]=${projectId}&per_page=${PerPage}&page=${CurrentPage}`,
-					{
-						headers: myHeaders,
-					}
+					`https://quttouf.com/api/user/projects/data/${projectId}?per_page=${PerPage}&page=${CurrentPage}`,
+					{ headers: myHeaders }
 				);
 				const result = await response.json();
-				setData(result.data);
-				setTotalPages(result?.pages);
-				setCurrentPage(result?.current_page);
+				setData(result.data || []);
+				setTotalPages(result?.pages || 1);
+				setCurrentPage(result?.current_page || 1);
 			} catch (error) {
-				console.error("Error fetching data:", error);
+				console.error("Error fetching sectors:", error);
 			}
 		};
 
 		fetchData();
-	}, [CurrentPage, projectId]); // Empty dependency array ensures this runs only once after the component mounts
+	}, [CurrentPage, projectId]);
 
 	const t = useTranslations("SectorDetails");
 	const t_home = useTranslations("HomePage");

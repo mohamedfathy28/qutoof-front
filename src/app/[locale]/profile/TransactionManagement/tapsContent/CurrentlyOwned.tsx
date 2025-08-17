@@ -138,7 +138,7 @@ const RenderCurrentlyOwned = () => {
 			);
 			const result = await response.json();
 			setData(result.data);
-			console.log(result.data);
+			console.log(result.data, "result");
 			setTotalPages(result?.pages);
 			setCurrentPage(result?.current_page);
 			setisLoading(false);

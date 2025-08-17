@@ -12,6 +12,18 @@ const nextConfig: NextConfig = {
 				port: "",
 				pathname: "/**",
 			},
+			{
+				protocol: "http",
+				hostname: "localhost",
+				port: "",
+				pathname: "/**",
+			},
+			{
+				protocol: "http",
+				hostname: "quttouf-backend.test",
+				port: "",
+				pathname: "/**",
+			},
 		],
 		qualities: [100],
 	},

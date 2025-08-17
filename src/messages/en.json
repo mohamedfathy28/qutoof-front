@@ -10,6 +10,8 @@
 		"market": "Market",
 		"ourProjects": "Our Projects",
 		"Blogs": "News & Articles",
+		"shares": "Shares",
+		"acre": "Acres",
 		"Partners": "Partners",
 		"contactUs": "Contact Us",
 		"Profile": "My Profile",
@@ -66,7 +68,27 @@
 			"password_min": "Password must be at least 8 characters",
 			"password_strength": "Password must include uppercase, lowercase, number, and special character (@$!%*?&)"
 		},
-		"meter": "M"
+		"meter": "M",
+		"OfferModal": {
+			"title": "Submitting an Offer",
+			"rule1": "You must be a member of the Qutoof community.",
+			"rule2": "A 1% fee is deducted from the total amount as a purchase fee.",
+			"rule3": "Approval from the seller and then the company is required, the company's approval process takes two business days.",
+			"rule4": "You must have 20% of the required amount in your wallet, or deposit the amount into your wallet.",
+			"rule5": "You have a grace period of 5 days to deposit the remaining 80%, either into your wallet or by transferring it to the offer owner, along with a copy of the transfer receipt.",
+			"rule6": "If there is a delay, we reserve the right to deduct 10% as compensation for the landowner, from which 2% will be deducted as fees.",
+			"rule7": "You must contact the company as soon as possible or request to send the contracts by mail.",
+			"rule8": "Contracts will be issued in the name shown on the ID, and for heirs in the event of death, they have the right to request the contracts and transfer ownership via official legal documentation.",
+			"cancel": "Cancel",
+			"send": "Send Offer",
+			"sending": "Sending offer...",
+			"numberSharesPlaceholder": "Enter number of shares",
+			"numberSharesLabel": "Number Shares",
+			"sharesCurrency": "Shares",
+			"pricePlaceholder": "Enter price",
+			"priceLabel": "Price",
+			"egCurrency": "EGP"
+		}
 	},
 	"SectorDetails": {
 		"Sectors": "Sectors",
@@ -110,7 +132,9 @@
 		"Note": "Notes",
 		"NoProfitsFound": "No profits available for this sector.",
 		"NoOwnersFound": "No data available for the owners of this sector.",
-		"Year": "Year"
+		"Year": "Year",
+		"NumberOfAcres": "Number of Acres",
+		"available_shares": "Available Shares For Sale"
 	},
 	"auth": {
 		"Welcome_to_Quttouf": "Welcome to Quttouf",

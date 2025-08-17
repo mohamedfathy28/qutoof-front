@@ -16,6 +16,7 @@ interface AppProps {
 		number_of_shares: number;
 		share_price: number;
 		company_evaluation: number;
+		shares: number;
 		status_id: number;
 		status: string;
 		type: string;
@@ -157,12 +158,20 @@ const ProductCard = ({ ProductInfo }: AppProps) => {
 							{ProductInfo.total_price}
 						</span>
 					</li>
-					<li className='flex justify-between items-center'>
+					{/* <li className='flex justify-between items-center'>
 						<span className='text-[16px] text-[#656565] font-[400]'>
 							{t("CompanyEvaluation")}
 						</span>
 						<span className='text-[16px] text-[#000] font-[600]'>
 							{ProductInfo.company_evaluation}
+						</span>
+					</li> */}
+					<li className='flex justify-between items-center'>
+						<span className='text-[16px] text-[#656565] font-[400]'>
+							{t("shares")}
+						</span>
+						<span className='text-[16px] text-[#000] font-[600]'>
+							{ProductInfo.shares}
 						</span>
 					</li>
 				</ul>
@@ -189,18 +198,17 @@ const ProductCard = ({ ProductInfo }: AppProps) => {
 				onClose={() => {
 					setIsOpen(false);
 				}}
-				title='Submitting an offer'
+				title={t("OfferModal.title")}
 			>
 				<ul className='space-y-2 list-disc mx-8 mb-8'>
 					<li className='text-[18px] text-[#525252] font-[400]'>
-						You must be a member of the Qutoof community.{" "}
+						{t("OfferModal.rule1")}
 					</li>
 					<li className='text-[18px] text-[#525252] font-[400]'>
-						A 1% fee is deducted from the total amount as a purchase fee.{" "}
+						{t("OfferModal.rule2")}
 					</li>
 					<li className='text-[18px] text-[#525252] font-[400]'>
-						Approval from the seller and then the company is required, the
-						company&apos;s approval process takes two business days.{" "}
+						{t("OfferModal.rule3")}
 					</li>
 				</ul>
 
@@ -209,61 +217,69 @@ const ProductCard = ({ ProductInfo }: AppProps) => {
 						{ProductInfo.created_at.split(" ")[0]}
 					</p>
 					<h6 className='text-center text-[26px] text-[#009444] font-[600] mb-6'>
-						Agricultural land
+						{ProductInfo.sector.description}
 					</h6>
 					<ul className='w-full space-y-2 mb-8'>
 						<li className='flex items-center justify-between'>
 							<span className='text-[16px] text-[#656565] font-[400]'>
-								sector
+								{t("sector")}
 							</span>
 							<span className='text-[16px] text-[#000000] font-[400]'>
-								{ProductInfo.sector.id}
+								{ProductInfo.sector.title}
 							</span>
 						</li>
 						<li className='flex items-center justify-between'>
 							<span className='text-[16px] text-[#656565] font-[400]'>
-								Asking price
+								{t("shares")}
+							</span>
+							<span className='text-[16px] text-[#000000] font-[400]'>
+								{ProductInfo.shares}
+							</span>
+						</li>
+						<li className='flex items-center justify-between'>
+							<span className='text-[16px] text-[#656565] font-[400]'>
+								{t("price")}
 							</span>
 							<span className='text-[16px] text-[#000000] font-[400]'>
 								{ProductInfo.total_price}
 							</span>
 						</li>
 					</ul>
+					{/* This input will set the number_of_shares sent in handleSendOffer */}
 					<PriceInput
 						maxValue={100000000}
 						minValue={0}
-						onChange={handleOfferPrice}
-						initialValue={""}
-						placeholder='Enter amount'
-						label='Number Shares'
-						currency='EGP'
+						onChange={(val: number) => {
+							// mutate prop object so the latest value is used when calling handleSendOffer(ProductInfo.id, ProductInfo.number_of_shares)
+							// @ts-ignore
+							ProductInfo.number_of_shares = val;
+						}}
+						placeholder={t("OfferModal.numberSharesPlaceholder")}
+						label={t("OfferModal.numberSharesLabel")}
+						currency={t("OfferModal.sharesCurrency")}
 					/>
+					<div className='mt-4'>
+						<PriceInput
+							maxValue={100000000}
+							minValue={0}
+							onChange={(val: number) => {
+								setOfferValue(val);
+							}}
+							placeholder={t("OfferModal.pricePlaceholder")}
+							label={t("OfferModal.priceLabel")}
+							// default to product total price
+							// @ts-ignore PriceInput may accept value prop; if not, adjust implementation
+							value={ProductInfo.total_price}
+							currency={t("OfferModal.egCurrency")}
+						/>
+					</div>
 				</div>
 				<ul className='space-y-2 list-disc mx-8 mb-6'>
-					<li className='text-[18px] text-[#525252] font-[400]'>
-						You must have 20% of the required amount in your wallet, or
-						deposit the amount into your wallet.
-					</li>
-					<li className='text-[18px] text-[#525252] font-[400]'>
-						You have a grace period of 5 days to deposit the remaining
-						80%, either into your wallet or by transferring it to the
-						offer owner, along with a copy of the transfer receipt.
-					</li>
-					<li className='text-[18px] text-[#525252] font-[400]'>
-						If there is a delay, we reserve the right to deduct 10% as
-						compensation for the landowner, from which 2% will be deducted
-						as fees.{" "}
-					</li>
-					<li className='text-[18px] text-[#525252] font-[400]'>
-						You must contact the company as soon as possible or request to
-						send the contracts by mail.
-					</li>
-					<li className='text-[18px] text-[#525252] font-[400]'>
-						Contracts will be issued in the name shown on the ID, and for
-						heirs in the event of death, they have the right to request
-						the contracts and transfer ownership via official legal
-						documentation.
-					</li>
+					<li className='text-[18px] text-[#525252] font-[400]'>{t("OfferModal.rule4")}</li>
+					<li className='text-[18px] text-[#525252] font-[400]'>{t("OfferModal.rule5")}</li>
+					<li className='text-[18px] text-[#525252] font-[400]'>{t("OfferModal.rule6")}</li>
+					<li className='text-[18px] text-[#525252] font-[400]'>{t("OfferModal.rule7")}</li>
+					<li className='text-[18px] text-[#525252] font-[400]'>{t("OfferModal.rule8")}</li>
 				</ul>
 
 				<div className='w-full flex justify-end items-center gap-4 px-2 pt-6 border-t border-[#F1F1F1]'>
@@ -273,7 +289,7 @@ const ProductCard = ({ ProductInfo }: AppProps) => {
 							setIsOpen(false);
 						}}
 					>
-						Cancel
+						{t("OfferModal.cancel")}
 					</Button>
 					<Button
 						onClick={() =>
@@ -284,7 +300,7 @@ const ProductCard = ({ ProductInfo }: AppProps) => {
 						}
 						disabled={IsLoading}
 					>
-						{IsLoading ? "Sendding offer" : "Send Offer"}
+						{IsLoading ? t("OfferModal.sending") : t("OfferModal.send")}
 					</Button>
 				</div>
 			</Modal>
