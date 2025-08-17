@@ -65,8 +65,9 @@ const OurMarket = () => {
 				);
 				const result = await response.json();
 				// Map data to include 'shares' property
+				type ApiProject = Omit<IProject, 'shares'>;
 				const mappedData: IProject[] = Array.isArray(result.data)
-					? result.data.map((item: any) => ({
+					? result.data.map((item: ApiProject) => ({
 						...item,
 						shares: item.number_of_shares ?? 0
 					}))
