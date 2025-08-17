@@ -131,6 +131,52 @@ const ProductsTab: React.FC<ProductsTabProps> = ({ data, isLoading, currentPage,
 	);
 };
 
+// Define the expected API response item type
+interface ApiSector {
+	id?: number;
+	title?: string;
+	description?: string;
+	number_of_acres?: number;
+	available_shares?: number;
+	land_area?: number;
+	offered_by_company?: number;
+	pdf?: string;
+	company_rate?: number;
+	launch_start?: string;
+	construction_start?: string;
+	construction_end?: string;
+	production_start?: string;
+	media?: string[] | Record<string, string>;
+	created_at?: string;
+}
+
+interface ApiUser {
+	id?: number;
+	image?: string;
+	username?: string;
+	whatsapp_number?: string;
+	country_code?: string;
+	phone?: string;
+}
+
+interface ApiProject {
+	id: number;
+	number_of_shares?: number;
+	share_price?: number;
+	price?: string | number;
+	company_evaluation?: number;
+	status_id?: number;
+	status?: string;
+	type?: string;
+	type_flag?: string;
+	participants?: number;
+	total_price?: number;
+	sector?: ApiSector;
+	user?: ApiUser;
+	date?: string;
+	created_at?: string;
+}
+
 const MarketPage = () => {
 	const t = useTranslations("HomePage");
 	// const { user, loading } = useUser();
@@ -154,13 +200,13 @@ const MarketPage = () => {
 
 				// Adapt API data shape to IProject & UI expectations
 				const adapted: IProject[] = Array.isArray(result.data)
-					? result.data.map((item: any) => {
+					? result.data.map((item: ApiProject) => {
 						const rawPrice = item.price ?? 0;
 						const numericPrice = typeof rawPrice === 'string' ? parseFloat(rawPrice) : rawPrice;
 						// Ensure media is an array
 						let mediaArray: string[] = [];
-						if (Array.isArray(item?.sector?.media)) mediaArray = item.sector.media;
-						else if (item?.sector?.media && typeof item.sector.media === 'object') mediaArray = Object.values(item.sector.media).filter((v: any) => typeof v === 'string');
+						if (Array.isArray(item?.sector?.media)) mediaArray = item.sector.media as string[];
+						else if (item?.sector?.media && typeof item.sector.media === 'object') mediaArray = Object.values(item.sector.media as Record<string, string>).filter((v) => typeof v === 'string');
 
 						return {
 							id: item.id,
