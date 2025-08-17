@@ -66,7 +66,7 @@ const Out_team = () => {
 		};
 
 		fetchData();
-	}, []); // Empty dependency array ensures this runs only once after the component mounts
+	}, [direction]); // Add direction to dependency array
 
 	const settings2 = {
 		dots: false,

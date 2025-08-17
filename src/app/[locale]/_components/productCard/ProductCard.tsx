@@ -108,9 +108,6 @@ const ProductCard = ({ ProductInfo }: AppProps) => {
 		}
 	};
 
-	const handleOfferPrice = (value: number): void => {
-		setOfferValue(value);
-	};
 
 	const router = useRouter();
 

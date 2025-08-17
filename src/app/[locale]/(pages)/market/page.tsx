@@ -133,148 +133,151 @@ const ProductsTab: React.FC<ProductsTabProps> = ({ data, isLoading, currentPage,
 
 const MarketPage = () => {
 	const t = useTranslations("HomePage");
-	const { user, loading } = useUser();
+	// Removed incorrect useUser destructuring
 	const router = useRouter();
+	function someFunction(param: unknown) {
+		const handleSomething = (event: React.SyntheticEvent) => {
 
-	const [allData, setAllData] = useState<IProject[]>([]);
-	const [isLoading, setIsLoading] = useState<boolean>(true);
-	const [currentPage, setCurrentPage] = useState<number>(1);
-	const [totalPages, setTotalPages] = useState<number>(1);
-	const PerPage = 6;
+			const [allData, setAllData] = useState<IProject[]>([]);
+			const [isLoading, setIsLoading] = useState<boolean>(true);
+			const [currentPage, setCurrentPage] = useState<number>(1);
+			const [totalPages, setTotalPages] = useState<number>(1);
+			const PerPage = 6;
 
-	useEffect(() => {
-		const fetchAll = async () => {
-			const direction = typeof window !== 'undefined' && localStorage.getItem('direction');
-			const myHeaders = new Headers();
-			myHeaders.append('Accept-Language', direction == 'ltr' ? 'en' : 'ar');
-			setIsLoading(true);
-			try {
-				const response = await fetch(`http://localhost/quttouf-backend/api/user/new-market?per_page=${PerPage}&page=${currentPage}`, { headers: myHeaders });
-				const result = await response.json();
+			useEffect(() => {
+				const fetchAll = async () => {
+					const direction = typeof window !== 'undefined' && localStorage.getItem('direction');
+					const myHeaders = new Headers();
+					myHeaders.append('Accept-Language', direction == 'ltr' ? 'en' : 'ar');
+					setIsLoading(true);
+					try {
+						const response = await fetch(`http://localhost/quttouf-backend/api/user/new-market?per_page=${PerPage}&page=${currentPage}`, { headers: myHeaders });
+						const result = await response.json();
 
-				// Adapt API data shape to IProject & UI expectations
-				const adapted: IProject[] = Array.isArray(result.data)
-					? result.data.map((item: any) => {
-						const rawPrice = item.price ?? 0;
-						const numericPrice = typeof rawPrice === 'string' ? parseFloat(rawPrice) : rawPrice;
-						// Ensure media is an array
-						let mediaArray: string[] = [];
-						if (Array.isArray(item?.sector?.media)) mediaArray = item.sector.media;
-						else if (item?.sector?.media && typeof item.sector.media === 'object') mediaArray = Object.values(item.sector.media).filter((v: any) => typeof v === 'string');
+						// Adapt API data shape to IProject & UI expectations
+						const adapted: IProject[] = Array.isArray(result.data)
+							? result.data.map((item: any) => {
+								const rawPrice = item.price ?? 0;
+								const numericPrice = typeof rawPrice === 'string' ? parseFloat(rawPrice) : rawPrice;
+								// Ensure media is an array
+								let mediaArray: string[] = [];
+								if (Array.isArray(item?.sector?.media)) mediaArray = item.sector.media;
+								else if (item?.sector?.media && typeof item.sector.media === 'object') mediaArray = Object.values(item.sector.media).filter((v: any) => typeof v === 'string');
 
-						return {
-							id: item.id,
-							number_of_shares: item.number_of_shares ?? 0,
-							share_price: numericPrice,
-							price: rawPrice,
-							company_evaluation: item.company_evaluation ?? 0,
-							status_id: item.status_id,
-							status: item.status,
-							type: item.type,
-							type_flag: item.type_flag,
-							participants: item.participants ?? 0,
-							total_price: numericPrice,
-							sector: {
-								id: item?.sector?.id ?? 0,
-								title: item?.sector?.title,
-								description: item?.sector?.description,
-								number_of_acres: item?.sector?.number_of_acres,
-								available_shares: item?.sector?.available_shares,
-								land_area: item?.sector?.land_area,
-								offered_by_company: item?.sector?.offered_by_company,
-								pdf: item?.sector?.pdf,
-								company_rate: item?.sector?.company_rate,
-								launch_start: item?.sector?.launch_start,
-								construction_start: item?.sector?.construction_start,
-								construction_end: item?.sector?.construction_end,
-								production_start: item?.sector?.production_start,
-								media: mediaArray,
-								created_at: item?.sector?.created_at,
-							},
-							user: {
-								id: item?.user?.id ?? 0,
-								image: item?.user?.image || '',
-								username: item?.user?.username,
-								whatsapp_number: item?.user?.whatsapp_number || '',
-								country_code: item?.user?.country_code || '',
-								phone: item?.user?.phone || '',
-							},
-							created_at: item.date || item.created_at || new Date().toISOString(),
-						};
-					})
-					: [];
+								return {
+									id: item.id,
+									number_of_shares: item.number_of_shares ?? 0,
+									share_price: numericPrice,
+									price: rawPrice,
+									company_evaluation: item.company_evaluation ?? 0,
+									status_id: item.status_id,
+									status: item.status,
+									type: item.type,
+									type_flag: item.type_flag,
+									participants: item.participants ?? 0,
+									total_price: numericPrice,
+									sector: {
+										id: item?.sector?.id ?? 0,
+										title: item?.sector?.title,
+										description: item?.sector?.description,
+										number_of_acres: item?.sector?.number_of_acres,
+										available_shares: item?.sector?.available_shares,
+										land_area: item?.sector?.land_area,
+										offered_by_company: item?.sector?.offered_by_company,
+										pdf: item?.sector?.pdf,
+										company_rate: item?.sector?.company_rate,
+										launch_start: item?.sector?.launch_start,
+										construction_start: item?.sector?.construction_start,
+										construction_end: item?.sector?.construction_end,
+										production_start: item?.sector?.production_start,
+										media: mediaArray,
+										created_at: item?.sector?.created_at,
+									},
+									user: {
+										id: item?.user?.id ?? 0,
+										image: item?.user?.image || '',
+										username: item?.user?.username,
+										whatsapp_number: item?.user?.whatsapp_number || '',
+										country_code: item?.user?.country_code || '',
+										phone: item?.user?.phone || '',
+									},
+									created_at: item.date || item.created_at || new Date().toISOString(),
+								};
+							})
+							: [];
 
-				setAllData(adapted);
-				setTotalPages(result?.pages || 1);
-			} catch (error) {
-				console.error('Error fetching market data:', error);
-				if (error instanceof Error) toast.error(error.message); else toast.error('An unexpected error occurred');
-			} finally {
-				setIsLoading(false);
-			}
+						setAllData(adapted);
+						setTotalPages(result?.pages || 1);
+					} catch (error) {
+						console.error('Error fetching market data:', error);
+						if (error instanceof Error) toast.error(error.message); else toast.error('An unexpected error occurred');
+					} finally {
+						setIsLoading(false);
+					}
+				};
+				fetchAll();
+			}, [currentPage, router]);
+
+			// Derived datasets
+			const companyData = useMemo(() => allData.filter(p => p?.user?.id === 1), [allData]);
+			const customersData = useMemo(() => allData.filter(p => p?.user?.id !== 1), [allData]);
+
+			const tabs = useMemo(() => {
+				return [
+					{
+						id: 'tab1',
+						label: t('All'),
+						content: () => (
+							<ProductsTab
+								data={allData}
+								isLoading={isLoading}
+								currentPage={currentPage}
+								totalPages={totalPages}
+								onPageChange={setCurrentPage}
+								labelNoRecords={t('NoRecords')}
+							/>
+						)
+					},
+					{
+						id: 'tab4',
+						label: t('fromCompany'),
+						content: () => (
+							<ProductsTab
+								data={companyData}
+								isLoading={isLoading}
+								currentPage={currentPage}
+								totalPages={totalPages}
+								onPageChange={setCurrentPage}
+								labelNoRecords={t('NoRecords')}
+							/>
+						)
+					},
+					{
+						id: 'tab3',
+						label: t('fromCustomers'),
+						content: () => (
+							<ProductsTab
+								data={customersData}
+								isLoading={isLoading}
+								currentPage={currentPage}
+								totalPages={totalPages}
+								onPageChange={setCurrentPage}
+								labelNoRecords={t('NoRecords')}
+							/>
+						)
+					}
+				];
+			}, [allData, companyData, customersData, currentPage, isLoading, totalPages, t]);
+
+			return (
+				<>
+					<Breadcrumb items={[{ label: t('market'), href: '/market' }]} />
+					<div className='mx-auto max-w-[90%] sm:max-w-xl md:max-w-2xl lg:max-w-4xl xl:max-w-6xl 2xl:max-w-7xl my-20 md:my-32'>
+						<Tabs tabs={tabs} defaultTab='tab1' className='w-full' />
+					</div>
+				</>
+			);
 		};
-		fetchAll();
-	}, [currentPage, router]);
 
-	// Derived datasets
-	const companyData = useMemo(() => allData.filter(p => p?.user?.id === 1), [allData]);
-	const customersData = useMemo(() => allData.filter(p => p?.user?.id !== 1), [allData]);
-
-	const tabs = useMemo(() => {
-		return [
-			{
-				id: 'tab1',
-				label: t('All'),
-				content: () => (
-					<ProductsTab
-						data={allData}
-						isLoading={isLoading}
-						currentPage={currentPage}
-						totalPages={totalPages}
-						onPageChange={setCurrentPage}
-						labelNoRecords={t('NoRecords')}
-					/>
-				)
-			},
-			{
-				id: 'tab4',
-				label: t('fromCompany'),
-				content: () => (
-					<ProductsTab
-						data={companyData}
-						isLoading={isLoading}
-						currentPage={currentPage}
-						totalPages={totalPages}
-						onPageChange={setCurrentPage}
-						labelNoRecords={t('NoRecords')}
-					/>
-				)
-			},
-			{
-				id: 'tab3',
-				label: t('fromCustomers'),
-				content: () => (
-					<ProductsTab
-						data={customersData}
-						isLoading={isLoading}
-						currentPage={currentPage}
-						totalPages={totalPages}
-						onPageChange={setCurrentPage}
-						labelNoRecords={t('NoRecords')}
-					/>
-				)
-			}
-		];
-	}, [allData, companyData, customersData, currentPage, isLoading, totalPages, t]);
-
-	return (
-		<>
-			<Breadcrumb items={[{ label: t('market'), href: '/market' }]} />
-			<div className='mx-auto max-w-[90%] sm:max-w-xl md:max-w-2xl lg:max-w-4xl xl:max-w-6xl 2xl:max-w-7xl my-20 md:my-32'>
-				<Tabs tabs={tabs} defaultTab='tab1' className='w-full' />
-			</div>
-		</>
-	);
-};
-
-export default MarketPage;
+		export default MarketPage;
+		export default MarketPage;
