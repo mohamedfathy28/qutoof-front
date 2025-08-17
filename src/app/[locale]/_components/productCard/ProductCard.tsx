@@ -141,7 +141,7 @@ const ProductCard = ({ ProductInfo }: AppProps) => {
 					/>
 				</div>
 				<p className='text-[14px] font-[500] text-black text-center mb-4'>
-									// @ts-expect-error
+
 				</p>
 				<h6 className='text-[26px] text-[#009444] text-center font-[600] mb-8'>
 					{ProductInfo.sector.title}
@@ -248,7 +248,7 @@ const ProductCard = ({ ProductInfo }: AppProps) => {
 						minValue={0}
 						onChange={(val: number) => {
 							// mutate prop object so the latest value is used when calling handleSendOffer(ProductInfo.id, ProductInfo.number_of_shares)
-							// @ts-ignore
+
 							ProductInfo.number_of_shares = val;
 						}}
 						placeholder={t("OfferModal.numberSharesPlaceholder")}
@@ -265,7 +265,7 @@ const ProductCard = ({ ProductInfo }: AppProps) => {
 							placeholder={t("OfferModal.pricePlaceholder")}
 							label={t("OfferModal.priceLabel")}
 							// default to product total price
-							// @ts-ignore PriceInput may accept value prop; if not, adjust implementation
+							// @ts-expect-error PriceInput may accept value prop; if not, adjust implementation
 							value={ProductInfo.total_price}
 							currency={t("OfferModal.egCurrency")}
 						/>
