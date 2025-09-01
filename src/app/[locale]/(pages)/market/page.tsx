@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useState, useMemo } from "react";
+import { useSearchParams } from 'next/navigation';
 import Breadcrumb from "../../_components/breadcrumb/breadcrumb";
 import Tabs from "../../_components/tabs/Tabs";
 import ProductCard from "../../_components/productCard/ProductCard";
@@ -181,6 +182,8 @@ const MarketPage = () => {
 	const t = useTranslations("HomePage");
 	// const { user, loading } = useUser();
 	const router = useRouter();
+	const searchParams = useSearchParams();
+	const sectorId = searchParams.get('sector_id');
 
 	const [allData, setAllData] = useState<IProject[]>([]);
 	const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -195,7 +198,11 @@ const MarketPage = () => {
 			myHeaders.append('Accept-Language', direction == 'ltr' ? 'en' : 'ar');
 			setIsLoading(true);
 			try {
-				const response = await fetch(`http://localhost/quttouf-backend/api/user/new-market?per_page=${PerPage}&page=${currentPage}`, { headers: myHeaders });
+				// Build API URL with optional sector_id filter
+				const baseUrl = 'http://localhost/quttouf-backend/api/user/new-market';
+				const params = new URLSearchParams({ per_page: String(PerPage), page: String(currentPage) });
+				if (sectorId) params.append('sector_id', sectorId);
+				const response = await fetch(`${baseUrl}?${params.toString()}`, { headers: myHeaders });
 				const result = await response.json();
 
 				// Adapt API data shape to IProject & UI expectations
@@ -260,7 +267,7 @@ const MarketPage = () => {
 			}
 		};
 		fetchAll();
-	}, [currentPage, router]);
+	}, [currentPage, router, sectorId]);
 
 	// Derived datasets
 	const companyData = useMemo(() => allData.filter(p => p?.user?.id === 1), [allData]);

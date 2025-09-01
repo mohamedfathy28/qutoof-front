@@ -187,7 +187,14 @@ const SectorCard = ({ SectorInfo }: ISectorCardProps) => {
 							</svg>
 						</Link>
 						{SectorInfo.AllowToSell && (
-							<Button className='px-4' onClick={handleOpenModal}>
+							<Button
+								className='px-4'
+								onClick={() => {
+									// include sector id in market query params
+									const id = SectorInfo?.id;
+									router.push(`/market?sector_id=${id}`);
+								}}
+							>
 								{t("BuyNow")}
 							</Button>
 						)}

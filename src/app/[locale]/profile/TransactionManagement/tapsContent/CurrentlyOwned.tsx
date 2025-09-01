@@ -2,63 +2,39 @@ import Spinner from "@/app/[locale]/_components/spinner/Spinner";
 import PriceInput from "../../../_components/amountInput/AmountInput";
 import Button from "../../../_components/button/Button";
 import Modal from "../../../_components/modal/Modal";
-import Pagination from "../../../_components/pagination/Pagination";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { useTranslations } from "next-intl";
 
-interface IProject {
-	id: number;
+interface IRecord {
+	id: number; // record id (kept for key rendering)
+	sector_id: number; // backend sector identifier we now use for selling
 	number_of_shares: number;
-	share_price: number;
-	company_evaluation: number;
-	status_id: number;
-	status: string;
-	type: string;
-	type_flag: string;
-	participants: number;
-	total_price: number;
+	price: number | string;
 	sector: {
-		id: number;
+		id: number; // may duplicate sector_id
 		title: string;
-		description: string;
-		number_of_acres: number;
-		available_shares: number;
-		land_area: number;
-		offered_by_company: number;
-		pdf: string;
 		company_rate: number;
-		launch_start: string;
-		construction_start: string;
-		construction_end: string;
-		production_start: string;
-		media: string[];
+		description?: string;
 	};
-	user: {
-		id: number;
-		image: string;
-		username: string;
-		whatsapp_number: string;
-		country_code: string;
-		phone: string;
-	};
-	created_at: string;
+	created_at?: string;
 }
 
-const RenderCurrentlyOwned = () => {
-	const [isLoading, setisLoading] = useState<boolean>(true);
+interface Props {
+	data: IRecord[];
+	loading?: boolean;
+}
+
+const RenderCurrentlyOwned: React.FC<Props> = ({ data, loading }) => {
 	const [IsSelling, setIsSelling] = useState<boolean>(false);
-	const [data, setData] = useState<IProject[]>([]);
-	const [totalPages, setTotalPages] = useState<number>();
-	const [CurrentPage, setCurrentPage] = useState<number>(1);
 	const [isOpen, setIsOpen] = useState<boolean>(false);
 	const [OfferValue, setOfferValue] = useState<number | null>(null);
 	const [NumberOfShares, setNumberOfShares] = useState<number | null>(null);
-	const [CurrentSectorId, setCurrentSectorId] = useState<number | undefined>();
+	const [CurrentSectorId, setCurrentSectorId] = useState<number | undefined>(); // will store sector_id
 
 	const t = useTranslations("profile.transaction_management");
 
-	const handleSell = async (sectorid: number | undefined) => {
+	const handleSell = async (sectorId: number | undefined) => {
 		const token =
 			typeof window !== "undefined" && localStorage.getItem("token");
 		const direction =
@@ -73,7 +49,8 @@ const RenderCurrentlyOwned = () => {
 		myHeaders.append("Accept-Language", direction == "ltr" ? "en" : "ar");
 
 		const formData = new FormData();
-		if (sectorid) formData.append("market_of_sector_id", sectorid.toString());
+		// Use new field name sector_id instead of market_of_sector_id
+		if (sectorId) formData.append("market_of_sector_id", sectorId.toString());
 		if (OfferValue !== null)
 			formData.append("asking_price", OfferValue.toString());
 		if (NumberOfShares !== null)
@@ -97,7 +74,7 @@ const RenderCurrentlyOwned = () => {
 				toast.success(result.message);
 				setIsOpen(false);
 				setIsSelling(false);
-				fetchData();
+				// Optionally trigger a refetch via an event or callback prop
 			} else {
 				toast.error(result.message);
 				setIsSelling(false);
@@ -118,41 +95,7 @@ const RenderCurrentlyOwned = () => {
 		setNumberOfShares(value);
 	};
 
-	const fetchData = async () => {
-		const token =
-			typeof window !== "undefined" && localStorage.getItem("token");
-		const PerPage = 6;
-		const myHeaders = new Headers();
-		myHeaders.append("accept", "application/json");
-		myHeaders.append(
-			"Authorization",
-			`Bearer ${token ? JSON.parse(token) : ""}`
-		);
-
-		try {
-			const response = await fetch(
-				`https://quttouf.com/api/user/sectors/currently-owned?per_page=${PerPage}&page=${CurrentPage}`,
-				{
-					headers: myHeaders,
-				}
-			);
-			const result = await response.json();
-			setData(result.data);
-			console.log(result.data, "result");
-			setTotalPages(result?.pages);
-			setCurrentPage(result?.current_page);
-			setisLoading(false);
-		} catch (error) {
-			console.error("Error fetching data:", error);
-			setisLoading(false);
-		}
-	};
-	useEffect(() => {
-		fetchData();
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [CurrentPage]); // Empty dependency array ensures this runs only once after the component mounts
-
-	if (isLoading) return <Spinner />;
+	if (loading) return <Spinner />;
 
 	return (
 		<>
@@ -164,7 +107,7 @@ const RenderCurrentlyOwned = () => {
 							className='px-4 py-6 lg:px-6 lg:py-8  rounded-[20px] bg-[#fff] w-full'
 						>
 							<p className='text-[14px] font-[500] text-black text-center mb-4'>
-								{ele.created_at.split(" ")[0]}
+								{(ele.created_at || "").split(" ")[0]}
 							</p>
 							<h6 className='text-[26px] text-[#009444] text-center font-[600] mb-8'>
 								{ele.sector.title}
@@ -172,10 +115,16 @@ const RenderCurrentlyOwned = () => {
 							<ul className='flex flex-col gap-4 w-full mb-8'>
 								<li className='flex justify-between items-center'>
 									<span className='text-[16px] text-[#656565] font-[400]'>
-										{t("sector")}
+										{ele.sector.description}
+									</span>
+
+								</li>
+								<li className='flex justify-between items-center'>
+									<span className='text-[16px] text-[#656565] font-[400]'>
+										{t("Number_Shares")}
 									</span>
 									<span className='text-[16px] text-[#000] font-[600]'>
-										{ele.sector.id}
+										{ele.number_of_shares}
 									</span>
 								</li>
 								<li className='flex justify-between items-center'>
@@ -183,7 +132,7 @@ const RenderCurrentlyOwned = () => {
 										{t("asking_price")}
 									</span>
 									<span className='text-[16px] text-[#000] font-[600]'>
-										{ele.total_price}
+										{ele.price}
 									</span>
 								</li>
 								<li className='flex justify-between items-center'>
@@ -191,7 +140,7 @@ const RenderCurrentlyOwned = () => {
 										{t("company_evaluation")}
 									</span>
 									<span className='text-[16px] text-[#000] font-[600]'>
-										{ele.company_evaluation}
+										{ele.sector.company_rate}
 									</span>
 								</li>
 							</ul>
@@ -200,7 +149,7 @@ const RenderCurrentlyOwned = () => {
 									className='w-28 h-12'
 									onClick={() => {
 										setIsOpen(true);
-										setCurrentSectorId(ele?.id);
+										setCurrentSectorId(ele?.sector_id);
 									}}
 								>
 									{t("Sell")}
@@ -214,17 +163,7 @@ const RenderCurrentlyOwned = () => {
 					</h3>
 				)}
 
-				<div className='col-span-3'>
-					{data?.length !== 0 ? (
-						<Pagination
-							currentPage={CurrentPage}
-							totalPages={totalPages ? totalPages : 1}
-							onPageChange={(t) => setCurrentPage(t)}
-						/>
-					) : (
-						""
-					)}
-				</div>
+				{/* Pagination removed */}
 			</div>
 
 			<Modal
@@ -237,15 +176,28 @@ const RenderCurrentlyOwned = () => {
 			>
 				<div className='space-y-6 pb-8 mb-8 border-b border-[#F1F1F1]'>
 					<div className='space-y-1'>
-						<PriceInput
-							maxValue={100000000}
-							minValue={0}
-							onChange={handleNumberOfShares}
-							initialValue={""}
-							placeholder={t("Enter_amount")}
-							label={t("Number_Shares")}
-							currency='EGP'
+						<label className='block text-sm font-medium text-[#32363D]'>
+							{t("Number_Shares")}
+						</label>
+						<input
+							type='number'
+							min={0}
+							max={data.find(r => r.sector_id === CurrentSectorId)?.number_of_shares ?? 0}
+							value={NumberOfShares ?? ""}
+							onChange={e => {
+								const raw = e.target.value;
+								const max = data.find(r => r.sector_id === CurrentSectorId)?.number_of_shares ?? 0;
+								const parsed = raw === "" ? null : Math.min(Math.max(0, parseInt(raw, 10)), max);
+								setNumberOfShares(parsed);
+								if (parsed !== null) handleNumberOfShares(parsed);
+							}}
+							placeholder={`${t("Enter_amount")} (≤ ${data.find(r => r.sector_id === CurrentSectorId)?.number_of_shares ?? 0
+								})`}
+							className='w-full h-12 rounded-lg border border-[#E4E6EA] px-3 outline-none focus:ring-2 focus:ring-[#009444]'
 						/>
+						<p className='text-xs text-[#656565]'>
+							{t("Max")}: {data.find(r => r.sector_id === CurrentSectorId)?.number_of_shares ?? 0}
+						</p>
 					</div>
 					<div className='space-y-1'>
 						<PriceInput

@@ -272,6 +272,7 @@
 			"pending": "Pending",
 			"sector": "Sector",
 			"asking_price": "Asking Price",
+			"Max": "Max",
 			"company_evaluation": "Company Evaluation",
 			"no_records": "No records have been added yet.",
 			"Sell": "Sell",
@@ -286,7 +287,11 @@
 			"Refusing": "Refusing...",
 			"Refuse": "Refuse",
 			"Accepting": "Accepting...",
-			"Accept": "Confirm"
+			"Accept": "Confirm",
+			"Waiting_For_Approval_Sell": "Waiting for approval to sell",
+			"current_price": "Current Price",
+			"status": "Status",
+			"Cancelling": "Cancelling..."
 		},
 		"wallet": {
 			"address_invalid": "Invalid email address",

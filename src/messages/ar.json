@@ -278,6 +278,7 @@
 			"company_evaluation": "تقييم الشركة",
 			"no_records": "لم يتم إضافة أي سجلات بعد.",
 			"Sell": "بيع",
+			"Max": "الحد الأقصى",
 			"Enter_amount": "أدخل المبلغ",
 			"Number_Shares": "عدد الأسهم",
 			"Asking_Price": "السعر المطلوب",
@@ -289,7 +290,11 @@
 			"Refusing": "جارٍ الرفض...",
 			"Refuse": "رفض",
 			"Accepting": "جارٍ القبول...",
-			"Accept": "تأكيد"
+			"Accept": "تأكيد",
+			"Waiting_For_Approval_Sell": "في انتظار الموافقة على البيع",
+			"current_price": "السعر الحالي",
+			"status": "الحالة",
+			"Cancelling": "جارٍ الإلغاء..."
 		},
 		"wallet": {
 			"address_invalid": "عنوان البريد الإلكتروني غير صالح",
