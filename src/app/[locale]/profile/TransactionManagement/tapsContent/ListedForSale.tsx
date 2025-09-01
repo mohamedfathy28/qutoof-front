@@ -1,6 +1,5 @@
 "use client";
 import Spinner from "@/app/[locale]/_components/spinner/Spinner";
-import Pagination from "../../../_components/pagination/Pagination";
 import React from "react";
 import { useTranslations } from "next-intl";
 
@@ -47,7 +46,7 @@ const RenderListedForSale: React.FC<Props> = ({ data, loading }) => {
 									<span className='text-[16px] text-[#656565] font-[400]'>
 										{ele.sector.description}
 									</span>
-									
+
 								</li>
 								<li className='flex justify-between items-center'>
 									<span className='text-[16px] text-[#656565] font-[400]'>

@@ -1,7 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import RenderListedForSale from "./tapsContent/ListedForSale";
-import RenderPurchaseRequests from "./tapsContent/PurchaseRequests";
 import RenderCurrentlyOwned from "./tapsContent/CurrentlyOwned";
 import RenderAwaitingApproval from "./tapsContent/AwaitingApproval";
 import RenderSold from "./tapsContent/Sold";
@@ -28,13 +27,22 @@ interface ISector {
 	created_at?: string;
 }
 
-interface IUnifiedRecord {
+interface IUnifiedRecordBase {
 	id: number;
 	number_of_shares: number;
-	price: number | string; // some arrays have string price
+	price: number | string;
 	sector: ISector;
-	created_at?: string; // not always present – fall back to sector.created_at
+	created_at?: string;
+	sector_id?: number; // sometimes provided separately
 }
+
+interface IWaitingForApprovalSellRecord extends IUnifiedRecordBase {
+	asking_price?: number | string;
+	status?: number;
+	status_string?: string;
+}
+
+type IUnifiedRecord = IUnifiedRecordBase | IWaitingForApprovalSellRecord;
 
 interface ITransactionManagementResponse {
 	owned_shares: IUnifiedRecord[];
@@ -88,28 +96,16 @@ const RenderTransactionManagement = () => {
 				/>
 			),
 		},
-		// {
-		// 	id: "PurchaseRequests",
-		// 	label: t("Purchase_Requests"),
-		// 	content: () => (
-		// 		<RenderPurchaseRequests
-		// 			data={data?.purchase_orders || []}
-		// 			loading={loading}
-		// 		/>
-		// 	),
-		// },
+		// PurchaseRequests tab intentionally removed; restore if backend data needed.
 		{
 			id: "WaitingForApprovalSell",
 			label: t("Waiting_For_Approval_Sell"),
 			content: () => (
 				<WaitingForApprovalSell
 					data={(data?.waiting_for_approval_sell || []).map(r => ({
-						...(r as any),
-						asking_price: (r as any).asking_price,
-						status: (r as any).status,
-						status_string: (r as any).status_string,
-						sector_id: (r as any).sector_id ?? r.sector.id,
-					})) as any}
+						...(r as IWaitingForApprovalSellRecord),
+						sector_id: r.sector_id ?? r.sector.id,
+					}))}
 					loading={loading}
 				/>
 			),
@@ -120,10 +116,9 @@ const RenderTransactionManagement = () => {
 			content: () => (
 				<RenderCurrentlyOwned
 					data={(data?.owned_shares || []).map(r => ({
-						// ensure sector_id exists for component expectation
-						sector_id: (r as any).sector_id ?? r.sector.id,
 						...r,
-					})) as any}
+						sector_id: r.sector_id ?? r.sector.id,
+					}))}
 					loading={loading}
 				/>
 			),

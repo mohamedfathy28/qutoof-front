@@ -96,17 +96,7 @@ const SectorCard = ({ SectorInfo }: ISectorCardProps) => {
 		setNumberOfShares(value);
 	};
 
-	const handleOpenModal = () => {
-		const token =
-			typeof window !== "undefined" && localStorage.getItem("token");
-
-		// If the user is not authenticated, redirect to the login page
-		if (!token) {
-			router.push("/auth/signin");
-		} else {
-			setIsOpen(true);
-		}
-	};
+	// Removed unused handleOpenModal (previously handled auth check) to satisfy ESLint.
 
 	return (
 		<>
