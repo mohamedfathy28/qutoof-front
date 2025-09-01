@@ -76,8 +76,12 @@ const RenderTransactionManagement = () => {
 				if (!res.ok) throw new Error(`Status ${res.status}`);
 				const result = await res.json();
 				setData(result as ITransactionManagementResponse);
-			} catch (e: any) {
-				setError(e.message || "Unknown error");
+			} catch (e: unknown) {
+				if (e instanceof Error) {
+					setError(e.message);
+				} else {
+					setError("Unknown error");
+				}
 			} finally {
 				setLoading(false);
 			}
