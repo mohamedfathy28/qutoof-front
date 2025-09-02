@@ -24,7 +24,7 @@ interface AppProps {
 		participants: number;
 		total_price: number;
 		sector: {
-			id: 1;
+			id: number;
 			title: string;
 			description: string;
 			number_of_acres: number;
