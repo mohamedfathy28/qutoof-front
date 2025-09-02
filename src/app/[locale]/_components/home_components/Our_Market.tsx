@@ -75,7 +75,7 @@ const OurMarket: React.FC = () => {
 			myHeaders.append('Accept-Language', direction == 'ltr' ? 'en' : 'ar');
 			setIsLoading(true);
 			try {
-				const baseUrl = 'http://localhost/quttouf-backend/api/user/new-market';
+				const baseUrl = 'https://quttouf.com/api/api/user/new-market';
 				const params = new URLSearchParams({ per_page: String(PerPage), page: String(currentPage) });
 				const response = await fetch(`${baseUrl}?${params.toString()}`, { headers: myHeaders });
 				const result = await response.json();

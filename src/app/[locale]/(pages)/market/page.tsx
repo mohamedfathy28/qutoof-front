@@ -199,7 +199,7 @@ const MarketPage = () => {
 			setIsLoading(true);
 			try {
 				// Build API URL with optional sector_id filter
-				const baseUrl = 'http://localhost/quttouf-backend/api/user/new-market';
+				const baseUrl = 'https://quttouf.com/api/api/user/new-market';
 				const params = new URLSearchParams({ per_page: String(PerPage), page: String(currentPage) });
 				if (sectorId) params.append('sector_id', sectorId);
 				const response = await fetch(`${baseUrl}?${params.toString()}`, { headers: myHeaders });
