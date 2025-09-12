@@ -311,7 +311,7 @@ const MarketPage = () => {
 								}
 								: p
 						);
-					} catch (e) {
+					} catch {
 						return list;
 					}
 				};
