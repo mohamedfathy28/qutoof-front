@@ -39,6 +39,10 @@ interface IProject {
 		production_start?: string;
 		media: string[]; // ensure array for component
 		created_at?: string;
+		project?: {
+			id: number;
+			title?: string;
+		};
 	};
 	user: {
 		id: number;
@@ -99,6 +103,10 @@ const ProductsTab: React.FC<ProductsTabProps> = ({ data, isLoading, currentPage,
 									launch_start: (ProductInfo.sector && ProductInfo.sector.launch_start) ? ProductInfo.sector.launch_start : '',
 									construction_start: (ProductInfo.sector && ProductInfo.sector.construction_start) ? ProductInfo.sector.construction_start : '',
 									construction_end: (ProductInfo.sector && ProductInfo.sector.construction_end) ? ProductInfo.sector.construction_end : '',
+									project: (ProductInfo.sector && ProductInfo.sector.project) ? {
+										id: ProductInfo.sector.project.id,
+										title: ProductInfo.sector.project.title
+									} : undefined,
 									production_start: (ProductInfo.sector && ProductInfo.sector.production_start) ? ProductInfo.sector.production_start : '',
 									media: (ProductInfo.sector && ProductInfo.sector.media) ? ProductInfo.sector.media : [],
 									created_at: (ProductInfo.sector && ProductInfo.sector.created_at) ? ProductInfo.sector.created_at : new Date().toISOString(),
@@ -149,6 +157,10 @@ interface ApiSector {
 	production_start?: string;
 	media?: string[] | Record<string, string>;
 	created_at?: string;
+	project?: {
+		id?: number;
+		title?: string;
+	};
 }
 
 interface ApiUser {
@@ -243,6 +255,9 @@ const MarketPage = () => {
 								production_start: item?.sector?.production_start,
 								media: mediaArray,
 								created_at: item?.sector?.created_at,
+								project: item?.sector?.project
+									? { id: item.sector.project.id ?? 0, title: item.sector.project.title }
+									: undefined,
 							},
 							user: {
 								id: item?.user?.id ?? 0,
@@ -257,7 +272,52 @@ const MarketPage = () => {
 					})
 					: [];
 
-				setAllData(adapted);
+				// Enrich with project titles if missing by fetching sector details
+				const enrichWithProjects = async (list: IProject[]) => {
+					const missingIds = Array.from(new Set(
+						list
+							.filter(p => !p.sector?.project?.title && !!p.sector?.id)
+							.map(p => p.sector.id)
+					));
+					if (missingIds.length === 0) return list;
+					try {
+						const token = typeof window !== 'undefined' && localStorage.getItem('token');
+						const hdrs = new Headers();
+						hdrs.append('accept', 'application/json');
+						if (token) hdrs.append('Authorization', `Bearer ${JSON.parse(String(token))}`);
+						hdrs.append('Accept-Language', direction == 'ltr' ? 'en' : 'ar');
+						const promises = missingIds.map(async (sid) => {
+							try {
+								const r = await fetch(`https://quttouf.com/api/user/sectors/${sid}`, { headers: hdrs });
+								const j = await r.json();
+								return { sid, project: j?.data?.project } as { sid: number; project?: { id: number; title?: string } };
+							} catch {
+								return { sid, project: undefined } as { sid: number; project?: { id: number; title?: string } };
+							}
+						});
+						const results = await Promise.all(promises);
+						const bySector = new Map<number, { id: number; title?: string }>();
+						results.forEach(r => {
+							if (r.project?.id) bySector.set(r.sid, { id: r.project.id, title: r.project.title });
+						});
+						return list.map(p =>
+							bySector.has(p.sector.id)
+								? {
+									...p,
+									sector: {
+										...p.sector,
+										project: bySector.get(p.sector.id)
+									}
+								}
+								: p
+						);
+					} catch (e) {
+						return list;
+					}
+				};
+
+				const enriched = await enrichWithProjects(adapted);
+				setAllData(enriched);
 				setTotalPages(result?.pages || 1);
 			} catch (error) {
 				console.error('Error fetching market data:', error);
@@ -320,9 +380,30 @@ const MarketPage = () => {
 		];
 	}, [allData, companyData, customersData, currentPage, isLoading, totalPages, t]);
 
+	// Breadcrumb items: add project/sector when filtering by sector_id
+	const breadcrumbItems = useMemo(() => {
+		const items: { label: string; href: string }[] = [
+			{ label: t('market'), href: '/market' }
+		];
+		if (sectorId && allData && allData.length > 0) {
+			const sectorIdNum = Number(sectorId);
+			const matched = allData.find(p => p.sector?.id === sectorIdNum) || allData[0];
+			const project = matched?.sector?.project;
+			const sectorTitle = matched?.sector?.title;
+			if (project?.title) {
+				items.push({ label: project.title, href: project.id ? `/our-projects/${project.id}` : '/our-projects' });
+			}
+			if (sectorTitle) {
+				const projectPart = project?.id ? `/our-projects/${project.id}` : '/our-projects';
+				items.push({ label: sectorTitle, href: `${projectPart}/sectors/${matched?.sector?.id ?? ''}` });
+			}
+		}
+		return items;
+	}, [allData, sectorId, t]);
+
 	return (
 		<>
-			<Breadcrumb items={[{ label: t('market'), href: '/market' }]} />
+			<Breadcrumb items={breadcrumbItems} />
 			<div className='mx-auto max-w-[90%] sm:max-w-xl md:max-w-2xl lg:max-w-4xl xl:max-w-6xl 2xl:max-w-7xl my-20 md:my-32'>
 				<Tabs tabs={tabs} defaultTab='tab1' className='w-full' />
 			</div>

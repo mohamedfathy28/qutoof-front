@@ -258,8 +258,11 @@ const SectorDetails = ({ sectorId }: Iprops) => {
 		<>
 			<Breadcrumb
 				items={[
-					{ label: t("Sectors"), href: "/sectors" },
-					{ label: data?.title, href: `/sectors/${sectorId}` },
+					{ label: t("ourProjects"), href: "/our-projects" },
+					data?.project?.id
+						? { label: data?.project?.title, href: `/our-projects/${data?.project?.id}` }
+						: { label: t("ourSectors"), href: "/our-projects" },
+					{ label: data?.title, href: `/our-projects/${data?.project?.id ?? ""}/sectors/${sectorId}` },
 				]}
 			/>
 			<div className='mx-auto max-w-[90%] sm:max-w-xl md:max-w-2xl lg:max-w-4xl xl:max-w-6xl 2xl:max-w-7xl py-20 md:py-32'>
@@ -267,7 +270,7 @@ const SectorDetails = ({ sectorId }: Iprops) => {
 					<ImageSlider images={sliderImages} />
 					<div>
 						<h3 className='text-[#121212] text-[28px] font-[500] mb-2'>
-							{data?.title}
+							{data?.project?.title ? `${data.project.title} - ${data.title}` : data?.title}
 						</h3>
 						<span className='flex items-center gap-2 text-[24px] pb-6 mb-6 border-b border-[#F1F1F1]'>
 							<FaStar className='text-yellow-500' />

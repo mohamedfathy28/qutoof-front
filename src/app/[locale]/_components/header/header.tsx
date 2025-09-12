@@ -34,14 +34,17 @@ const Header = () => {
 	const dropdownRef = useRef<HTMLDivElement>(null);
 	const t = useTranslations("HomePage");
 
-	// Ensure consistent rendering between server and client
-	const isClient = typeof window !== "undefined";
-	const initialUser = isClient ? user : null;
+	// Ensure consistent SSR/CSR: only use user after mount
+	const [mounted, setMounted] = useState(false);
+	useEffect(() => {
+		setMounted(true);
+	}, []);
+	const isAuthenticated = mounted && !!user && Object.keys(user).length > 0;
 
 	const router = useRouter();
 
 	const handleLogout = () => {
-		if (isClient) {
+		if (typeof window !== "undefined") {
 			localStorage.removeItem("token");
 			localStorage.removeItem("userInfo");
 			updateUser({});
@@ -230,7 +233,7 @@ const Header = () => {
 								{t("contactUs")}
 							</Link>
 						</li>
-						{initialUser ? (
+						{isAuthenticated ? (
 							<ul className='w-full lg:hidden border-t border-[#fff] mt-8 pt-4'>
 								<li className='w-full'>
 									<button
@@ -272,7 +275,7 @@ const Header = () => {
 
 					<div className='flex items-center gap-4 md:gap-8'>
 						<LanguageSwitcher />
-						{initialUser ? (
+						{isAuthenticated ? (
 							<>
 								<div
 									className='relative hidden lg:inline-block text-left '
@@ -282,7 +285,7 @@ const Header = () => {
 										onClick={() => setDropdownIsOpen(!dropdownIsOpen)}
 										className='text-[14px] font-[500] rounded-[4px] bg-white cursor-pointer'
 									>
-										{t("welcome")}, {initialUser.username}
+										{t("welcome")}, {user?.username}
 									</p>
 
 									{dropdownIsOpen && (

@@ -39,6 +39,10 @@ interface AppProps {
 			production_start: string;
 			media: string[];
 			created_at: string;
+			project?: {
+				id: number;
+				title?: string;
+			};
 		};
 		user: {
 			id: number;
@@ -140,11 +144,13 @@ const ProductCard = ({ ProductInfo }: AppProps) => {
 						height={50}
 					/>
 				</div>
-				<p className='text-[14px] font-[500] text-black text-center mb-4'>
-
-				</p>
+				{ProductInfo.sector.project?.title && (
+					<p className='text-[14px] font-[500] text-black text-center mb-4'>
+						{ProductInfo.sector.project.title}
+					</p>
+				)}
 				<h6 className='text-[26px] text-[#009444] text-center font-[600] mb-8'>
-					{ProductInfo.sector.title}
+					{ProductInfo.sector.project?.title ? `${ProductInfo.sector.project.title} - ${ProductInfo.sector.title}` : ProductInfo.sector.title}
 				</h6>
 				<ul className='flex flex-col gap-4 w-full mb-8'>
 					<li className='flex justify-between items-center'>
@@ -178,7 +184,7 @@ const ProductCard = ({ ProductInfo }: AppProps) => {
 						className='w-full'
 						onClick={() =>
 							router.push(
-								`/our-projects/${ProductInfo.id}/sectors/${ProductInfo.sector.id}`
+								`/our-projects/${ProductInfo.sector.project?.id ?? ProductInfo.id}/sectors/${ProductInfo.sector.id}`
 							)
 						}
 					>
@@ -222,7 +228,7 @@ const ProductCard = ({ ProductInfo }: AppProps) => {
 								{t("sector")}
 							</span>
 							<span className='text-[16px] text-[#000000] font-[400]'>
-								{ProductInfo.sector.title}
+								{ProductInfo.sector.project?.title ? `${ProductInfo.sector.project.title} - ${ProductInfo.sector.title}` : ProductInfo.sector.title}
 							</span>
 						</li>
 						<li className='flex items-center justify-between'>
