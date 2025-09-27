@@ -86,7 +86,7 @@ const ProductCard = ({ ProductInfo }: AppProps) => {
 
 		try {
 			const response = await fetch(
-				"https://quttouf.com/api/user/sectors/buy-shares",
+				"https://www.quttouf.com/api/user/sectors/buy-shares",
 				{
 					method: "POST",
 					headers: myHeaders,

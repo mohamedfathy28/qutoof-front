@@ -45,7 +45,7 @@ const WaitingForApprovalSell: React.FC<Props> = ({ data, loading }) => {
             headers.append("accept", "application/json");
             if (token) headers.append("Authorization", `Bearer ${JSON.parse(token)}`);
 
-            const res = await fetch(`https://quttouf.com/api/user/sellshare/change/${id}`, {
+            const res = await fetch(`https://www.quttouf.com/api/user/sellshare/change/${id}`, {
                 method: "POST",
                 headers,
             });
@@ -73,7 +73,7 @@ const WaitingForApprovalSell: React.FC<Props> = ({ data, loading }) => {
             headers.append("accept", "application/json");
             if (token) headers.append("Authorization", `Bearer ${JSON.parse(token)}`);
 
-            const res = await fetch(`https://quttouf.com/api/user/sellshare/change/${id}/accept`, {
+            const res = await fetch(`https://www.quttouf.com/api/user/sellshare/change/${id}/accept`, {
                 method: "POST",
                 headers,
             });

@@ -14,15 +14,16 @@ interface ISectorCardProps {
 		id: number;
 		title: string;
 		description: string;
-		number_of_acres: number;
-		available_shares: number;
-		land_area: number;
-		offered_by_company: number;
+		number_of_acres?: number | string | null;
+		available_shares?: number | string | null;
+		land_area?: number | string | null;
+		offered_by_company?: number | string | null;
 		media: Record<string, string> | string[];
 		AllowToSell: boolean;
 		// optional legacy fields (may be undefined)
-		share_price?: number;
-		total_price?: number;
+		share_price?: number | string | null;
+		total_price?: number | string | null;
+		number_of_listing?: number | string | null;
 	};
 }
 
@@ -56,7 +57,7 @@ const SectorCard = ({ SectorInfo }: ISectorCardProps) => {
 
 		try {
 			const response = await fetch(
-				"https://quttouf.com/api/user/sectors/buy-shares",
+				"https://www.quttouf.com/api/user/sectors/buy-shares",
 				{
 					method: "POST",
 					headers: myHeaders,
@@ -97,6 +98,30 @@ const SectorCard = ({ SectorInfo }: ISectorCardProps) => {
 	};
 
 	// Removed unused handleOpenModal (previously handled auth check) to satisfy ESLint.
+	const hasValue = (v: unknown): boolean => {
+		if (v === null || v === undefined) return false;
+		if (typeof v === "string") {
+			const s = v.trim().toLowerCase();
+			if (s === "" || s === "null" || s === "undefined") return false;
+			const n = Number(v);
+			return Number.isFinite(n);
+		}
+		if (typeof v === "number") return Number.isFinite(v);
+		return false;
+	};
+
+	const toNumber = (v: unknown): number | null => {
+		if (!hasValue(v)) return null;
+		const n = typeof v === "string" ? Number(v) : (v as number);
+		return Number.isFinite(n) ? n : null;
+	};
+
+	const hasAnyDetail =
+		hasValue(SectorInfo.land_area) ||
+		hasValue(SectorInfo.number_of_acres) ||
+		hasValue(SectorInfo.available_shares) ||
+		hasValue(SectorInfo.number_of_listing) ||
+		(SectorInfo.AllowToSell && hasValue(SectorInfo.share_price));
 
 	return (
 		<>
@@ -120,42 +145,60 @@ const SectorCard = ({ SectorInfo }: ISectorCardProps) => {
 					<p className='text-[#525252] text-[16px] lg:text-[20px] mb-4 line-clamp-3'>
 						{SectorInfo.description}
 					</p>
-					<ul className='grid grid-cols-2 mb-8'>
-						<li className='flex items-center gap-2'>
-							<span className='text-[#656565] text-[14px] lg:text-[18px]'>
-								{t("LandArea")}:
-							</span>
-							<span className='text-[#121212] text-[14px] lg:text-[18px] font-[500]'>
-								{SectorInfo.land_area} {t_home("meter")}
-							</span>
-						</li>
-						<li className='flex items-center gap-2'>
-							<span className='text-[#656565] text-[14px] lg:text-[18px]'>
-								{t("NumberOfAcres")}:
-							</span>
-							<span className='text-[#121212] text-[14px] lg:text-[18px] font-[500]'>
-								{SectorInfo.number_of_acres} {t_home("acres")}
-							</span>
-						</li>
-						<li className='flex items-center gap-2'>
-							<span className='text-[#656565] text-[14px] lg:text-[18px]'>
-								{t("available_shares")}:
-							</span>
-							<span className='text-[#121212] text-[14px] lg:text-[18px] font-[500]'>
-								{SectorInfo.available_shares ?? "0"} {t_home("shares")}
-							</span>
-						</li>
-						{SectorInfo.AllowToSell && (
-							<li className='flex items-center gap-2'>
-								<span className='text-[#656565] text-[14px] lg:text-[18px]'>
-									{t("SharePrice")}:
-								</span>
-								<span className='text-[#121212] text-[14px] lg:text-[18px] font-[500]'>
-									{SectorInfo.share_price ?? "-"} {SectorInfo.share_price ? t("currency") : ""}
-								</span>
-							</li>
-						)}
-					</ul>
+					{hasAnyDetail && (
+						<ul className='grid grid-cols-2 mb-8'>
+							{hasValue(SectorInfo.land_area) && (
+								<li className='flex items-center gap-2'>
+									<span className='text-[#656565] text-[14px] lg:text-[18px]'>
+										{t("LandArea")}:
+									</span>
+									<span className='text-[#121212] text-[14px] lg:text-[18px] font-[500]'>
+										{toNumber(SectorInfo.land_area)} {t_home("meter")}
+									</span>
+								</li>
+							)}
+							{hasValue(SectorInfo.number_of_acres) && (
+								<li className='flex items-center gap-2'>
+									<span className='text-[#656565] text-[14px] lg:text-[18px]'>
+										{t("NumberOfAcres")}:
+									</span>
+									<span className='text-[#121212] text-[14px] lg:text-[18px] font-[500]'>
+										{toNumber(SectorInfo.number_of_acres)} {t_home("acres")}
+									</span>
+								</li>
+							)}
+							{hasValue(SectorInfo.available_shares) && (
+								<li className='flex items-center gap-2'>
+									<span className='text-[#656565] text-[14px] lg:text-[18px]'>
+										{t("available_shares")}:
+									</span>
+									<span className='text-[#121212] text-[14px] lg:text-[18px] font-[500]'>
+										{toNumber(SectorInfo.available_shares)} {t_home("shares")}
+									</span>
+								</li>
+							)}
+							{SectorInfo.AllowToSell && hasValue(SectorInfo.share_price) && (
+								<li className='flex items-center gap-2'>
+									<span className='text-[#656565] text-[14px] lg:text-[18px]'>
+										{t("SharePrice")}:
+									</span>
+									<span className='text-[#121212] text-[14px] lg:text-[18px] font-[500]'>
+										{toNumber(SectorInfo.share_price)} {t("currency")}
+									</span>
+								</li>
+							)}
+							{hasValue(SectorInfo.number_of_listing) && (
+								<li className='flex items-center gap-2'>
+									<span className='text-[#656565] text-[14px] lg:text-[18px]'>
+										{t("NumberOfListing")}:
+									</span>
+									<span className='text-[#121212] text-[14px] lg:text-[18px] font-[500]'>
+										{toNumber(SectorInfo.number_of_listing)}
+									</span>
+								</li>
+							)}
+						</ul>
+					)}
 					<div className='flex items-center justify-between'>
 						<Link
 							href={`sectors/${SectorInfo.id}`}

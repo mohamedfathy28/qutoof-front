@@ -78,7 +78,7 @@ const Our_client = () => {
 
 			try {
 				const response = await fetch(
-					"https://quttouf.com/api/user/clients",
+					"https://www.quttouf.com/api/user/clients",
 					{
 						headers: myHeaders,
 					}

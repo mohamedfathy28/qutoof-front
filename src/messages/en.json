@@ -136,6 +136,7 @@
 		"NoOwnersFound": "No data available for the owners of this sector.",
 		"Year": "Year",
 		"NumberOfAcres": "Number of Acres",
+		"NumberOfListing": "Number of Listing",
 		"available_shares": "Available Shares For Sale"
 	},
 	"auth": {

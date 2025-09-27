@@ -58,7 +58,7 @@ const RenderCurrentlyOwned: React.FC<Props> = ({ data, loading }) => {
 
 		try {
 			const response = await fetch(
-				"https://quttouf.com/api/user/sectors/sell-shares",
+				"https://www.quttouf.com/api/user/sectors/sell-shares",
 				{
 					method: "POST",
 					headers: myHeaders,

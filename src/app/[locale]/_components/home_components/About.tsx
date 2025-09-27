@@ -23,7 +23,7 @@ const About = () => {
 			myHeaders.append("Accept-Language", direction == "ltr" ? "en" : "ar");
 
 			try {
-				const response = await fetch("https://quttouf.com/api/user/about", {
+				const response = await fetch("https://www.quttouf.com/api/user/about", {
 					headers: myHeaders,
 				});
 				const result = await response.json();
