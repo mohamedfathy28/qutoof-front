@@ -43,7 +43,7 @@ const ResetPassword = () => {
 
 		try {
 			const response = await fetch(
-				"https://www.quttouf.com/api/user/reset-password",
+				"https://quttouf.com/api/user/reset-password",
 				{
 					method: "POST",
 					headers: myHeaders,

@@ -211,7 +211,7 @@ const MarketPage = () => {
 			setIsLoading(true);
 			try {
 				// Build API URL with optional sector_id filter
-				const baseUrl = 'https://www.quttouf.com/api/user/new-market';
+				const baseUrl = 'https://quttouf.com/api/user/new-market';
 				const params = new URLSearchParams({ per_page: String(PerPage), page: String(currentPage) });
 				if (sectorId) params.append('sector_id', sectorId);
 				const response = await fetch(`${baseUrl}?${params.toString()}`, { headers: myHeaders });
@@ -288,7 +288,7 @@ const MarketPage = () => {
 						hdrs.append('Accept-Language', direction == 'ltr' ? 'en' : 'ar');
 						const promises = missingIds.map(async (sid) => {
 							try {
-								const r = await fetch(`https://www.quttouf.com/api/user/sectors/${sid}`, { headers: hdrs });
+								const r = await fetch(`https://quttouf.com/api/user/sectors/${sid}`, { headers: hdrs });
 								const j = await r.json();
 								return { sid, project: j?.data?.project } as { sid: number; project?: { id: number; title?: string } };
 							} catch {

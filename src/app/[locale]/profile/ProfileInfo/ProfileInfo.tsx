@@ -55,13 +55,13 @@ const RenderProfileInfo = () => {
 		const fetchData = async () => {
 			try {
 				const countriesResponse = await fetch(
-					"https://www.quttouf.com/api/user/countries"
+					"https://quttouf.com/api/user/countries"
 				);
 				const countriesResult = await countriesResponse.json();
 				setCountries(countriesResult);
 
 				const nationalitiesResponse = await fetch(
-					"https://www.quttouf.com/api/user/nationalities"
+					"https://quttouf.com/api/user/nationalities"
 				);
 				const nationalitiesResult = await nationalitiesResponse.json();
 				setNationalities(nationalitiesResult);
@@ -127,7 +127,7 @@ const RenderProfileInfo = () => {
 
 			try {
 				const response = await fetch(
-					"https://www.quttouf.com/api/user/update/profile",
+					"https://quttouf.com/api/user/update/profile",
 					{
 						method: "POST",
 						headers: myHeaders,

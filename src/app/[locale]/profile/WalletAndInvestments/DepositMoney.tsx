@@ -40,7 +40,7 @@ const RenderDepositMoney = () => {
 		myHeaders.append("Accept-Language", direction == "ltr" ? "en" : "ar");
 
 		try {
-			const response = await fetch("https://www.quttouf.com/api/user/wallet", {
+			const response = await fetch("https://quttouf.com/api/user/wallet", {
 				headers: myHeaders,
 			});
 			const result = await response.json();
@@ -93,7 +93,7 @@ const RenderDepositMoney = () => {
 
 			try {
 				const response = await fetch(
-					"https://www.quttouf.com/api/user/wallet/deposit",
+					"https://quttouf.com/api/user/wallet/deposit",
 					{
 						method: "POST",
 						headers: myHeaders,

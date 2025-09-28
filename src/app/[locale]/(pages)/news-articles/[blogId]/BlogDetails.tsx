@@ -34,7 +34,7 @@ const BlogDetails = ({ blogId }: IProps) => {
 			myHeaders.append("Accept-Language", direction == "ltr" ? "en" : "ar");
 			try {
 				const response = await fetch(
-					`https://www.quttouf.com/api/user/blogs/${blogId}`,
+					`https://quttouf.com/api/user/blogs/${blogId}`,
 					{
 						headers: myHeaders,
 					}
@@ -53,7 +53,7 @@ const BlogDetails = ({ blogId }: IProps) => {
 			const myHeaders = new Headers();
 			myHeaders.append("Accept-Language", direction == "ltr" ? "en" : "ar");
 			try {
-				const response = await fetch("https://www.quttouf.com/api/user/blogs", {
+				const response = await fetch("https://quttouf.com/api/user/blogs", {
 					headers: myHeaders,
 				});
 				const result = await response.json();

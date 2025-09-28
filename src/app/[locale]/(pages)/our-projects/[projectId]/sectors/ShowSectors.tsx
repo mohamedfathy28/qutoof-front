@@ -33,7 +33,7 @@ const ShowSectors = ({ projectId }: { projectId: number }) => {
 			myHeaders.append("Accept-Language", direction == "ltr" ? "en" : "ar");
 			try {
 				const response = await fetch(
-					`https://www.quttouf.com/api/user/projects/data/${projectId}?per_page=${PerPage}&page=${CurrentPage}`,
+					`https://quttouf.com/api/user/projects/data/${projectId}?per_page=${PerPage}&page=${CurrentPage}`,
 					{ headers: myHeaders }
 				);
 				const result = await response.json();

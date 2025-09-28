@@ -37,7 +37,7 @@ export const ConfigrationsContextProvider = ({ children }: { children: ReactNode
       const myHeaders = new Headers();
       myHeaders.append("Accept-Language", direction === 'ltr' ? "en" : "ar");
       try {
-        const response = await fetch('https://www.quttouf.com/api/user/main-config', {
+        const response = await fetch('https://quttouf.com/api/user/main-config', {
           headers: myHeaders
         });
         const result = await response.json();

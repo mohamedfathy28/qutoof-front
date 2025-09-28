@@ -32,7 +32,7 @@ const OurProjectsPage = () => {
 			myHeaders.append("Accept-Language", direction == "ltr" ? "en" : "ar");
 			try {
 				const response = await fetch(
-					`https://www.quttouf.com/api/user/projects?per_page=${PerPage}&page=${CurrentPage}`,
+					`https://quttouf.com/api/user/projects?per_page=${PerPage}&page=${CurrentPage}`,
 					{
 						headers: myHeaders,
 					}

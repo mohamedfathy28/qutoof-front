@@ -72,7 +72,7 @@ const RenderTransactionManagement = () => {
 				if (token) headers.append("Authorization", `Bearer ${JSON.parse(token)}`);
 				if (direction) headers.append("Accept-Language", direction === "ltr" ? "en" : "ar");
 
-				const res = await fetch("https://www.quttouf.com/api/user/transaction-management", { headers });
+				const res = await fetch("https://quttouf.com/api/user/transaction-management", { headers });
 				if (!res.ok) throw new Error(`Status ${res.status}`);
 				const result = await res.json();
 				setData(result as ITransactionManagementResponse);

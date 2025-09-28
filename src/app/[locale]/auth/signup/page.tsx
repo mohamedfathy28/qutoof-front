@@ -29,7 +29,7 @@ const SignUpPage = () => {
 		const fetchCountries = async () => {
 			try {
 				const response = await fetch(
-					"https://www.quttouf.com/api/user/countries"
+					"https://quttouf.com/api/user/countries"
 				);
 				const result = await response.json();
 				setCountries(result);
@@ -85,7 +85,7 @@ const SignUpPage = () => {
 				console.log(formData);
 
 				const response = await fetch(
-					"https://www.quttouf.com/api/user/register",
+					"https://quttouf.com/api/user/register",
 					{
 						method: "POST",
 						body: formData,

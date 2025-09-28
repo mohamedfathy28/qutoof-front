@@ -29,7 +29,7 @@ const ForgetPass = () => {
 
 		try {
 			const response = await fetch(
-				"https://www.quttouf.com/api/user/verify-otp",
+				"https://quttouf.com/api/user/verify-otp",
 				{
 					method: "POST",
 					body: formData,

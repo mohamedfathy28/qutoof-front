@@ -54,7 +54,7 @@ const RenderPurchaseRequests: React.FC<Props> = ({ data, loading }) => {
 
 		try {
 			const response = await fetch(
-				`https://www.quttouf.com/api/user/purchase-buying-requests/accept/${id}`,
+				`https://quttouf.com/api/user/purchase-buying-requests/accept/${id}`,
 				{
 					method: "POST",
 					headers: myHeaders,
@@ -92,7 +92,7 @@ const RenderPurchaseRequests: React.FC<Props> = ({ data, loading }) => {
 
 		try {
 			const response = await fetch(
-				`https://www.quttouf.com/api/user/purchase-buying-requests/accept/${id}`,
+				`https://quttouf.com/api/user/purchase-buying-requests/accept/${id}`,
 				{
 					method: "POST",
 					headers: myHeaders,

@@ -145,7 +145,7 @@ const SectorDetails = ({ sectorId }: Iprops) => {
 
 		try {
 			const response = await fetch(
-				"https://www.quttouf.com/api/user/sectors/buy-shares",
+				"https://quttouf.com/api/user/sectors/buy-shares",
 				{
 					method: "POST",
 					headers: myHeaders,
@@ -188,7 +188,7 @@ const SectorDetails = ({ sectorId }: Iprops) => {
 				myHeaders.append("Accept-Language", direction === "ltr" ? "en" : "ar");
 
 				const response = await fetch(
-					`https://www.quttouf.com/api/user/sectors/${sectorId}`,
+					`https://quttouf.com/api/user/sectors/${sectorId}`,
 					{ headers: myHeaders }
 				);
 				const result = await response.json();
@@ -214,7 +214,7 @@ const SectorDetails = ({ sectorId }: Iprops) => {
 
 			try {
 				const response = await fetch(
-					`https://www.quttouf.com/api/user/blogs?sector_id=${sectorId}`,
+					`https://quttouf.com/api/user/blogs?sector_id=${sectorId}`,
 					{
 						headers: myHeaders,
 					}
