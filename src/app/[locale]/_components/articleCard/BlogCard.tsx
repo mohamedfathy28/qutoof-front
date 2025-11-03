@@ -41,8 +41,8 @@ const BlogCard = ({ blogInfo }: IBlogCardProps) => {
 						<Image
 							src={blogInfo?.image ? blogInfo.image : blogImg}
 							alt='user'
-							width={100}
-							height={100}
+							width={600}
+							height={600}
 							className='rounded-[8px] w-full h-full object-cover'
 						/>
 					</Link>

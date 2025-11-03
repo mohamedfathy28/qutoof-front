@@ -121,8 +121,8 @@ const Out_team = () => {
 											<Image
 												src={data.image ? data.image : ourTeamImg}
 												alt={data?.name || "team img"}
-												width={100}
-												height={100}
+												width={600}
+												height={600}
 												className='w-full rounded-[8px] h-[550px] object-cover'
 											/>
 											<div className='absolute z-8 top-0 left-0 w-full h-full bg-gradient-to-t from-[#0000008f] to-[#D9D9D900] p-8 flex flex-col justify-center items-center'>

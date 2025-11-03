@@ -131,8 +131,8 @@ const Our_client = () => {
 												? data.image
 												: "https://quttouf.com/dashboard/blank.jpg"
 										}
-										width={100}
-										height={100}
+										width={600}
+										height={600}
 										alt='our clients'
 										className='w-full h-auto'
 									/>

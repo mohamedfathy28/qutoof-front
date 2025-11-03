@@ -98,8 +98,8 @@ const BlogDetails = ({ blogId }: IProps) => {
 							<Image
 								src={data?.image ? data?.image : panner}
 								alt='user'
-								width={100}
-								height={100}
+								width={1000}
+								height={600}
 								className='w-full h-auto rounded-[10px] object-cover max-h-[420px]'
 							/>
 							<span className='absolute bottom-6 left-6 px-6 py-3 rounded-[10px] text-white bg-[#009444] text-[14px] font-[600]'>

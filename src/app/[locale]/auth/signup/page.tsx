@@ -122,7 +122,7 @@ const SignUpPage = () => {
 	return (
 		<div className='p-6'>
 			<div className='space-y-6 mb-8 text-center flex flex-col items-center justify-center'>
-				<Image src={logo} alt='Logo' width={150} height={50} />
+				<Image src={logo} alt='Logo' />
 				<h2 className='text-2xl font-bold'>
 					{t("messages.welcome_title")}
 				</h2>

@@ -133,8 +133,8 @@ const SectorCard = ({ SectorInfo }: ISectorCardProps) => {
 							: Object.values(SectorInfo.media || {});
 						return list[0] || SectorImg;
 					})()}
-					width={100}
-					height={100}
+					width={1000}
+					height={600}
 					alt='Card image'
 					className='w-full h-96 rounded-lg object-cover mb-2 lg:mb-4'
 				/>

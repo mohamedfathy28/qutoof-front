@@ -74,8 +74,8 @@ const Blogs = () => {
 					<Link href={`/news-articles/${data ? data[0].id : 1}`}>
 						<Image
 							src={data ? data[0]?.image : ProjectImg}
-							width={100}
-							height={100}
+							width={600}
+							height={600}
 							alt='blog img'
 							className='rounded-[8px] h-full w-full object-cover'
 						/>

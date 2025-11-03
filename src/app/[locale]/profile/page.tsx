@@ -62,8 +62,8 @@ const ProfilePage = () => {
 					<Image
 						src={currentUser ? currentUser.image : UserImg}
 						alt='profile cover'
-						width={100}
-						height={100}
+						width={600}
+						height={600}
 						className='h-[120px] w-[120px] lg:h-[280px] lg:w-[280px] object-cover rounded-[50%] border-[4px] border-white'
 					/>
 					<div className='flex flex-col justify-center gap-0 lg:gap-2 h-[70px] lg:h-[140px]'>

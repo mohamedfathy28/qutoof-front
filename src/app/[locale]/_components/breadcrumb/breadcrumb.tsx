@@ -21,8 +21,6 @@ const Breadcrumb: React.FC<BreadcrumbProps> = ({ items = [] }) => {
 		<nav className='relative w-full h-[30vh] md:h-[50vh]'>
 			<Image
 				src={breadcrumbImg}
-				width={100}
-				height={100}
 				alt='breadcrumb img'
 				className='object-cover h-full w-full'
 			/>

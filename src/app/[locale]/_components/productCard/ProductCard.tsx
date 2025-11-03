@@ -132,7 +132,7 @@ const ProductCard = ({ ProductInfo }: AppProps) => {
 	return (
 		<>
 			<div className='relative px-6 pb-6 pt-10 rounded-[20px] bg-gradient-to-t from-[#F4F8ED] to-[#F4F8ED00] w-full mt-16'>
-				<div className='bg-[#F4F8ED] rounded-[50%] w-24 h-24 flex items-center justify-center absolute top-[-3rem] left-2'>
+				<div className='bg-[#F4F8ED] rounded-[50%] w-24 h-24 flex items-center justify-center absolute top-[-3rem] left-2 overflow-hidden'>
 					<Image
 						src={
 							ProductInfo.sector.media[0]
@@ -140,8 +140,7 @@ const ProductCard = ({ ProductInfo }: AppProps) => {
 								: userImg
 						}
 						alt='user'
-						width={50}
-						height={50}
+						fill
 					/>
 				</div>
 				{ProductInfo.sector.project?.title && (
